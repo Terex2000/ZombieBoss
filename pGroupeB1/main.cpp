@@ -24,7 +24,7 @@ int main()
         }
 
         // Clear screen
-        app.clear();
+        app.clear(sf::Color::Blue);
 
         // Draw the sprite
         app.draw(sprite);
