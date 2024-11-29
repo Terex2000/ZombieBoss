@@ -5,6 +5,7 @@
 		<Option title="pGroupeB1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="Controller/;Model/;Program/;View/;Utils/" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/pGroupeB1" prefix_auto="1" extension_auto="1" />
@@ -13,6 +14,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
@@ -27,6 +29,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -48,8 +51,298 @@
 			<Add library="dxguid" />
 			<Add directory="C:/Program Files/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="cb.bmp" />
-		<Unit filename="main.cpp" />
+		<Unit filename="assets/img/cb.bmp" />
+		<Unit filename="include/Boss.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/BossFactory.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/BossView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/ChoiceCharacterDifficulty.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/ChoiceCharacterDifficultyView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/CollisionManager.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="include/Defeat.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/DefeatView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/Enemy.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/EnemyController.h">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="include/EnemyFactory.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/FileReader.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="include/FileWriter.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="include/GameController.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="include/HUD.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/HUDController.h">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="include/HUDView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/InGameState.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/InputManager.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="include/LoseState.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/MainMenu.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/MainMenuView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/Map.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/MapController.h">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="include/MapView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/MenuController.h">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="include/OnPauseState.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/Pause.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/PauseView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/Player.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/PlayerController.h">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="include/PlayerView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/Projectile.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/ProjectileController.h">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="include/ProjectileView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/Settings.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/SettingsView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/Shop.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/ShopView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/State.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/TextureManager.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="include/Tiles.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/TilesView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/Victory.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/VictoryView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/WinState.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/Zombie.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/ZombieFactory.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/ZombieView.h">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="main.cpp">
+			<Option virtualFolder="Program/" />
+		</Unit>
+		<Unit filename="src/Boss.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/BossFactory.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/BossView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/ChoiceCharacterDifficulty.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/ChoiceCharacterDifficultyView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/CollisionManager.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/Defeat.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/DefeatView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/EnemyController.cpp">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="src/EnemyFactory.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/FileReader.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/FileWriter.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/GameController.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/HUD.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/HUDController.cpp">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="src/HUDView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/InGameState.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/InputManager.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/LoseState.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/MainMenu.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/MainMenuView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/Map.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/MapController.cpp">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="src/MapView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/MenuController.cpp">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="src/OnPauseState.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/Pause.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/PauseView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/Player.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/PlayerController.cpp">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="src/PlayerView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/Projectile.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/ProjectileController.cpp">
+			<Option virtualFolder="Controller/" />
+		</Unit>
+		<Unit filename="src/ProjectileView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/Settings.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/SettingsView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/Shop.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/ShopView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/TextureManager.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/Tiles.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/TilesView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/Victory.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/VictoryView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/WinState.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/Zombie.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/ZombieFactory.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/ZombieView.cpp">
+			<Option virtualFolder="View/" />
+		</Unit>
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
