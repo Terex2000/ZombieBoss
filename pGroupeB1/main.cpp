@@ -7,7 +7,7 @@ int main()
 
     // Load a sprite to display
     sf::Texture texture;
-    if (!texture.loadFromFile("cb.bmp"))
+    if (!texture.loadFromFile("assets/img/cb.bmp"))
         return EXIT_FAILURE;
     sf::Sprite sprite(texture);
 
