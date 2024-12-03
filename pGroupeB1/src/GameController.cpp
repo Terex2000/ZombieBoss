@@ -5,6 +5,9 @@ GameController::GameController() {
     if (!textureManager.loadTexture("tileset", "assets/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
     }
+    if (!textureManager.loadTexture("background", "assets/background.jpg")) {
+        std::cerr << "Error: Failed to load background texture" << std::endl;
+    }
     mapController = new MapController(fileReader.readMap("assets/map.txt"), textureManager);
 }
 

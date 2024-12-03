@@ -14,6 +14,7 @@ public:
 private:
     const Map& map;
     std::vector<TilesView> tilesViews;
+    sf::Sprite backgroundSprite;
 };
 
 #endif // MAPVIEW_H
