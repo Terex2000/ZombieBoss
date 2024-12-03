@@ -1,16 +1,13 @@
 #ifndef TILES_H
 #define TILES_H
 
+class Tiles {
+public:
+    Tiles(int type);
+    int getType() const;
 
-class Tiles
-{
-    public:
-        Tiles();
-        virtual ~Tiles();
-
-    protected:
-
-    private:
+private:
+    int type;
 };
 
 #endif // TILES_H

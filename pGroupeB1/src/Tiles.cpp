@@ -1,11 +1,7 @@
 #include "Tiles.h"
 
-Tiles::Tiles()
-{
-    //ctor
-}
+Tiles::Tiles(int type) : type(type) {}
 
-Tiles::~Tiles()
-{
-    //dtor
+int Tiles::getType() const {
+    return type;
 }
