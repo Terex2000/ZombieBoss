@@ -1,11 +1,21 @@
 #include "FileReader.h"
+#include <fstream>
+#include <sstream>
 
-FileReader::FileReader()
-{
-    //ctor
-}
+std::vector<std::vector<int>> FileReader::readMap(const std::string& filename) {
+    std::vector<std::vector<int>> map;
+    std::ifstream file(filename);
+    std::string line;
 
-FileReader::~FileReader()
-{
-    //dtor
+    while (std::getline(file, line)) {
+        std::vector<int> row;
+        std::istringstream iss(line);
+        char tile;
+        while (iss >> tile) {
+            row.push_back(tile - '0');
+        }
+        map.push_back(row);
+    }
+
+    return map;
 }
