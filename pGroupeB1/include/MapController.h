@@ -4,10 +4,11 @@
 #include <SFML/Graphics.hpp>
 #include "Map.h"
 #include "MapView.h"
+#include "TextureManager.h"
 
 class MapController {
 public:
-    MapController(const std::vector<std::vector<int>>& mapData);
+    MapController(const std::vector<std::vector<int>>& mapData, TextureManager& textureManager);
     void draw(sf::RenderWindow& window);
 
 private:
