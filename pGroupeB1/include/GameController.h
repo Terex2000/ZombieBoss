@@ -3,6 +3,7 @@
 
 #include "FileReader.h"
 #include "MapController.h"
+#include "TextureManager.h"
 
 class GameController {
 public:
@@ -11,7 +12,8 @@ public:
 
 private:
     FileReader fileReader;
-    MapController mapController;
+    TextureManager textureManager;
+    MapController* mapController;
 };
 
 #endif // GAMECONTROLLER_H

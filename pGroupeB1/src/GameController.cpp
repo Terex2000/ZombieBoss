@@ -1,6 +1,12 @@
 #include "GameController.h"
+#include <iostream>
 
-GameController::GameController() : mapController(fileReader.readMap("assets/map.txt")) {}
+GameController::GameController() {
+    if (!textureManager.loadTexture("tileset", "assets/tileset.png")) {
+        std::cerr << "Error: Failed to load tileset texture" << std::endl;
+    }
+    mapController = new MapController(fileReader.readMap("assets/map.txt"), textureManager);
+}
 
 void GameController::run() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Map");
@@ -13,7 +19,9 @@ void GameController::run() {
         }
 
         window.clear();
-        mapController.draw(window);
+        mapController->draw(window);
         window.display();
     }
+
+    delete mapController;
 }
