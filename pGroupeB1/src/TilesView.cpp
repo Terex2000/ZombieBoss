@@ -1,26 +1,27 @@
 #include "TilesView.h"
+#include <iostream>
 
-TilesView::TilesView(const Tiles& tile, int x, int y) : tile(tile) {
-    vertices.setPrimitiveType(sf::Triangles);
-    vertices.resize(6); // 2 triangles per tile
-
+TilesView::TilesView(const Tiles& tile, int x, int y, TextureManager& textureManager) : tile(tile) {
     int tileSize = 32;
+    sf::Texture& tileset = textureManager.getTexture("tileset");
 
-    sf::Color color = (tile.getType() == 1) ? sf::Color::Red : sf::Color::Green;
-
-    vertices[0].position = sf::Vector2f(x, y);
-    vertices[1].position = sf::Vector2f(x + tileSize, y);
-    vertices[2].position = sf::Vector2f(x, y + tileSize);
-
-    vertices[3].position = sf::Vector2f(x + tileSize, y);
-    vertices[4].position = sf::Vector2f(x + tileSize, y + tileSize);
-    vertices[5].position = sf::Vector2f(x, y + tileSize);
-
-    for (int i = 0; i < 6; ++i) {
-        vertices[i].color = color;
+    if (tileset.getSize().x == 0 || tileset.getSize().y == 0) {
+        std::cerr << "Error: Tileset texture is not loaded correctly" << std::endl;
+        return;
     }
+
+    int tilesetWidth = tileset.getSize().x / tileSize;
+
+    int tu = tile.getType() % tilesetWidth;
+    int tv = tile.getType() / tilesetWidth;
+
+    sprite.setTexture(tileset);
+    sprite.setPosition(x, y);
+    sprite.setTextureRect(sf::IntRect(tu * tileSize, tv * tileSize, tileSize, tileSize));
+
+    std::cout << "Tile type: " << tile.getType() << " at position (" << x << ", " << y << ")" << std::endl;
 }
 
 void TilesView::draw(sf::RenderWindow& window) {
-    window.draw(vertices);
+    window.draw(sprite);
 }

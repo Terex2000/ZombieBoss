@@ -3,15 +3,16 @@
 
 #include <SFML/Graphics.hpp>
 #include "Tiles.h"
+#include "TextureManager.h"
 
 class TilesView {
 public:
-    TilesView(const Tiles& tile, int x, int y);
+    TilesView(const Tiles& tile, int x, int y, TextureManager& textureManager);
     void draw(sf::RenderWindow& window);
 
 private:
     const Tiles& tile;
-    sf::VertexArray vertices;
+    sf::Sprite sprite;
 };
 
 #endif // TILESVIEW_H
