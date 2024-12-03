@@ -1,11 +1,7 @@
 #include "MapController.h"
 
-MapController::MapController()
-{
-    //ctor
-}
+MapController::MapController(const std::vector<std::vector<int>>& mapData) : map(mapData), mapView(map) {}
 
-MapController::~MapController()
-{
-    //dtor
+void MapController::draw(sf::RenderWindow& window) {
+    mapView.draw(window);
 }
