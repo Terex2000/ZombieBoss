@@ -4,10 +4,11 @@
 #include <SFML/Graphics.hpp>
 #include "Map.h"
 #include "TilesView.h"
+#include "TextureManager.h"
 
 class MapView {
 public:
-    MapView(const Map& map);
+    MapView(const Map& map, TextureManager& textureManager);
     void draw(sf::RenderWindow& window);
 
 private:
