@@ -1,16 +1,17 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
+#include "FileReader.h"
+#include "MapController.h"
 
-class GameController
-{
-    public:
-        GameController();
-        virtual ~GameController();
+class GameController {
+public:
+    GameController();
+    void run();
 
-    protected:
-
-    private:
+private:
+    FileReader fileReader;
+    MapController mapController;
 };
 
 #endif // GAMECONTROLLER_H
