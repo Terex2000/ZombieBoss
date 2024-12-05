@@ -18,6 +18,7 @@ GameController::GameController()
 
 void GameController::run() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Map");
+    sf::Clock clock;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -26,7 +27,10 @@ void GameController::run() {
                 window.close();
         }
 
+        float deltaTime = clock.restart().asSeconds();
+
         inputManager.handleInput(playerController);
+        playerController.update(deltaTime);
         collisionManager.checkCollisions(playerController, mapController->getMap(), collisionTypes);
 
         window.clear();
