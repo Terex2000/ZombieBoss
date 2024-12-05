@@ -1,7 +1,10 @@
+// GameController.cpp
 #include "GameController.h"
 #include <iostream>
 
-GameController::GameController() {
+GameController::GameController() 
+    : playerController(100.0f, 100.0f) // Initial position of the player
+{
     if (!textureManager.loadTexture("tileset", "assets/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
     }
@@ -9,6 +12,8 @@ GameController::GameController() {
         std::cerr << "Error: Failed to load background texture" << std::endl;
     }
     mapController = new MapController(fileReader.readMap("assets/map.txt"), textureManager);
+    collisionTypes = fileReader.readCollisionTypes("assets/map.txt");
+    std::cout << "Total collision types: " << collisionTypes.size() << std::endl; // Debug message
 }
 
 void GameController::run() {
@@ -21,8 +26,12 @@ void GameController::run() {
                 window.close();
         }
 
+        inputManager.handleInput(playerController);
+        collisionManager.checkCollisions(playerController, mapController->getMap(), collisionTypes);
+
         window.clear();
         mapController->draw(window);
+        playerController.draw(window);
         window.display();
     }
 
