@@ -10,6 +10,7 @@ class MapController {
 public:
     MapController(const std::vector<std::vector<int>>& mapData, TextureManager& textureManager);
     void draw(sf::RenderWindow& window);
+    const Map& getMap() const;
 
 private:
     Map map;
