@@ -1,11 +1,9 @@
 #include "PlayerView.h"
 
-PlayerView::PlayerView()
-{
-    //ctor
-}
+PlayerView::PlayerView(Player& player) : player(player) {}
 
-PlayerView::~PlayerView()
-{
-    //dtor
+PlayerView::~PlayerView() {}
+
+void PlayerView::draw(sf::RenderWindow& window) {
+    window.draw(player.getShape());
 }
