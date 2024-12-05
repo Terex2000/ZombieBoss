@@ -92,7 +92,7 @@
 			<Option virtualFolder="Utils/" />
 		</Unit>
 		<Unit filename="include/GameController.h">
-			<Option virtualFolder="Utils/" />
+			<Option virtualFolder="Controller/" />
 		</Unit>
 		<Unit filename="include/HUD.h">
 			<Option virtualFolder="Model/" />
@@ -239,7 +239,7 @@
 			<Option virtualFolder="Utils/" />
 		</Unit>
 		<Unit filename="src/GameController.cpp">
-			<Option virtualFolder="Utils/" />
+			<Option virtualFolder="Controller/" />
 		</Unit>
 		<Unit filename="src/HUD.cpp">
 			<Option virtualFolder="Model/" />
