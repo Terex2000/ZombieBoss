@@ -3,6 +3,7 @@
 
 Player::Player() {
     shape.setRadius(15);
+    shape.setFillColor(sf::Color::Red); // Définir la couleur initiale en rouge
 }
 
 Player::~Player() {}
@@ -15,6 +16,10 @@ const sf::CircleShape& Player::getShape() const {
     return shape;
 }
 
-void Player::setPosition(float x, float y) { // Implémentation de la méthode setPosition
+void Player::setPosition(float x, float y) {
     shape.setPosition(x, y);
+}
+
+void Player::setColor(const sf::Color& color) {
+    shape.setFillColor(color);
 }

@@ -10,7 +10,8 @@ public:
     ~Player();
     void move(float dx, float dy);
     const sf::CircleShape& getShape() const;
-    void setPosition(float x, float y); // Ajout de la méthode setPosition
+    void setPosition(float x, float y);
+    void setColor(const sf::Color& color); // Ajout de la méthode setColor
 
 private:
     sf::CircleShape shape;
