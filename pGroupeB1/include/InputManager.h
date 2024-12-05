@@ -1,16 +1,16 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
 
+#include "PlayerController.h"
 
-class InputManager
-{
-    public:
-        InputManager();
-        virtual ~InputManager();
+class InputManager {
+public:
+    InputManager();
+    ~InputManager();
+    void handleInput(PlayerController& playerController);
 
-    protected:
-
-    private:
+private:
+    const float moveSpeed = 0.05f;
 };
 
 #endif // INPUTMANAGER_H
