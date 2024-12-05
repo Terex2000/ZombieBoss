@@ -22,7 +22,6 @@ void CollisionManager::checkCollisions(PlayerController& playerController, const
                 sf::RectangleShape tileShape(sf::Vector2f(32, 32));
                 tileShape.setPosition(tile.getX() * 32, tile.getY() * 32);
                 if (isColliding(playerShape, tileShape)) {
-                    std::cout << "Collision with tile at: " << tile.getX() << ", " << tile.getY() << std::endl; // Debug message
                     // Adjust player position to prevent passing through the tile
                     float playerX = playerShape.getPosition().x;
                     float playerY = playerShape.getPosition().y;

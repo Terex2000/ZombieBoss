@@ -18,8 +18,6 @@ TilesView::TilesView(const Tiles& tile, int x, int y, TextureManager& textureMan
     sprite.setTexture(tileset);
     sprite.setPosition(x, y);
     sprite.setTextureRect(sf::IntRect(tu * tileSize, tv * tileSize, tileSize, tileSize));
-
-    std::cout << "Tile type: " << tile.getType() << " at position (" << x << ", " << y << ")" << std::endl;
 }
 
 void TilesView::draw(sf::RenderWindow& window) {
