@@ -3,7 +3,16 @@
 
 Player::Player() {
     shape.setRadius(15);
-    shape.setFillColor(sf::Color::Red); // Définir la couleur initiale en rouge
+    shape.setFillColor(sf::Color::Red);
+}
+
+Player::Player(const Player& other) : shape(other.shape) {}
+
+Player& Player::operator=(const Player& other) {
+    if (this != &other) {
+        shape = other.shape;
+    }
+    return *this;
 }
 
 Player::~Player() {}

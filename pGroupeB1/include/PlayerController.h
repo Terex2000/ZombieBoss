@@ -9,6 +9,8 @@
 class PlayerController {
 public:
     PlayerController(float startX, float startY);
+    PlayerController(const PlayerController& other); // Constructeur de copie
+    PlayerController& operator=(const PlayerController& other); // Opérateur d'affectation
     ~PlayerController();
     void draw(sf::RenderWindow& window);
     void move(float dx, float dy);

@@ -4,7 +4,21 @@
 PlayerController::PlayerController(float startX, float startY) 
     : player(), playerView(player), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
-    player.setColor(sf::Color::Red); // Définir la couleur du joueur en rouge
+    player.setColor(sf::Color::Red);
+}
+
+PlayerController::PlayerController(const PlayerController& other)
+    : player(other.player), playerView(player), verticalSpeed(other.verticalSpeed), isJumping(other.isJumping), onGround(other.onGround) {}
+
+PlayerController& PlayerController::operator=(const PlayerController& other) {
+    if (this != &other) {
+        player = other.player;
+        playerView = PlayerView(player);
+        verticalSpeed = other.verticalSpeed;
+        isJumping = other.isJumping;
+        onGround = other.onGround;
+    }
+    return *this;
 }
 
 PlayerController::~PlayerController() {}
