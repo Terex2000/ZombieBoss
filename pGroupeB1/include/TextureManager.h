@@ -1,16 +1,20 @@
 #ifndef TEXTUREMANAGER_H
 #define TEXTUREMANAGER_H
 
+#include <SFML/Graphics.hpp>
+#include <map>
+#include <string>
 
-class TextureManager
-{
-    public:
-        TextureManager();
-        virtual ~TextureManager();
+class TextureManager {
+public:
+    TextureManager();
+    ~TextureManager();
 
-    protected:
+    bool loadTexture(const std::string& name, const std::string& filename);
+    sf::Texture& getTexture(const std::string& name);
 
-    private:
+private:
+    std::map<std::string, sf::Texture> textures;
 };
 
 #endif // TEXTUREMANAGER_H

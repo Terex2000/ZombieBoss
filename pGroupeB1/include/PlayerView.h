@@ -1,16 +1,20 @@
+// PlayerView.h
 #ifndef PLAYERVIEW_H
 #define PLAYERVIEW_H
 
+#include <SFML/Graphics.hpp>
+#include "Player.h"
 
-class PlayerView
-{
-    public:
-        PlayerView();
-        virtual ~PlayerView();
+class PlayerView {
+public:
+    PlayerView(Player& player);
+    PlayerView(const PlayerView& other); // Constructeur de copie
+    PlayerView& operator=(const PlayerView& other); // Opérateur d'affectation
+    ~PlayerView();
+    void draw(sf::RenderWindow& window);
 
-    protected:
-
-    private:
+private:
+    Player& player;
 };
 
 #endif // PLAYERVIEW_H
