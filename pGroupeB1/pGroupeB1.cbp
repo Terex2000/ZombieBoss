@@ -169,6 +169,9 @@
 		<Unit filename="include/ShopView.h">
 			<Option virtualFolder="View/" />
 		</Unit>
+		<Unit filename="include/SoundManager.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
 		<Unit filename="include/State.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -315,6 +318,9 @@
 		</Unit>
 		<Unit filename="src/ShopView.cpp">
 			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/SoundManager.cpp">
+			<Option virtualFolder="Utils/" />
 		</Unit>
 		<Unit filename="src/TextureManager.cpp">
 			<Option virtualFolder="Utils/" />
