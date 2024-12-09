@@ -10,3 +10,11 @@ void MapController::draw(sf::RenderWindow& window) {
 const Map& MapController::getMap() const {
     return map;
 }
+
+int MapController::getMapWidth() const {
+    return map.getData()[0].size() * 32; // Assuming each tile is 32x32 pixels
+}
+
+int MapController::getMapHeight() const {
+    return map.getData().size() * 32; // Assuming each tile is 32x32 pixels
+}
