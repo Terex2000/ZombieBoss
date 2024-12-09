@@ -8,7 +8,9 @@
 #include "InputManager.h"
 #include "CollisionManager.h"
 #include "PlayerController.h"
+#include "CameraManager.h"
 #include <unordered_set>
+#include <SFML/Graphics.hpp>
 
 class GameController {
 public:
@@ -22,7 +24,9 @@ private:
     InputManager inputManager;
     CollisionManager collisionManager;
     PlayerController playerController;
+    CameraManager cameraManager;
     std::unordered_set<int> collisionTypes;
+    sf::Sprite backgroundSprite; // Sprite pour le fond d'écran
 };
 
 #endif // GAMECONTROLLER_H
