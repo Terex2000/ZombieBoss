@@ -5,14 +5,14 @@
 GameController::GameController()
     : playerController(100.0f, 100.0f), cameraManager(800.0f, 600.0f) // Initial position of the player and camera size
 {
-    if (!textureManager.loadTexture("tileset", "assets/tileset.png")) {
+    if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
     }
-    if (!textureManager.loadTexture("background", "assets/background.jpg")) {
+    if (!textureManager.loadTexture("background", "assets/img/background.jpg")) {
         std::cerr << "Error: Failed to load background texture" << std::endl;
     }
-    mapController = new MapController(fileReader.readMap("assets/map.txt"), textureManager);
-    collisionTypes = fileReader.readCollisionTypes("assets/map.txt");
+    mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager);
+    collisionTypes = fileReader.readCollisionTypes("assets/map/map.txt");
     std::cout << "Total collision types: " << collisionTypes.size() << std::endl; // Debug message
 
     // Créer le sprite pour le fond d'écran

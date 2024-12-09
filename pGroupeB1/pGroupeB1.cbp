@@ -51,7 +51,9 @@
 			<Add library="dxguid" />
 			<Add directory="C:/Program Files/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="assets/img/cb.bmp" />
+		<Unit filename="assets/img/background.jpg" />
+		<Unit filename="assets/img/tileset.png" />
+		<Unit filename="assets/map/map.txt" />
 		<Unit filename="include/Boss.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -60,6 +62,9 @@
 		</Unit>
 		<Unit filename="include/BossView.h">
 			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="include/CameraManager.h">
+			<Option virtualFolder="Utils/" />
 		</Unit>
 		<Unit filename="include/ChoiceCharacterDifficulty.h">
 			<Option virtualFolder="Model/" />
@@ -210,6 +215,9 @@
 		</Unit>
 		<Unit filename="src/BossView.cpp">
 			<Option virtualFolder="View/" />
+		</Unit>
+		<Unit filename="src/CameraManager.cpp">
+			<Option virtualFolder="Utils/" />
 		</Unit>
 		<Unit filename="src/ChoiceCharacterDifficulty.cpp">
 			<Option virtualFolder="Model/" />
