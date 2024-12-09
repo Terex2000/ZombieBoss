@@ -1,0 +1,27 @@
+#ifndef MAINMENUSTATE_H
+#define MAINMENUSTATE_H
+
+#include "State.h"
+#include "StateManager.h"
+#include "SoundManager.h"
+#include "MainMenu.h"
+#include "MainMenuView.h"
+#include "MenuController.h"
+
+class MainMenuState : public State {
+public:
+    MainMenuState(StateManager& stateManager, SoundManager& soundManager);
+    virtual ~MainMenuState();
+
+    void handleInput(sf::RenderWindow& app, sf::Event event) override;
+    void update(sf::RenderWindow& app, double deltaTime) override;
+    void draw(sf::RenderWindow& app) override;
+
+private:
+    MainMenu model;
+    MainMenuView view;
+    MenuController controller;
+    SoundManager& soundManager;
+};
+
+#endif // MAINMENUSTATE_H

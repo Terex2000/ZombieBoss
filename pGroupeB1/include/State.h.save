@@ -1,0 +1,22 @@
+#ifndef STATE_H
+#define STATE_H
+
+#include <SFML/Graphics.hpp>
+
+class State {
+public:
+    virtual ~State() = default;
+
+    // Méthodes principales que chaque état doit implémenter
+    virtual void handleInput(sf::RenderWindow& window, sf::Event event) = 0;
+    virtual void update(sf::RenderWindow& window, double deltaTime) = 0;
+    virtual void draw(sf::RenderWindow& window) = 0;
+
+    // Permet de vérifier si une transition d'état est nécessaire
+    virtual bool shouldChangeState() const { return false; }
+
+    // Retourne le nom du prochain état à charger
+    virtual std::string getNextState() const { return ""; }
+};
+
+#endif // STATE_H
