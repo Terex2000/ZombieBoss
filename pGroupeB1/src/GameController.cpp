@@ -2,8 +2,8 @@
 #include "GameController.h"
 #include <iostream>
 
-GameController::GameController() 
-    : playerController(100.0f, 100.0f) // Initial position of the player
+GameController::GameController()
+    : playerController(100.0f, 100.0f), cameraManager(800.0f, 600.0f) // Initial position of the player and camera size
 {
     if (!textureManager.loadTexture("tileset", "assets/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
@@ -14,6 +14,9 @@ GameController::GameController()
     mapController = new MapController(fileReader.readMap("assets/map.txt"), textureManager);
     collisionTypes = fileReader.readCollisionTypes("assets/map.txt");
     std::cout << "Total collision types: " << collisionTypes.size() << std::endl; // Debug message
+
+    // Créer le sprite pour le fond d'écran
+    backgroundSprite.setTexture(textureManager.getTexture("background"));
 }
 
 void GameController::run() {
@@ -32,10 +35,21 @@ void GameController::run() {
         inputManager.handleInput(playerController);
         playerController.update(deltaTime);
         collisionManager.checkCollisions(playerController, mapController->getMap(), collisionTypes);
+        cameraManager.update(playerController, *mapController);
 
         window.clear();
+
+        // Réinitialiser la vue à la vue par défaut pour dessiner le fond d'écran fixe
+        window.setView(window.getDefaultView());
+        window.draw(backgroundSprite);
+
+        // Définir la vue de la caméra
+        window.setView(cameraManager.getView());
+
+        // Dessiner la carte et le joueur
         mapController->draw(window);
         playerController.draw(window);
+
         window.display();
     }
 
