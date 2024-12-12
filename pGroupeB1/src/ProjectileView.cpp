@@ -1,11 +1,9 @@
 #include "ProjectileView.h"
 
-ProjectileView::ProjectileView()
-{
-    //ctor
-}
+ProjectileView::ProjectileView() {}
 
-ProjectileView::~ProjectileView()
-{
-    //dtor
+ProjectileView::~ProjectileView() {}
+
+void ProjectileView::draw(sf::RenderWindow& window, const Projectile& projectile) const {
+    window.draw(projectile.getShape());
 }

@@ -1,16 +1,20 @@
 #ifndef PROJECTILECONTROLLER_H
 #define PROJECTILECONTROLLER_H
 
+#include "Projectile.h"
+#include <vector>
 
-class ProjectileController
-{
-    public:
-        ProjectileController();
-        virtual ~ProjectileController();
+class ProjectileController {
+public:
+    ProjectileController();
+    void shoot(const sf::Vector2f& position, float direction);
+    void update(float deltaTime, const sf::View& cameraView);
+    void draw(sf::RenderWindow& window) const;
+    std::vector<Projectile>& getProjectiles();
+    std::vector<Projectile>::iterator handleCollision(std::vector<Projectile>::iterator it); // Modifiez cette ligne
 
-    protected:
-
-    private:
+private:
+    std::vector<Projectile> projectiles;
 };
 
 #endif // PROJECTILECONTROLLER_H
