@@ -1,16 +1,15 @@
-// Player.cpp
 #include "Player.h"
 
-Player::Player() {
-    shape.setRadius(15);
-    shape.setFillColor(sf::Color::Red);
-}
+Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f) {}
 
-Player::Player(const Player& other) : shape(other.shape) {}
+Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction) {}
 
 Player& Player::operator=(const Player& other) {
     if (this != &other) {
-        shape = other.shape;
+        position = other.position;
+        color = other.color;
+        radius = other.radius;
+        direction = other.direction;
     }
     return *this;
 }
@@ -18,17 +17,38 @@ Player& Player::operator=(const Player& other) {
 Player::~Player() {}
 
 void Player::move(float dx, float dy) {
-    shape.move(dx, dy);
+    position.x += dx;
+    position.y += dy;
+    if (dx != 0) {
+        direction = (dx > 0) ? 1.0f : -1.0f;
+    }
 }
 
-const sf::CircleShape& Player::getShape() const {
-    return shape;
+const sf::Vector2f& Player::getPosition() const {
+    return position;
 }
 
 void Player::setPosition(float x, float y) {
-    shape.setPosition(x, y);
+    position.x = x;
+    position.y = y;
 }
 
 void Player::setColor(const sf::Color& color) {
-    shape.setFillColor(color);
+    this->color = color;
+}
+
+const sf::Color& Player::getColor() const {
+    return color;
+}
+
+float Player::getRadius() const {
+    return radius;
+}
+
+void Player::setDirection(float direction) {
+    this->direction = direction;
+}
+
+float Player::getDirection() const {
+    return direction;
 }

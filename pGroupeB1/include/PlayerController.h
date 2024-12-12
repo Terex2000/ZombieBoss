@@ -1,10 +1,11 @@
-// PlayerController.h
 #ifndef PLAYERCONTROLLER_H
 #define PLAYERCONTROLLER_H
 
-#include <SFML/Graphics.hpp>
 #include "Player.h"
 #include "PlayerView.h"
+#include "ProjectileController.h"
+#include "Map.h"
+#include <unordered_set>
 
 class PlayerController {
 public:
@@ -14,18 +15,24 @@ public:
     ~PlayerController();
     void draw(sf::RenderWindow& window);
     void move(float dx, float dy);
-    void update(float deltaTime);
-    const sf::CircleShape& getPlayerShape() const;
+    void update(float deltaTime, const sf::View& cameraView);
     void setPosition(float x, float y);
     void jump();
+    void shoot();
     void resetVerticalSpeed();
     void setJumping(bool jumping);
     void setOnGround(bool onGround);
     bool isOnGround() const;
+    const sf::CircleShape& getPlayerShape() const;
+    float getDirection() const;
+    Player& getPlayer();
+    std::vector<Projectile>& getProjectiles();
+    void handleCollision(const sf::RectangleShape& tileShape);
 
 private:
     Player player;
     PlayerView playerView;
+    ProjectileController projectileController;
     float verticalSpeed;
     bool isJumping;
     bool onGround;

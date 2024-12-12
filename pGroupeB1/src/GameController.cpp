@@ -1,4 +1,3 @@
-// GameController.cpp
 #include "GameController.h"
 #include <iostream>
 
@@ -33,8 +32,39 @@ void GameController::run() {
         float deltaTime = clock.restart().asSeconds();
 
         inputManager.handleInput(playerController);
-        playerController.update(deltaTime);
-        collisionManager.checkCollisions(playerController, mapController->getMap(), collisionTypes);
+        playerController.update(deltaTime, cameraManager.getView());
+
+        // Vérification des collisions du joueur
+        const auto& playerShape = playerController.getPlayerShape();
+        const auto& mapData = mapController->getMap().getData();
+        bool onGround = false;
+
+        for (size_t i = 0; i < mapData.size(); ++i) {
+            for (size_t j = 0; j < mapData[i].size(); ++j) {
+                const auto& tile = mapData[i][j];
+                if (collisionTypes.find(tile.getType()) != collisionTypes.end()) {
+                    sf::RectangleShape tileShape(sf::Vector2f(32, 32));
+                    tileShape.setPosition(tile.getX() * 32, tile.getY() * 32);
+                    if (collisionManager.isColliding(playerShape, tileShape)) {
+                        playerController.handleCollision(tileShape);
+                        onGround = true;
+                    }
+                }
+            }
+        }
+
+        playerController.setOnGround(onGround);
+
+        // Vérification des collisions des projectiles
+        auto& projectiles = playerController.getProjectiles();
+        for (auto it = projectiles.begin(); it != projectiles.end();) {
+            if (collisionManager.checkProjectileCollisions(*it, mapController->getMap(), collisionTypes)) {
+                it = playerController.getProjectiles().erase(it);
+            } else {
+                ++it;
+            }
+        }
+
         cameraManager.update(playerController, *mapController);
 
         window.clear();

@@ -1,4 +1,3 @@
-// PlayerView.h
 #ifndef PLAYERVIEW_H
 #define PLAYERVIEW_H
 
@@ -12,9 +11,12 @@ public:
     PlayerView& operator=(const PlayerView& other); // Opérateur d'affectation
     ~PlayerView();
     void draw(sf::RenderWindow& window);
+    const sf::CircleShape& getShape() const;
 
 private:
     Player& player;
+    sf::CircleShape shape;
+    void updateShape();
 };
 
 #endif // PLAYERVIEW_H
