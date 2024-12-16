@@ -20,6 +20,17 @@ bool TextureManager::loadTexture(const std::string& name, const std::string& fil
     return true;
 }
 
+void TextureManager::adjustSpriteToWindow(sf::Sprite& sprite, sf::RenderWindow& window) {
+    sf::Vector2u windowSize = window.getSize();
+    sf::Vector2u textureSize = sprite.getTexture()->getSize();
+
+    sprite.setScale(
+        static_cast<float>(windowSize.x) / textureSize.x,
+        static_cast<float>(windowSize.y) / textureSize.y
+    );
+}
+
+
 sf::Texture& TextureManager::getTexture(const std::string& name) {
     return textures.at(name);
 }

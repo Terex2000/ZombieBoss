@@ -9,28 +9,19 @@ class SoundManager
 {
     private:
         sf::Music backgroundSound;
-        std::unordered_map<std::string, sf::SoundBuffer*> sounds;
-        std::unordered_map<std::string, std::vector<sf::Sound>> playingSounds;
-
-        int volume;
+        float volume;
 
     public:
-        SoundManager(int volume);
+        SoundManager(float volume=50.0f);
         virtual ~SoundManager();
 
-        void loadMusic(const std::string& filename);
-        void loadSound(const std::string& name, const std::string& filename);
-
+        bool loadMusic(const std::string& filename);
         void playMusic();
-        void playSound(const std::string& name);
-
         void stopMusic();
-        void stopAllSounds();
-
+        void changeMusic(const std::string& filename);
         int getVolume();
         void setVolume(int newVolume);
 
-        void update();
 };
 
 #endif // SOUNDMANAGER_H

@@ -20,6 +20,7 @@
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
+					<Add library="C:/Program Files/CodeBlocks/SFML-2.5.1/lib/libsfml-audio-d.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -36,6 +37,7 @@
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
+					<Add library="C:/Program Files/CodeBlocks/SFML-2.5.1/lib/libsfml-audio-d.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -52,8 +54,13 @@
 			<Add directory="C:/Program Files/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="assets/img/background.jpg" />
+		<Unit filename="assets/img/mainMenuBackground.gif" />
 		<Unit filename="assets/img/tileset.png" />
 		<Unit filename="assets/map/map.txt" />
+		<Unit filename="assets/police/Arial.ttf" />
+		<Unit filename="assets/police/ZOMBIE.TTF" />
+		<Unit filename="assets/sound/gameSound.wav" />
+		<Unit filename="assets/sound/mainMenuSound.wav" />
 		<Unit filename="include/Boss.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -120,6 +127,9 @@
 		<Unit filename="include/MainMenu.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
+		<Unit filename="include/MainMenuState.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
 		<Unit filename="include/MainMenuView.h">
 			<Option virtualFolder="View/" />
 		</Unit>
@@ -165,9 +175,6 @@
 		<Unit filename="include/Settings.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
-		<Unit filename="include/SettingsView.h">
-			<Option virtualFolder="View/" />
-		</Unit>
 		<Unit filename="include/Shop.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -177,7 +184,8 @@
 		<Unit filename="include/SoundManager.h">
 			<Option virtualFolder="Utils/" />
 		</Unit>
-		<Unit filename="include/State.h">
+		<Unit filename="include/State.h" />
+		<Unit filename="include/StateManager.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="include/TextureManager.h">
@@ -220,7 +228,7 @@
 			<Option virtualFolder="View/" />
 		</Unit>
 		<Unit filename="src/CameraManager.cpp">
-			<Option virtualFolder="Utils/" />
+			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="src/ChoiceCharacterDifficulty.cpp">
 			<Option virtualFolder="Model/" />
@@ -273,6 +281,9 @@
 		<Unit filename="src/MainMenu.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
+		<Unit filename="src/MainMenuState.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
 		<Unit filename="src/MainMenuView.cpp">
 			<Option virtualFolder="View/" />
 		</Unit>
@@ -318,9 +329,6 @@
 		<Unit filename="src/Settings.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
-		<Unit filename="src/SettingsView.cpp">
-			<Option virtualFolder="View/" />
-		</Unit>
 		<Unit filename="src/Shop.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -329,6 +337,10 @@
 		</Unit>
 		<Unit filename="src/SoundManager.cpp">
 			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/State.cpp" />
+		<Unit filename="src/StateManager.cpp">
+			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="src/TextureManager.cpp">
 			<Option virtualFolder="Utils/" />

@@ -1,4 +1,3 @@
-// GameController.h
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
@@ -14,19 +13,19 @@
 
 class GameController {
 public:
-    GameController();
-    void run();
+    GameController(TextureManager& textureManager); // Injecter le TextureManager
+    void run(sf::RenderWindow& window); // Utiliser la fenêtre existante
 
 private:
     FileReader fileReader;
-    TextureManager textureManager;
+    TextureManager& textureManager;
     MapController* mapController;
     InputManager inputManager;
     CollisionManager collisionManager;
     PlayerController playerController;
     CameraManager cameraManager;
     std::unordered_set<int> collisionTypes;
-    sf::Sprite backgroundSprite; // Sprite pour le fond d'écran
+    sf::Sprite backgroundSprite;
 };
 
 #endif // GAMECONTROLLER_H

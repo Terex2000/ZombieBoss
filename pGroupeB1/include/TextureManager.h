@@ -11,6 +11,7 @@ public:
     ~TextureManager();
 
     bool loadTexture(const std::string& name, const std::string& filename);
+    void adjustSpriteToWindow(sf::Sprite& sprite, sf::RenderWindow& window);
     sf::Texture& getTexture(const std::string& name);
 
 private:

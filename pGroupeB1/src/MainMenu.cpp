@@ -1,7 +1,7 @@
 #include "MainMenu.h"
 
 MainMenu::MainMenu() : selectedIndex(0) {
-    options = {"New Game", "Settings", "Shop", "Quit"};
+    options = {"Play", "Shop", "Settings", "Quit"};
 }
 
 MainMenu::~MainMenu() {}
@@ -20,8 +20,4 @@ void MainMenu::selectNext() {
 
 void MainMenu::selectPrevious() {
     selectedIndex = (selectedIndex - 1 + options.size()) % options.size();
-}
-
-void MainMenu::confirmSelection() {
-    // Logic will depend on the controller
 }

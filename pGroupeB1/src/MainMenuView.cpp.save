@@ -1,0 +1,43 @@
+#include "MainMenuView.h"
+#include <iostream>
+
+MainMenuView::MainMenuView(sf::RenderWindow& window, TextureManager& textureManager) : window(window),TextureManager& textureManager {
+    // Charger la texture globale pour le fond
+    if (!textureManager.loadTexture("background", "assets/img/mainMenuBackground.gif")) {
+        std::cerr << "Error: Failed to load background texture!" << std::endl;
+    }else {
+        backgroundSprite.setTexture(textureManager);
+
+        // Ajuster l'image pour qu'elle occupe toute la fenêtre
+        sf::Vector2u windowSize = window.getSize();
+        sf::Vector2u textureSize = textureManager.getSize();
+
+        backgroundSprite.setScale(
+            static_cast<float>(windowSize.x) / textureSize.x,
+            static_cast<float>(windowSize.y) / textureSize.y
+        );
+    }
+
+    // Charger la police
+    if (!font.loadFromFile("assets/police/ZOMBIE.TTF")) {
+        std::cerr << "Error loading police!" << std::endl;
+    }
+}
+
+void MainMenuView::render(const MainMenu& menu) {
+    window.clear();
+    window.draw(backgroundSprite);
+
+    const auto& options = menu.getOptions();
+    for (size_t i = 0; i < options.size(); ++i) {
+        sf::Text text;
+        text.setFont(font);
+        text.setString(options[i]);
+        text.setCharacterSize(50);
+        text.setFillColor(i == menu.getSelectedOption() ? sf::Color::Red : sf::Color::White);
+        text.setPosition(300.f, 200.f + i * 100.f);
+        window.draw(text);
+    }
+
+    window.display();
+}

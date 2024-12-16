@@ -2,20 +2,16 @@
 #define MENUCONTROLLER_H
 
 #include "MainMenu.h"
-#include "MainMenuView.h"
-#include <SFML/Window.hpp>
+#include "InputManager.h"
 
 class MenuController {
 public:
-    MenuController(MainMenu& model, MainMenuView& view);
-    virtual ~MenuController();
-
-    void handleInput(const sf::Event& event);
-    void update();
+    MenuController(MainMenu& model, InputManager& inputManager);
+    void handleInput();
 
 private:
     MainMenu& model;
-    MainMenuView& view;
+    InputManager& inputManager;
 };
 
 #endif // MENUCONTROLLER_H

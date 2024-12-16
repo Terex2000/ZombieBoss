@@ -2,8 +2,8 @@
 #include "GameController.h"
 #include <iostream>
 
-GameController::GameController()
-    : playerController(100.0f, 100.0f), cameraManager(800.0f, 600.0f) // Initial position of the player and camera size
+GameController::GameController(TextureManager& textureManager)
+    : playerController(100.0f, 100.0f), cameraManager(800.0f, 600.0f), textureManager(textureManager)
 {
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
@@ -19,9 +19,11 @@ GameController::GameController()
     backgroundSprite.setTexture(textureManager.getTexture("background"));
 }
 
-void GameController::run() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Map");
+void GameController::run(sf::RenderWindow& window) {
     sf::Clock clock;
+
+    // Ajuster dynamiquement le fond d'écran
+    textureManager.adjustSpriteToWindow(backgroundSprite, window);
 
     while (window.isOpen()) {
         sf::Event event;
