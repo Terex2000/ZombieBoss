@@ -3,7 +3,7 @@
 // Constructor for MapController
 // Initializes the map and map view with the provided map data and texture manager.
 MapController::MapController(const std::vector<std::vector<int>>& mapData, TextureManager& textureManager)
-    : map(mapData), mapView(map, textureManager) {}
+    : map(mapData, textureManager.getTexture("tileset")), mapView(map, textureManager) {}
 
 // Draws the map using the map view.
 void MapController::draw(sf::RenderWindow& window) {

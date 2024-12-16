@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "Map.h"
-#include "TilesView.h"
 #include "TextureManager.h"
 
 // The MapView class is responsible for rendering the map and its tiles.
@@ -17,8 +16,8 @@ public:
 
 private:
     const Map& map; // Reference to the map model
-    std::vector<TilesView> tilesViews; // Vector of tile views for rendering
-    sf::Sprite backgroundSprite; // Sprite for rendering the background
+    sf::VertexArray vertices; // Vertex array for rendering the map
+    sf::Texture& tileset; // Texture for the tiles
 };
 
 #endif // MAPVIEW_H
