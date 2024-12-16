@@ -6,10 +6,12 @@ CollisionManager::CollisionManager() {}
 
 CollisionManager::~CollisionManager() {}
 
+// Checks if the player shape is colliding with a tile shape.
 bool CollisionManager::isColliding(const sf::CircleShape& playerShape, const sf::RectangleShape& tileShape) {
     return playerShape.getGlobalBounds().intersects(tileShape.getGlobalBounds());
 }
 
+// Helper function to check if a shape is colliding with any collision tiles in the map.
 bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& mapData = map.getData();
     for (size_t i = 0; i < mapData.size(); ++i) {
@@ -27,11 +29,13 @@ bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const M
     return false;
 }
 
+// Checks if the player is colliding with any collision tiles in the map.
 bool CollisionManager::checkPlayerCollisions(const PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& playerShape = playerController.getPlayerShape();
     return isCollidingWithTile(playerShape, map, collisionTypes);
 }
 
+// Checks if a projectile is colliding with any collision tiles in the map.
 bool CollisionManager::checkProjectileCollisions(const Projectile& projectile, const Map& map, const std::unordered_set<int>& collisionTypes) {
     return isCollidingWithTile(projectile.getShape(), map, collisionTypes);
 }

@@ -2,13 +2,14 @@
 #include <iostream>
 
 TextureManager::TextureManager() {
-    //ctor
+    // Constructor
 }
 
 TextureManager::~TextureManager() {
-    //dtor
+    // Destructor
 }
 
+// Loads a texture from a file and stores it with the given name.
 bool TextureManager::loadTexture(const std::string& name, const std::string& filename) {
     sf::Texture texture;
     if (!texture.loadFromFile(filename)) {
@@ -20,6 +21,7 @@ bool TextureManager::loadTexture(const std::string& name, const std::string& fil
     return true;
 }
 
+// Retrieves a texture by name.
 sf::Texture& TextureManager::getTexture(const std::string& name) {
     return textures.at(name);
 }
