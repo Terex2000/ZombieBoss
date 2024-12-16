@@ -5,11 +5,12 @@
 #include "PlayerView.h"
 #include "ProjectileController.h"
 #include "Map.h"
+#include "TextureManager.h"
 #include <unordered_set>
 
 class PlayerController {
 public:
-    PlayerController(float startX, float startY);
+    PlayerController(float startX, float startY, TextureManager& textureManager); // Modifiez cette ligne
     PlayerController(const PlayerController& other); // Constructeur de copie
     PlayerController& operator=(const PlayerController& other); // Opérateur d'affectation
     ~PlayerController();
@@ -33,6 +34,7 @@ private:
     Player player;
     PlayerView playerView;
     ProjectileController projectileController;
+    TextureManager& textureManager; // Ajoutez cette ligne
     float verticalSpeed;
     bool isJumping;
     bool onGround;

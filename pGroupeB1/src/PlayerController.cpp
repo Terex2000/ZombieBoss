@@ -1,19 +1,20 @@
 #include "PlayerController.h"
 
-PlayerController::PlayerController(float startX, float startY) 
-    : player(), playerView(player), projectileController(), verticalSpeed(0.0f), isJumping(false), onGround(false) {
+PlayerController::PlayerController(float startX, float startY, TextureManager& textureManager) 
+    : player(), playerView(player), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
     player.setColor(sf::Color::Red);
 }
 
 PlayerController::PlayerController(const PlayerController& other)
-    : player(other.player), playerView(player), projectileController(), verticalSpeed(other.verticalSpeed), isJumping(other.isJumping), onGround(other.onGround) {}
+    : player(other.player), playerView(player), projectileController(), textureManager(other.textureManager), verticalSpeed(other.verticalSpeed), isJumping(other.isJumping), onGround(other.onGround) {}
 
 PlayerController& PlayerController::operator=(const PlayerController& other) {
     if (this != &other) {
         player = other.player;
         playerView = PlayerView(player);
         projectileController = other.projectileController;
+        textureManager = other.textureManager;
         verticalSpeed = other.verticalSpeed;
         isJumping = other.isJumping;
         onGround = other.onGround;
@@ -55,7 +56,9 @@ void PlayerController::jump() {
 void PlayerController::shoot() {
     sf::Vector2f position = player.getPosition();
     float direction = player.getDirection();
-    projectileController.shoot(position, direction);
+    const sf::Texture& texture = textureManager.getTexture("bullet");
+    projectileController.shoot(position, direction, texture);
+    projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Ajustez l'échelle ici
 }
 
 void PlayerController::resetVerticalSpeed() {

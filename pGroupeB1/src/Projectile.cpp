@@ -1,9 +1,9 @@
 #include "Projectile.h"
 
-Projectile::Projectile(const sf::Vector2f& position, float direction) 
+Projectile::Projectile(const sf::Vector2f& position, float direction, const sf::Texture& texture) 
     : speed(300.0f) {
     shape.setRadius(5.0f);
-    shape.setFillColor(sf::Color::Yellow);
+    shape.setTexture(&texture);
     shape.setPosition(position);
     velocity = sf::Vector2f(speed * direction, 0.0f);
 }
@@ -47,4 +47,8 @@ const sf::CircleShape& Projectile::getShape() const {
 bool Projectile::isOutOfBounds(const sf::RenderWindow& window) const {
     sf::Vector2f position = shape.getPosition();
     return position.x < 0 || position.x > window.getSize().x || position.y < 0 || position.y > window.getSize().y;
+}
+
+void Projectile::setScale(float scaleX, float scaleY) {
+    shape.setScale(scaleX, scaleY);
 }

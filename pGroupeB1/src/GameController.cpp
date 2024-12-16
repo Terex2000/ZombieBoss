@@ -2,13 +2,16 @@
 #include <iostream>
 
 GameController::GameController()
-    : playerController(100.0f, 100.0f), cameraManager(800.0f, 600.0f) // Initial position of the player and camera size
+    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f) // Initial position of the player and camera size
 {
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
     }
     if (!textureManager.loadTexture("background", "assets/img/background.jpg")) {
         std::cerr << "Error: Failed to load background texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
+        std::cerr << "Error: Failed to load bullet texture" << std::endl;
     }
     mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager);
     collisionTypes = fileReader.readCollisionTypes("assets/map/map.txt");

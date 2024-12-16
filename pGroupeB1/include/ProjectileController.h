@@ -7,7 +7,7 @@
 class ProjectileController {
 public:
     ProjectileController();
-    void shoot(const sf::Vector2f& position, float direction);
+    void shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture); // Modifiez cette ligne
     void update(float deltaTime, const sf::View& cameraView);
     void draw(sf::RenderWindow& window) const;
     std::vector<Projectile>& getProjectiles();

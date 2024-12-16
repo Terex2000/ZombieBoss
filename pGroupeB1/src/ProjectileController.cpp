@@ -2,9 +2,9 @@
 
 ProjectileController::ProjectileController() {}
 
-void ProjectileController::shoot(const sf::Vector2f& position, float direction) {
+void ProjectileController::shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture) { // Modifiez cette ligne
     if (projectiles.empty()) {
-        projectiles.emplace_back(position, direction);
+        projectiles.emplace_back(position, direction, texture);
     }
 }
 
