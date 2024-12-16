@@ -9,8 +9,12 @@
 #include "InputManager.h"
 #include "MapController.h"
 #include <SFML/Graphics.hpp>
-#include <unordered_set>
+#include <unordered_set>//Offers amortized constant-time search, 
+                        //Inserting elements into an unordered_set is also amortized constant-time, O(1) 
+                        //and does not allow duplicates.
 
+// The GameController class is responsible for managing the game loop and coordinating
+// interactions between different components of the game.
 class GameController {
 public:
     GameController();
