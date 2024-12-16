@@ -1,11 +1,14 @@
 #include "PlayerController.h"
 
+// Constructor for PlayerController
+// Initializes the player controller with a starting position and texture manager.
 PlayerController::PlayerController(float startX, float startY, TextureManager& textureManager) 
     : player(), playerView(player), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
     player.setColor(sf::Color::Red);
 }
 
+// Draws the player and projectiles to the window.
 PlayerController::PlayerController(const PlayerController& other)
     : player(other.player), playerView(player), projectileController(), textureManager(other.textureManager), verticalSpeed(other.verticalSpeed), isJumping(other.isJumping), onGround(other.onGround) {}
 
@@ -29,10 +32,12 @@ void PlayerController::draw(sf::RenderWindow& window) {
     projectileController.draw(window);
 }
 
+// Moves the player by the specified amounts.
 void PlayerController::move(float dx, float dy) {
     player.move(dx, dy);
 }
 
+// Updates the player's state based on the elapsed time and camera view.
 void PlayerController::update(float deltaTime, const sf::View& cameraView) {
     if (!onGround) {
         verticalSpeed += gravity * deltaTime;
@@ -41,10 +46,12 @@ void PlayerController::update(float deltaTime, const sf::View& cameraView) {
     projectileController.update(deltaTime, cameraView);
 }
 
+// Sets the player's position.
 void PlayerController::setPosition(float x, float y) {
     player.setPosition(x, y);
 }
 
+// Makes the player jump.
 void PlayerController::jump() {
     if (onGround) {
         isJumping = true;
@@ -53,6 +60,7 @@ void PlayerController::jump() {
     }
 }
 
+// Makes the player shoot a projectile.
 void PlayerController::shoot() {
     sf::Vector2f position = player.getPosition();
     float direction = player.getDirection();
@@ -61,38 +69,47 @@ void PlayerController::shoot() {
     projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Ajustez l'échelle ici
 }
 
+// Resets the player's vertical speed.
 void PlayerController::resetVerticalSpeed() {
     verticalSpeed = 0.0f;
 }
 
+// Sets whether the player is jumping.
 void PlayerController::setJumping(bool jumping) {
     isJumping = jumping;
 }
 
+// Sets whether the player is on the ground.
 void PlayerController::setOnGround(bool onGround) {
     this->onGround = onGround;
 }
 
+// Returns whether the player is on the ground.
 bool PlayerController::isOnGround() const {
     return onGround;
 }
 
+// Returns the shape of the player.
 const sf::CircleShape& PlayerController::getPlayerShape() const {
     return playerView.getShape();
 }
 
+// Returns the direction the player is facing.
 float PlayerController::getDirection() const {
     return player.getDirection();
 }
 
+// Returns a reference to the player.
 Player& PlayerController::getPlayer() {
     return player;
 }
 
+// Returns a reference to the projectiles.
 std::vector<Projectile>& PlayerController::getProjectiles() {
     return projectileController.getProjectiles();
 }
 
+// Handles collision for the player with a tile.
 void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     const auto& playerShape = getPlayerShape();
     float playerX = playerShape.getPosition().x;

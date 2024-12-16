@@ -13,7 +13,7 @@ public:
     void handleInput(PlayerController& playerController);
 
 private:
-    const float moveSpeed = 0.1f; // The speed at which the player moves.
+    const float moveSpeed = 0.05f; // The speed at which the player moves.
 };
 
 #endif // INPUTMANAGER_H
