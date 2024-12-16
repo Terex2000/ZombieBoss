@@ -1,13 +1,16 @@
 #include "ProjectileController.h"
 
+// Constructor for ProjectileController
 ProjectileController::ProjectileController() {}
 
-void ProjectileController::shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture) { // Modifiez cette ligne
+// Shoots a projectile from the specified position in the specified direction with the specified texture.
+void ProjectileController::shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture) {
     if (projectiles.empty()) {
         projectiles.emplace_back(position, direction, texture);
     }
 }
 
+// Updates the state of the projectiles based on the elapsed time and camera view.
 void ProjectileController::update(float deltaTime, const sf::View& cameraView) {
     sf::FloatRect cameraBounds(cameraView.getCenter() - cameraView.getSize() / 2.0f, cameraView.getSize());
 
@@ -21,16 +24,19 @@ void ProjectileController::update(float deltaTime, const sf::View& cameraView) {
     }
 }
 
+// Draws the projectiles to the window.
 void ProjectileController::draw(sf::RenderWindow& window) const {
     for (const auto& projectile : projectiles) {
         projectile.draw(window);
     }
 }
 
+// Returns a reference to the projectiles.
 std::vector<Projectile>& ProjectileController::getProjectiles() {
     return projectiles;
 }
 
-std::vector<Projectile>::iterator ProjectileController::handleCollision(std::vector<Projectile>::iterator it) { // Modifiez cette méthode
+// Handles collisions between projectiles and other objects.
+std::vector<Projectile>::iterator ProjectileController::handleCollision(std::vector<Projectile>::iterator it) {
     return projectiles.erase(it);
 }
