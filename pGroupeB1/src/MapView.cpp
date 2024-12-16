@@ -1,6 +1,8 @@
 #include "MapView.h"
 #include <iostream>
 
+// Constructor for MapView
+// Initializes the map view with the provided map and texture manager.
 MapView::MapView(const Map& map, TextureManager& textureManager) : map(map) {
     const auto& data = map.getData();
     for (size_t i = 0; i < data.size(); ++i) {
@@ -10,6 +12,7 @@ MapView::MapView(const Map& map, TextureManager& textureManager) : map(map) {
     }
 }
 
+// Draws the map and its tiles to the window.
 void MapView::draw(sf::RenderWindow& window) {
     // Draw background
     window.draw(backgroundSprite);
