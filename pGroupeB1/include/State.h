@@ -6,8 +6,8 @@
 
 class State {
 public:
-    State(); // Déclare le constructeur par défaut
-    virtual ~State(); // Déclare le destructeur
+    State();
+    virtual ~State();
 
     virtual void handleInput(sf::RenderWindow& window, sf::Event event) = 0;
     virtual void update(sf::RenderWindow& window, double deltaTime) = 0;
