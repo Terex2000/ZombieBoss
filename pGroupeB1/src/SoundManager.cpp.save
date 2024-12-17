@@ -11,14 +11,15 @@ SoundManager::~SoundManager()
     //dtor
 }
 
-void SoundManager::loadMusic(const std::string& filename) {
+bool SoundManager::loadMusic(const std::string& filename) {
     if (!backgroundSound.openFromFile(filename)) {
         std::cerr << "Failed to load music: " << filename << std::endl;
-        return;
+        return false;
     }
     backgroundSound.setVolume(volume);
     backgroundSound.setLoop(true);
     std::cout << "Music loaded successfully: " << filename << std::endl;
+    return true;
 }
 
 void SoundManager::playMusic() {

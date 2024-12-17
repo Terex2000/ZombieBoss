@@ -2,8 +2,8 @@
 #include <iostream>
 
 // Constructor for GameController
-GameController::GameController()
-    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f) // Initial position of the player and camera size
+GameController::GameController(TextureManager& textureManager)
+    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f),textureManager(textureManager) // Initial position of the player and camera size
 {
     // Load textures
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {

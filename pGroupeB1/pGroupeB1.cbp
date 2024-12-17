@@ -184,7 +184,9 @@
 		<Unit filename="include/SoundManager.h">
 			<Option virtualFolder="Utils/" />
 		</Unit>
-		<Unit filename="include/State.h" />
+		<Unit filename="include/State.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
 		<Unit filename="include/StateManager.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -338,7 +340,9 @@
 		<Unit filename="src/SoundManager.cpp">
 			<Option virtualFolder="Utils/" />
 		</Unit>
-		<Unit filename="src/State.cpp" />
+		<Unit filename="src/State.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
 		<Unit filename="src/StateManager.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
