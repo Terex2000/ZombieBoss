@@ -7,7 +7,7 @@ CameraManager::CameraManager(float width, float height) {
 }
 
 void CameraManager::update(const PlayerController& playerController, const MapController& mapController) {
-    const auto& playerShape = playerController.getPlayerShape();
+    const sf::CircleShape& playerShape = playerController.getPlayerShape();
     sf::Vector2f center = playerShape.getPosition();
 
     float halfWidth = view.getSize().x / 2;
