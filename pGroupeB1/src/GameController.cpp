@@ -57,7 +57,9 @@ void GameController::run() {
                     tileShape.setPosition(tile.getX() * 32, tile.getY() * 32);
                     if (collisionManager.isColliding(playerShape, tileShape)) {
                         playerController.handleCollision(tileShape);
-                        onGround = true;
+                        if (playerController.isOnGround()) {
+                            onGround = true;
+                        }
                     }
                 }
             }
