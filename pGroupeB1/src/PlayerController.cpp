@@ -2,16 +2,17 @@
 
 // Constructor for PlayerController
 // Initializes the player controller with a starting position and texture manager.
-PlayerController::PlayerController(float startX, float startY, TextureManager& textureManager) 
+PlayerController::PlayerController(float startX, float startY, TextureManager& textureManager)
     : player(), playerView(player), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
     player.setColor(sf::Color::Red);
 }
 
-// Draws the player and projectiles to the window.
+// Copy constructor for PlayerController
 PlayerController::PlayerController(const PlayerController& other)
     : player(other.player), playerView(player), projectileController(), textureManager(other.textureManager), verticalSpeed(other.verticalSpeed), isJumping(other.isJumping), onGround(other.onGround) {}
 
+// Copy assignment operator for PlayerController
 PlayerController& PlayerController::operator=(const PlayerController& other) {
     if (this != &other) {
         player = other.player;
@@ -25,8 +26,10 @@ PlayerController& PlayerController::operator=(const PlayerController& other) {
     return *this;
 }
 
+// Destructor for PlayerController
 PlayerController::~PlayerController() {}
 
+// Draws the player and projectiles to the window.
 void PlayerController::draw(sf::RenderWindow& window) {
     playerView.draw(window);
     projectileController.draw(window);
@@ -66,7 +69,7 @@ void PlayerController::shoot() {
     float direction = player.getDirection();
     const sf::Texture& texture = textureManager.getTexture("bullet");
     projectileController.shoot(position, direction, texture);
-    projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Ajustez l'échelle ici
+    projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Adjust the scale here
 }
 
 // Resets the player's vertical speed.
@@ -99,17 +102,17 @@ float PlayerController::getDirection() const {
     return player.getDirection();
 }
 
-// Returns a reference to the player.
+// Returns a reference to the player object.
 Player& PlayerController::getPlayer() {
     return player;
 }
 
-// Returns a reference to the projectiles.
+// Returns a reference to the player's projectiles.
 std::vector<Projectile>& PlayerController::getProjectiles() {
     return projectileController.getProjectiles();
 }
 
-// Handles collision for the player with a tile.
+// Handles collisions between the player and a tile.
 void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     const auto& playerShape = getPlayerShape();
     float playerX = playerShape.getPosition().x;
@@ -125,22 +128,41 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     float overlapTop = (playerY + playerRadius * 2) - tileY;
     float overlapBottom = (tileY + tileSize) - playerY;
 
-    bool fromLeft = overlapLeft < overlapRight && overlapLeft < overlapTop && overlapLeft < overlapBottom;
-    bool fromRight = overlapRight < overlapLeft && overlapRight < overlapTop && overlapRight < overlapBottom;
-    bool fromTop = overlapTop < overlapBottom && overlapTop < overlapLeft && overlapTop < overlapRight;
-    bool fromBottom = overlapBottom < overlapTop && overlapBottom < overlapLeft && overlapBottom < overlapRight;
+    enum CollisionType { NONE, LEFT, RIGHT, TOP, BOTTOM };
+    CollisionType collision = NONE;
 
-    if (fromLeft) {
-        setPosition(tileX - playerRadius * 2, playerY);
-    } else if (fromRight) {
-        setPosition(tileX + tileSize, playerY);
-    } else if (fromTop) {
-        setPosition(playerX, tileY - playerRadius * 2);
-        resetVerticalSpeed();
-        setJumping(false);
-        setOnGround(true);
-    } else if (fromBottom) {
-        setPosition(playerX, tileY + tileSize);
-        resetVerticalSpeed();
+    if (overlapTop < overlapBottom && overlapTop < overlapLeft && overlapTop < overlapRight) {
+        collision = TOP;
+    } else if (overlapBottom < overlapTop && overlapBottom < overlapLeft && overlapBottom < overlapRight) {
+        collision = BOTTOM;
+    } else if (overlapLeft < overlapRight && overlapLeft < overlapTop && overlapLeft < overlapBottom) {
+        collision = LEFT;
+    } else if (overlapRight < overlapLeft && overlapRight < overlapTop && overlapRight < overlapBottom) {
+        collision = RIGHT;
+    }
+
+    const float marginH = 2.0f; // Adjust this value to increase the distance between the player and the tile
+    const float marginV = 0.0f; // Adjust this value to increase the distance between the player and the tile
+
+    switch (collision) {
+        case TOP:
+            setPosition(playerX, tileY - playerRadius * 2 - marginV);
+            resetVerticalSpeed();
+            setJumping(false);
+            setOnGround(true);
+            break;
+        case BOTTOM:
+            setPosition(playerX, tileY + tileSize + marginV);
+            resetVerticalSpeed();
+            setOnGround(false);
+            break;
+        case LEFT:
+            setPosition(tileX - playerRadius * 2 - marginH, playerY);
+            break;
+        case RIGHT:
+            setPosition(tileX + tileSize + marginH, playerY);
+            break;
+        default:
+            break;
     }
 }
