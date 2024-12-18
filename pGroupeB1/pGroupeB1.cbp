@@ -20,6 +20,7 @@
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
 					<Add library="sfml-system-d" />
+					<Add library="C:/Program Files/CodeBlocks/SFML-2.5.1/lib/libsfml-audio-d.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -36,6 +37,7 @@
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
+					<Add library="C:/Program Files/CodeBlocks/SFML-2.5.1/lib/libsfml-audio.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -120,6 +122,7 @@
 		<Unit filename="include/MainMenu.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
+		<Unit filename="include/MainMenuState.h" />
 		<Unit filename="include/MainMenuView.h">
 			<Option virtualFolder="View/" />
 		</Unit>
@@ -165,18 +168,17 @@
 		<Unit filename="include/Settings.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
-		<Unit filename="include/SettingsView.h">
-			<Option virtualFolder="View/" />
-		</Unit>
 		<Unit filename="include/Shop.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="include/ShopView.h">
 			<Option virtualFolder="View/" />
 		</Unit>
+		<Unit filename="include/SoundManager.h" />
 		<Unit filename="include/State.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
+		<Unit filename="include/StateManager.h" />
 		<Unit filename="include/TextureManager.h">
 			<Option virtualFolder="Utils/" />
 		</Unit>
@@ -270,6 +272,7 @@
 		<Unit filename="src/MainMenu.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
+		<Unit filename="src/MainMenuState.cpp" />
 		<Unit filename="src/MainMenuView.cpp">
 			<Option virtualFolder="View/" />
 		</Unit>
@@ -315,15 +318,15 @@
 		<Unit filename="src/Settings.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
-		<Unit filename="src/SettingsView.cpp">
-			<Option virtualFolder="View/" />
-		</Unit>
 		<Unit filename="src/Shop.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="src/ShopView.cpp">
 			<Option virtualFolder="View/" />
 		</Unit>
+		<Unit filename="src/SoundManager.cpp" />
+		<Unit filename="src/State.cpp" />
+		<Unit filename="src/StateManager.cpp" />
 		<Unit filename="src/TextureManager.cpp">
 			<Option virtualFolder="Utils/" />
 		</Unit>

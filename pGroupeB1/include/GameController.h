@@ -17,8 +17,8 @@
 // interactions between different components of the game.
 class GameController {
 public:
-    GameController();
-    void run();
+    GameController(TextureManager& textureManager); // Injecter le TextureManager
+    void run(sf::RenderWindow& window); // Utiliser la fenêtre existante
 
 private:
     PlayerController playerController;

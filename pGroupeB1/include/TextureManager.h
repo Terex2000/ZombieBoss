@@ -13,6 +13,7 @@ public:
 
     // Loads a texture from a file and stores it with the given name.
     bool loadTexture(const std::string& name, const std::string& filename);
+    void adjustSpriteToWindow(sf::Sprite& sprite, sf::RenderWindow& window);
 
     // Retrieves a texture by name.
     sf::Texture& getTexture(const std::string& name);

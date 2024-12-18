@@ -1,16 +1,24 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
+#include <vector>
+#include <string>
 
-class MainMenu
-{
-    public:
-        MainMenu();
-        virtual ~MainMenu();
+class MainMenu {
+public:
+    enum Option { Play, Shop, Settings, Quit };
 
-    protected:
+    MainMenu();
+    ~MainMenu();
 
-    private:
+    const std::vector<std::string>& getOptions() const;
+    Option getSelectedOption() const;
+    void selectNext();
+    void selectPrevious();
+
+private:
+    std::vector<std::string> options;
+    int selectedIndex;
 };
 
 #endif // MAINMENU_H

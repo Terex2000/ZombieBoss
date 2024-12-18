@@ -1,16 +1,17 @@
 #ifndef MENUCONTROLLER_H
 #define MENUCONTROLLER_H
 
+#include "MainMenu.h"
+#include "InputManager.h"
 
-class MenuController
-{
-    public:
-        MenuController();
-        virtual ~MenuController();
+class MenuController {
+public:
+    MenuController(MainMenu& model, InputManager& inputManager);
+    void handleInput();
 
-    protected:
-
-    private:
+private:
+    MainMenu& model;
+    InputManager& inputManager;
 };
 
 #endif // MENUCONTROLLER_H
