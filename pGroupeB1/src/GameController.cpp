@@ -1,10 +1,8 @@
 #include "GameController.h"
 #include <iostream>
 
-// Constructor for GameController
 GameController::GameController(TextureManager& textureManager)
-    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f),textureManager(textureManager) // Initial position of the player and camera size
-{
+    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), enemyController(zombieFactory) {
     // Load textures
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
@@ -19,17 +17,20 @@ GameController::GameController(TextureManager& textureManager)
     // Initialize map controller with map data and textures
     mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager);
     collisionTypes = fileReader.readCollisionTypes("assets/map/map.txt");
-    std::cout << "Total collision types: " << collisionTypes.size() << std::endl; // Debug message
+    std::cout << "Total collision types: " << collisionTypes.size() << std::endl;
 
     // Create the sprite for the background
     backgroundSprite.setTexture(textureManager.getTexture("background"));
+
+    // Create some enemies
+    enemyController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f);
+    enemyController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f);
 }
 
-// Main game loop
 void GameController::run(sf::RenderWindow& window) {
     sf::Clock clock;
 
-    // Ajuster dynamiquement le fond d'écran
+    // Adjust background
     textureManager.adjustSpriteToWindow(backgroundSprite, window);
 
     while (window.isOpen()) {
@@ -53,7 +54,6 @@ void GameController::run(sf::RenderWindow& window) {
         for (size_t i = 0; i < mapData.size(); ++i) {
             for (size_t j = 0; j < mapData[i].size(); ++j) {
                 const auto& tile = mapData[i][j];
-                // Use unordered_set for collisionTypes to quickly check if a tile type is a collision type
                 if (collisionTypes.find(tile.getType()) != collisionTypes.end()) {
                     sf::RectangleShape tileShape(sf::Vector2f(32, 32));
                     tileShape.setPosition(tile.getX() * 32, tile.getY() * 32);
@@ -79,6 +79,9 @@ void GameController::run(sf::RenderWindow& window) {
             }
         }
 
+        // Update enemies
+        enemyController.update(deltaTime);
+
         // Update camera position
         cameraManager.update(playerController, *mapController);
 
@@ -91,9 +94,10 @@ void GameController::run(sf::RenderWindow& window) {
         // Set the camera view
         window.setView(cameraManager.getView());
 
-        // Draw the map and the player
+        // Draw the map, player, and enemies
         mapController->draw(window);
         playerController.draw(window);
+        enemyController.draw(window);
 
         window.display();
     }

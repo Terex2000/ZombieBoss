@@ -8,17 +8,15 @@
 #include "CameraManager.h"
 #include "InputManager.h"
 #include "MapController.h"
+#include "EnemyController.h"
+#include "ZombieFactory.h"
 #include <SFML/Graphics.hpp>
-#include <unordered_set>//Offers amortized constant-time search, 
-                        //Inserting elements into an unordered_set is also amortized constant-time, O(1) 
-                        //and does not allow duplicates.
+#include <unordered_set>
 
-// The GameController class is responsible for managing the game loop and coordinating
-// interactions between different components of the game.
 class GameController {
 public:
-    GameController(TextureManager& textureManager); // Injecter le TextureManager
-    void run(sf::RenderWindow& window); // Utiliser la fenêtre existante
+    GameController(TextureManager& textureManager);
+    void run(sf::RenderWindow& window);
 
 private:
     PlayerController playerController;
@@ -31,6 +29,8 @@ private:
     std::unordered_set<int> collisionTypes;
     sf::Sprite backgroundSprite;
     TextureManager textureManager;
+    EnemyController enemyController;
+    ZombieFactory zombieFactory;
 };
 
 #endif // GAMECONTROLLER_H
