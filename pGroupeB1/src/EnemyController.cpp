@@ -20,7 +20,14 @@ void EnemyController::draw(sf::RenderWindow& window) {
 }
 
 void EnemyController::update(float deltaTime) {
-    // Update logic for enemies if needed
+    for (auto it = enemies.begin(); it != enemies.end();) {
+        if ((*it)->getHealth() <= 0) {
+            delete *it;
+            it = enemies.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
 
 std::vector<Enemy*>& EnemyController::getEnemies() {

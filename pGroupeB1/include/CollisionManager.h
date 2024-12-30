@@ -15,6 +15,7 @@ public:
     bool checkPlayerCollisions(const PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes);
     bool checkProjectileCollisions(const Projectile& projectile, const Map& map, const std::unordered_set<int>& collisionTypes);
     bool checkEnemyCollisions(EnemyController& enemyController, const Map& map, const std::unordered_set<int>& collisionTypes);
+    void checkProjectileEnemyCollisions(std::vector<Projectile>& projectiles, EnemyController& enemyController);
 
 private:
     bool isCollidingWithTile(const sf::CircleShape& shape, const Map& map, const std::unordered_set<int>& collisionTypes);

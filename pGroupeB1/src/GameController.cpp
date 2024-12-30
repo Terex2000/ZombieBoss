@@ -23,7 +23,7 @@ GameController::GameController(TextureManager& textureManager)
     backgroundSprite.setTexture(textureManager.getTexture("background"));
 
     // Create some enemies
-    enemyController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f);
+    enemyController.createEnemy(800.0f, 256.0f, 50.0f, 10.0f, 50.0f);
     enemyController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f);
 }
 
@@ -78,6 +78,9 @@ void GameController::run(sf::RenderWindow& window) {
                 ++it;
             }
         }
+
+        // Check projectile-enemy collisions
+        collisionManager.checkProjectileEnemyCollisions(projectiles, enemyController);
 
         // Update enemies
         enemyController.update(deltaTime);

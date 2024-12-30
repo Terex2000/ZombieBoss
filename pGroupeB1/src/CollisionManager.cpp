@@ -47,3 +47,23 @@ bool CollisionManager::checkEnemyCollisions(EnemyController& enemyController, co
     }
     return false;
 }
+
+void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& projectiles, EnemyController& enemyController) {
+    for (auto it = projectiles.begin(); it != projectiles.end();) {
+        bool hit = false;
+        for (auto enemy : enemyController.getEnemies()) {
+            sf::CircleShape enemyShape(15.0f); // Assuming enemy radius is 15.0f
+            enemyShape.setPosition(enemy->getPosition());
+            if (it->getShape().getGlobalBounds().intersects(enemyShape.getGlobalBounds())) {
+                enemy->takeDamage(10.0f); // Example damage value
+                hit = true;
+                break;
+            }
+        }
+        if (hit) {
+            it = projectiles.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
