@@ -9,8 +9,8 @@ class ProjectileController {
 public:
     ProjectileController();
 
-    // Shoots a projectile from the specified position in the specified direction with the specified texture.
-    void shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture);
+    // Shoots a projectile from the specified position in the specified direction with the specified texture and damage.
+    void shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture, float damage);
 
     // Updates the state of the projectiles based on the elapsed time and camera view.
     void update(float deltaTime, const sf::View& cameraView);

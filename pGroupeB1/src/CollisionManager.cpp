@@ -55,7 +55,7 @@ void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& p
             sf::CircleShape enemyShape(15.0f); // Assuming enemy radius is 15.0f
             enemyShape.setPosition(enemy->getPosition());
             if (it->getShape().getGlobalBounds().intersects(enemyShape.getGlobalBounds())) {
-                enemy->takeDamage(10.0f); // Example damage value
+                enemy->takeDamage(it->getDamage()); // Use the damage value from the projectile
                 hit = true;
                 break;
             }

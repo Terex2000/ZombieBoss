@@ -3,10 +3,10 @@
 // Constructor for ProjectileController
 ProjectileController::ProjectileController() {}
 
-// Shoots a projectile from the specified position in the specified direction with the specified texture.
-void ProjectileController::shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture) {
+// Shoots a projectile from the specified position in the specified direction with the specified texture and damage.
+void ProjectileController::shoot(const sf::Vector2f& position, float direction, const sf::Texture& texture, float damage) {
     if (projectiles.empty()) {
-        projectiles.emplace_back(position, direction, texture);
+    projectiles.emplace_back(position, direction, texture, damage);
     }
 }
 

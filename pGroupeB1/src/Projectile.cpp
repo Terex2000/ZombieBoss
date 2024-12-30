@@ -1,9 +1,9 @@
 #include "Projectile.h"
 
 // Constructor for Projectile
-// Initializes the projectile with a position, direction, and texture.
-Projectile::Projectile(const sf::Vector2f& position, float direction, const sf::Texture& texture) 
-    : speed(300.0f) {
+// Initializes the projectile with a position, direction, texture, and damage.
+Projectile::Projectile(const sf::Vector2f& position, float direction, const sf::Texture& texture, float damage)
+    : speed(300.0f), damage(damage) {
     shape.setRadius(5.0f);
     shape.setTexture(&texture);
     shape.setPosition(position);
@@ -11,28 +11,30 @@ Projectile::Projectile(const sf::Vector2f& position, float direction, const sf::
 }
 
 // Copy constructor for Projectile
-Projectile::Projectile(const Projectile& other) 
-    : shape(other.shape), velocity(other.velocity), speed(other.speed) {}
+Projectile::Projectile(const Projectile& other)
+    : shape(other.shape), velocity(other.velocity), speed(other.speed), damage(other.damage) {}
 
 // Copy assignment operator for Projectile
 Projectile& Projectile::operator=(const Projectile& other) {
     if (this != &other) {
         shape = other.shape;
         velocity = other.velocity;
+        damage = other.damage;
         // speed is const, no need to assign
     }
     return *this;
 }
 
 // Move constructor for Projectile
-Projectile::Projectile(Projectile&& other) noexcept 
-    : shape(std::move(other.shape)), velocity(std::move(other.velocity)), speed(other.speed) {}
+Projectile::Projectile(Projectile&& other) noexcept
+    : shape(std::move(other.shape)), velocity(std::move(other.velocity)), speed(other.speed), damage(other.damage) {}
 
 // Move assignment operator for Projectile
 Projectile& Projectile::operator=(Projectile&& other) noexcept {
     if (this != &other) {
         shape = std::move(other.shape);
         velocity = std::move(other.velocity);
+        damage = other.damage;
         // speed is const, no need to assign
     }
     return *this;
@@ -62,4 +64,9 @@ bool Projectile::isOutOfBounds(const sf::RenderWindow& window) const {
 // Sets the scale of the projectile's shape.
 void Projectile::setScale(float scaleX, float scaleY) {
     shape.setScale(scaleX, scaleY);
+}
+
+// Returns the damage of the projectile.
+float Projectile::getDamage() const {
+    return damage;
 }

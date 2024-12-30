@@ -6,8 +6,8 @@
 // The Projectile class represents a projectile fired by the player.
 class Projectile {
 public:
-    // Constructor that initializes the projectile with a position, direction, and texture.
-    Projectile(const sf::Vector2f& position, float direction, const sf::Texture& texture);
+    // Constructor that initializes the projectile with a position, direction, texture, and damage.
+    Projectile(const sf::Vector2f& position, float direction, const sf::Texture& texture, float damage);
 
     // Copy constructor for Projectile.
     Projectile(const Projectile& other);
@@ -36,10 +36,14 @@ public:
     // Sets the scale of the projectile's shape.
     void setScale(float scaleX, float scaleY);
 
+    // Returns the damage of the projectile.
+    float getDamage() const;
+
 private:
     sf::CircleShape shape; // Shape of the projectile
     sf::Vector2f velocity; // Velocity of the projectile
     const float speed; // Speed of the projectile
+    float damage; // Damage of the projectile
 };
 
 #endif // PROJECTILE_H

@@ -68,7 +68,8 @@ void PlayerController::shoot() {
     sf::Vector2f position = player.getPosition();
     float direction = player.getDirection();
     const sf::Texture& texture = textureManager.getTexture("bullet");
-    projectileController.shoot(position, direction, texture);
+    float damage = 50.0f; // Example damage value
+    projectileController.shoot(position, direction, texture, damage);
     projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Adjust the scale here
 }
 
