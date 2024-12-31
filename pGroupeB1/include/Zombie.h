@@ -2,10 +2,12 @@
 #define ZOMBIE_H
 
 #include "Enemy.h"
+#include <SFML/Graphics.hpp>
+#include <cmath> // Include for std::abs
 
 class Zombie : public Enemy {
 public:
-    Zombie(float x, float y, float health, float attack, float speed);
+    Zombie(float x, float y, float health, float attack, float speed, float maxDistance);
     virtual ~Zombie();
 
     void setPosition(float x, float y) override;
@@ -22,11 +24,16 @@ public:
 
     void takeDamage(float damage) override;
 
+    void update(float deltaTime);
+
 private:
     sf::Vector2f position;
+    sf::Vector2f origin;
     float health;
     float attack;
     float speed;
+    float maxDistance;
+    float direction;
 };
 
 #endif // ZOMBIE_H

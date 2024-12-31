@@ -1,7 +1,7 @@
 #include "Zombie.h"
 
-Zombie::Zombie(float x, float y, float health, float attack, float speed)
-    : position(x, y), health(health), attack(attack), speed(speed) {}
+Zombie::Zombie(float x, float y, float health, float attack, float speed, float maxDistance)
+    : position(x, y), origin(x, y), health(health), attack(attack), speed(speed), maxDistance(maxDistance), direction(1.0f) {}
 
 Zombie::~Zombie() {}
 
@@ -40,4 +40,11 @@ float Zombie::getSpeed() const {
 
 void Zombie::takeDamage(float damage) {
     health -= damage;
+}
+
+void Zombie::update(float deltaTime) {
+    position.x += direction * speed * deltaTime;
+    if (std::abs(position.x - origin.x) > maxDistance) {
+        direction = -direction;
+    }
 }

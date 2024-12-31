@@ -8,7 +8,7 @@ class ZombieFactory : public EnemyFactory {
 public:
     ZombieFactory();
     virtual ~ZombieFactory();
-    Enemy* createEnemy(float x, float y, float health, float attack, float speed) override;
+    Enemy* createEnemy(float x, float y, float health, float attack, float speed, float maxDistance) override;
 };
 
 #endif // ZOMBIEFACTORY_H

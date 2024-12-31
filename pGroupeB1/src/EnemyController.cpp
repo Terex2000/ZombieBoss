@@ -1,4 +1,5 @@
 #include "EnemyController.h"
+#include "Zombie.h"
 #include <cmath> // Include for sqrt and pow
 
 EnemyController::EnemyController(EnemyFactory& factory, TextureManager& textureManager)
@@ -10,8 +11,8 @@ EnemyController::~EnemyController() {
     }
 }
 
-void EnemyController::createEnemy(float x, float y, float health, float attack, float speed) {
-    enemies.push_back(factory.createEnemy(x, y, health, attack, speed));
+void EnemyController::createEnemy(float x, float y, float health, float attack, float speed, float maxDistance) {
+    enemies.push_back(factory.createEnemy(x, y, health, attack, speed, maxDistance));
 }
 
 void EnemyController::draw(sf::RenderWindow& window) {
@@ -27,6 +28,9 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
             delete *it;
             it = enemies.erase(it);
         } else {
+            // Update enemy position
+            dynamic_cast<Zombie*>(*it)->update(deltaTime);
+
             // Check if the enemy should shoot
             sf::Vector2f enemyPosition = (*it)->getPosition();
             float distance = std::sqrt(std::pow(playerPosition.x - enemyPosition.x, 2) + std::pow(playerPosition.y - enemyPosition.y, 2));

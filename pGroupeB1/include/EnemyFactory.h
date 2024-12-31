@@ -6,7 +6,7 @@
 class EnemyFactory {
 public:
     virtual ~EnemyFactory() {}
-    virtual Enemy* createEnemy(float x, float y, float health, float attack, float speed) = 0;
+    virtual Enemy* createEnemy(float x, float y, float health, float attack, float speed, float maxDistance) = 0;
 };
 
 #endif // ENEMYFACTORY_H

@@ -14,7 +14,7 @@ public:
     EnemyController(EnemyFactory& factory, TextureManager& textureManager);
     virtual ~EnemyController();
 
-    void createEnemy(float x, float y, float health, float attack, float speed);
+    void createEnemy(float x, float y, float health, float attack, float speed, float maxDistance);
     void draw(sf::RenderWindow& window);
     void update(float deltaTime, const sf::Vector2f& playerPosition);
     std::vector<Enemy*>& getEnemies();
