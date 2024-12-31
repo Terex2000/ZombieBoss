@@ -66,10 +66,8 @@ void PlayerController::jump() {
 // Makes the player shoot a projectile.
 void PlayerController::shoot() {
     sf::Vector2f position = player.getPosition();
-    float direction = player.getDirection();
-    const sf::Texture& texture = textureManager.getTexture("bullet");
-    float damage = 50.0f; // Example damage value
-    projectileController.shoot(position, direction, texture, damage);
+    sf::Vector2f direction = sf::Vector2f(player.getDirection(), 0.0f); // Use a Vector2f for the direction
+    projectileController.shoot(position, direction, textureManager.getTexture("bullet"), 10.0f); // Example damage
     projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Adjust the scale here
 }
 

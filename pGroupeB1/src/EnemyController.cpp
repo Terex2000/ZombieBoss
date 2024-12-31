@@ -31,9 +31,11 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
             sf::Vector2f enemyPosition = (*it)->getPosition();
             float distance = std::sqrt(std::pow(playerPosition.x - enemyPosition.x, 2) + std::pow(playerPosition.y - enemyPosition.y, 2));
             if (distance < 350.0f && projectileController.getProjectiles().size() < 3) { // Example distance
-                float direction = (playerPosition.x - enemyPosition.x) / distance;
+                sf::Vector2f direction = playerPosition - enemyPosition;
+                float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+                direction /= length; // Normalize the direction vector
                 projectileController.shoot(enemyPosition, direction, textureManager.getTexture("bullet"), 20.0f); // Example damage
-                projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Adjust the scale here
+                projectileController.getProjectiles().back().setScale(4.0f, 3.0f);
             }
             ++it;
         }
