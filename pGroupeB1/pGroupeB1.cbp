@@ -122,7 +122,9 @@
 		<Unit filename="include/MainMenu.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
-		<Unit filename="include/MainMenuState.h" />
+		<Unit filename="include/MainMenuState.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
 		<Unit filename="include/MainMenuView.h">
 			<Option virtualFolder="View/" />
 		</Unit>
@@ -174,11 +176,15 @@
 		<Unit filename="include/ShopView.h">
 			<Option virtualFolder="View/" />
 		</Unit>
-		<Unit filename="include/SoundManager.h" />
+		<Unit filename="include/SoundManager.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
 		<Unit filename="include/State.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
-		<Unit filename="include/StateManager.h" />
+		<Unit filename="include/StateManager.h">
+			<Option virtualFolder="Utils/" />
+		</Unit>
 		<Unit filename="include/TextureManager.h">
 			<Option virtualFolder="Utils/" />
 		</Unit>
@@ -272,7 +278,9 @@
 		<Unit filename="src/MainMenu.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
-		<Unit filename="src/MainMenuState.cpp" />
+		<Unit filename="src/MainMenuState.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
 		<Unit filename="src/MainMenuView.cpp">
 			<Option virtualFolder="View/" />
 		</Unit>
@@ -324,9 +332,15 @@
 		<Unit filename="src/ShopView.cpp">
 			<Option virtualFolder="View/" />
 		</Unit>
-		<Unit filename="src/SoundManager.cpp" />
-		<Unit filename="src/State.cpp" />
-		<Unit filename="src/StateManager.cpp" />
+		<Unit filename="src/SoundManager.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/State.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/StateManager.cpp">
+			<Option virtualFolder="Utils/" />
+		</Unit>
 		<Unit filename="src/TextureManager.cpp">
 			<Option virtualFolder="Utils/" />
 		</Unit>
