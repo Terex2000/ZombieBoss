@@ -2,7 +2,7 @@
 #include <iostream>
 
 GameController::GameController(TextureManager& textureManager)
-    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), enemyController(zombieFactory) {
+    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), enemyController(zombieFactory, textureManager) {
     // Load textures
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
@@ -23,7 +23,7 @@ GameController::GameController(TextureManager& textureManager)
     backgroundSprite.setTexture(textureManager.getTexture("background"));
 
     // Create some enemies
-    enemyController.createEnemy(800.0f, 256.0f, 50.0f, 10.0f, 50.0f);
+    enemyController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f);
     enemyController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f);
 }
 
@@ -83,7 +83,10 @@ void GameController::run(sf::RenderWindow& window) {
         collisionManager.checkProjectileEnemyCollisions(projectiles, enemyController);
 
         // Update enemies
-        enemyController.update(deltaTime);
+        enemyController.update(deltaTime, playerController.getPlayer().getPosition());
+
+        // Check enemy projectile collisions
+        collisionManager.checkEnemyProjectileCollisions(enemyController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes, cameraManager.getView());
 
         // Update camera position
         cameraManager.update(playerController, *mapController);
