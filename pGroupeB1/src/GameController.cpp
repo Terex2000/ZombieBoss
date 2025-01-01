@@ -26,8 +26,8 @@ GameController::GameController(TextureManager& textureManager)
     backgroundSprite.setTexture(textureManager.getTexture("background"));
 
     // Create some enemies
-    enemyController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f, 100.0f); // Example max distance
-    enemyController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f, 50.0f); // Example max distance
+    enemyController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
+    enemyController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
 }
 
 void GameController::run(sf::RenderWindow& window) {
@@ -86,7 +86,7 @@ void GameController::run(sf::RenderWindow& window) {
         collisionManager.checkProjectileEnemyCollisions(projectiles, enemyController);
 
         // Update enemies
-        enemyController.update(deltaTime, playerController.getPlayer().getPosition());
+        enemyController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer());
 
         // Check enemy projectile collisions
         collisionManager.checkEnemyProjectileCollisions(enemyController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes, cameraManager.getView());

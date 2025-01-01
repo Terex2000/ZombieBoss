@@ -6,7 +6,7 @@
 class EnemyFactory {
 public:
     virtual ~EnemyFactory() {}
-    virtual Enemy* createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, const sf::Texture& texture) = 0;
+    virtual Enemy* createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, int coins, const sf::Texture& texture) = 0;
 };
 
 #endif // ENEMYFACTORY_H

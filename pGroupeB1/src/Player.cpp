@@ -1,10 +1,10 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f) {}
+Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0) {}
 
 // Copy constructor for Player
-Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction) {}
+Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction), coins(other.coins) {}
 
 // Copy assignment operator for Player
 Player& Player::operator=(const Player& other) {
@@ -13,6 +13,7 @@ Player& Player::operator=(const Player& other) {
         color = other.color;
         radius = other.radius;
         direction = other.direction;
+        coins = other.coins;
     }
     return *this;
 }
@@ -63,4 +64,14 @@ void Player::setDirection(float direction) {
 // Returns the direction the player is facing.
 float Player::getDirection() const {
     return direction;
+}
+
+// Adds coins to the player's total.
+void Player::addCoins(int amount) {
+    coins += amount;
+}
+
+// Returns the number of coins the player has.
+int Player::getCoins() const {
+    return coins;
 }

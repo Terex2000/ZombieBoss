@@ -1,5 +1,6 @@
 #include "EnemyController.h"
 #include "Zombie.h"
+#include <iostream>
 #include <cmath> // Include for sqrt and pow
 
 EnemyController::EnemyController(EnemyFactory& factory, TextureManager& textureManager)
@@ -11,8 +12,8 @@ EnemyController::~EnemyController() {
     }
 }
 
-void EnemyController::createEnemy(float x, float y, float health, float attack, float speed, float maxDistance) {
-    enemies.push_back(factory.createEnemy(x, y, health, attack, speed, maxDistance, textureManager.getTexture("zombie")));
+void EnemyController::createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, int coins) {
+    enemies.push_back(factory.createEnemy(x, y, health, attack, speed, maxDistance, coins, textureManager.getTexture("zombie")));
 }
 
 void EnemyController::draw(sf::RenderWindow& window) {
@@ -22,9 +23,11 @@ void EnemyController::draw(sf::RenderWindow& window) {
     projectileController.draw(window);
 }
 
-void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition) {
+void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition, Player& player) {
     for (auto it = enemies.begin(); it != enemies.end();) {
         if ((*it)->getHealth() <= 0) {
+            player.addCoins(dynamic_cast<Zombie*>(*it)->getCoins());
+            std::cout << "Player coins: " << player.getCoins() << std::endl;
             delete *it;
             it = enemies.erase(it);
         } else {

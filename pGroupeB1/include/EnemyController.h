@@ -6,6 +6,7 @@
 #include "ZombieView.h"
 #include "ProjectileController.h"
 #include "TextureManager.h"
+#include "Player.h"
 #include <vector>
 #include <SFML/Graphics.hpp>
 
@@ -14,9 +15,9 @@ public:
     EnemyController(EnemyFactory& factory, TextureManager& textureManager);
     virtual ~EnemyController();
 
-    void createEnemy(float x, float y, float health, float attack, float speed, float maxDistance);
+    void createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, int coins);
     void draw(sf::RenderWindow& window);
-    void update(float deltaTime, const sf::Vector2f& playerPosition);
+    void update(float deltaTime, const sf::Vector2f& playerPosition, Player& player);
     std::vector<Enemy*>& getEnemies();
     ProjectileController& getProjectileController();
 
