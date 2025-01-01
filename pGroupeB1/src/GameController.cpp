@@ -2,7 +2,8 @@
 #include <iostream>
 
 GameController::GameController(TextureManager& textureManager)
-    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), enemyController(zombieFactory, textureManager) {
+    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), 
+      zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager) {
     // Load textures
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
@@ -26,8 +27,11 @@ GameController::GameController(TextureManager& textureManager)
     backgroundSprite.setTexture(textureManager.getTexture("background"));
 
     // Create some enemies
-    enemyController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
-    enemyController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
+    zombieController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
+    zombieController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
+
+    // Create a boss
+    bossController.createBoss(900.0f, 734.0f, 10.0f, 20.0f, 30.0f, 50); // Example boss
 }
 
 void GameController::run(sf::RenderWindow& window) {
@@ -83,13 +87,16 @@ void GameController::run(sf::RenderWindow& window) {
         }
 
         // Check projectile-enemy collisions
-        collisionManager.checkProjectileEnemyCollisions(projectiles, enemyController);
+        collisionManager.checkProjectileEnemyCollisions(projectiles, zombieController);
+        collisionManager.checkProjectileEnemyCollisions(projectiles, bossController);
 
         // Update enemies
-        enemyController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer());
+        zombieController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer());
+        bossController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer());
 
         // Check enemy projectile collisions
-        collisionManager.checkEnemyProjectileCollisions(enemyController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes, cameraManager.getView());
+        collisionManager.checkEnemyProjectileCollisions(zombieController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes, cameraManager.getView());
+        collisionManager.checkEnemyProjectileCollisions(bossController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes, cameraManager.getView());
 
         // Update camera position
         cameraManager.update(playerController, *mapController);
@@ -106,7 +113,8 @@ void GameController::run(sf::RenderWindow& window) {
         // Draw the map, player, and enemies
         mapController->draw(window);
         playerController.draw(window);
-        enemyController.draw(window);
+        zombieController.draw(window);
+        bossController.draw(window);
 
         window.display();
     }

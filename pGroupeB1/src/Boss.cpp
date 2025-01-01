@@ -1,11 +1,61 @@
 #include "Boss.h"
 
-Boss::Boss()
-{
-    //ctor
+Boss::Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture)
+    : position(x, y), health(health), attack(attack), speed(speed), coins(coins) {
+    sprite.setTexture(texture);
+    sprite.setPosition(position);
+    sprite.setScale(150.0f / texture.getSize().x, 150.0f / texture.getSize().y); // Scale the sprite to 60 pixels
+    sprite.setOrigin(texture.getSize().x / 2.0f, texture.getSize().y / 2.0f); // Center the sprite
 }
 
-Boss::~Boss()
-{
-    //dtor
+Boss::~Boss() {}
+
+void Boss::setPosition(float x, float y) {
+    position.x = x;
+    position.y = y;
+    sprite.setPosition(position);
+}
+
+const sf::Vector2f& Boss::getPosition() const {
+    return position;
+}
+
+void Boss::setHealth(float health) {
+    this->health = health;
+}
+
+float Boss::getHealth() const {
+    return health;
+}
+
+void Boss::setAttack(float attack) {
+    this->attack = attack;
+}
+
+float Boss::getAttack() const {
+    return attack;
+}
+
+void Boss::setSpeed(float speed) {
+    this->speed = speed;
+}
+
+float Boss::getSpeed() const {
+    return speed;
+}
+
+void Boss::takeDamage(float damage) {
+    health -= damage;
+}
+
+void Boss::update(float deltaTime) {
+    // Implement any specific behavior for the boss here
+}
+
+const sf::Sprite& Boss::getSprite() const {
+    return sprite;
+}
+
+int Boss::getCoins() const {
+    return coins;
 }

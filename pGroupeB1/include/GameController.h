@@ -10,6 +10,7 @@
 #include "MapController.h"
 #include "EnemyController.h"
 #include "ZombieFactory.h"
+#include "BossFactory.h"
 #include <SFML/Graphics.hpp>
 #include <unordered_set>
 
@@ -29,8 +30,10 @@ private:
     std::unordered_set<int> collisionTypes;
     sf::Sprite backgroundSprite;
     TextureManager textureManager;
-    EnemyController enemyController;
+    EnemyController zombieController;
+    EnemyController bossController;
     ZombieFactory zombieFactory;
+    BossFactory bossFactory;
 };
 
 #endif // GAMECONTROLLER_H

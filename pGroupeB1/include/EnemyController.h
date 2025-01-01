@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "EnemyFactory.h"
 #include "ZombieView.h"
+#include "BossView.h"
 #include "ProjectileController.h"
 #include "TextureManager.h"
 #include "Player.h"
@@ -16,6 +17,7 @@ public:
     virtual ~EnemyController();
 
     void createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, int coins);
+    void createBoss(float x, float y, float health, float attack, float speed, int coins);
     void draw(sf::RenderWindow& window);
     void update(float deltaTime, const sf::Vector2f& playerPosition, Player& player);
     std::vector<Enemy*>& getEnemies();
@@ -25,6 +27,7 @@ private:
     std::vector<Enemy*> enemies;
     EnemyFactory& factory;
     ZombieView zombieView;
+    BossView bossView;
     ProjectileController projectileController;
     TextureManager& textureManager;
 };

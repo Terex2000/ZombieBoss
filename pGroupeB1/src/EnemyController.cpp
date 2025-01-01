@@ -1,5 +1,6 @@
 #include "EnemyController.h"
 #include "Zombie.h"
+#include "Boss.h"
 #include <iostream>
 #include <cmath> // Include for sqrt and pow
 
@@ -16,9 +17,17 @@ void EnemyController::createEnemy(float x, float y, float health, float attack, 
     enemies.push_back(factory.createEnemy(x, y, health, attack, speed, maxDistance, coins, textureManager.getTexture("zombie")));
 }
 
+void EnemyController::createBoss(float x, float y, float health, float attack, float speed, int coins) {
+    enemies.push_back(factory.createBoss(x, y, health, attack, speed, coins, textureManager.getTexture("zombie")));
+}
+
 void EnemyController::draw(sf::RenderWindow& window) {
     for (auto enemy : enemies) {
-        zombieView.draw(window, *enemy);
+        if (dynamic_cast<Zombie*>(enemy)) {
+            zombieView.draw(window, *enemy);
+        } else if (dynamic_cast<Boss*>(enemy)) {
+            bossView.draw(window, *enemy);
+        }
     }
     projectileController.draw(window);
 }
@@ -26,13 +35,21 @@ void EnemyController::draw(sf::RenderWindow& window) {
 void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition, Player& player) {
     for (auto it = enemies.begin(); it != enemies.end();) {
         if ((*it)->getHealth() <= 0) {
-            player.addCoins(dynamic_cast<Zombie*>(*it)->getCoins());
+            if (dynamic_cast<Zombie*>(*it)) {
+                player.addCoins(dynamic_cast<Zombie*>(*it)->getCoins());
+            } else if (dynamic_cast<Boss*>(*it)) {
+                player.addCoins(dynamic_cast<Boss*>(*it)->getCoins());
+            }
             std::cout << "Player coins: " << player.getCoins() << std::endl;
             delete *it;
             it = enemies.erase(it);
         } else {
             // Update enemy position
-            dynamic_cast<Zombie*>(*it)->update(deltaTime);
+            if (dynamic_cast<Zombie*>(*it)) {
+                dynamic_cast<Zombie*>(*it)->update(deltaTime);
+            } else if (dynamic_cast<Boss*>(*it)) {
+                dynamic_cast<Boss*>(*it)->update(deltaTime);
+            }
 
             // Check if the enemy should shoot
             sf::Vector2f enemyPosition = (*it)->getPosition();
