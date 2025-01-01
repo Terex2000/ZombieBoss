@@ -7,7 +7,7 @@
 
 class Zombie : public Enemy {
 public:
-    Zombie(float x, float y, float health, float attack, float speed, float maxDistance);
+    Zombie(float x, float y, float health, float attack, float speed, float maxDistance, const sf::Texture& texture);
     virtual ~Zombie();
 
     void setPosition(float x, float y) override;
@@ -26,6 +26,8 @@ public:
 
     void update(float deltaTime);
 
+    const sf::Sprite& getSprite() const;
+
 private:
     sf::Vector2f position;
     sf::Vector2f origin;
@@ -34,6 +36,7 @@ private:
     float speed;
     float maxDistance;
     float direction;
+    sf::Sprite sprite;
 };
 
 #endif // ZOMBIE_H

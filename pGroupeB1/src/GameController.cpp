@@ -13,6 +13,9 @@ GameController::GameController(TextureManager& textureManager)
     if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
         std::cerr << "Error: Failed to load bullet texture" << std::endl;
     }
+    if (!textureManager.loadTexture("zombie", "assets/img/zombie.png")) {
+        std::cerr << "Error: Failed to load zombie texture" << std::endl;
+    }
 
     // Initialize map controller with map data and textures
     mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager);

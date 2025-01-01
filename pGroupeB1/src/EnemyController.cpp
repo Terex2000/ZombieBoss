@@ -12,7 +12,7 @@ EnemyController::~EnemyController() {
 }
 
 void EnemyController::createEnemy(float x, float y, float health, float attack, float speed, float maxDistance) {
-    enemies.push_back(factory.createEnemy(x, y, health, attack, speed, maxDistance));
+    enemies.push_back(factory.createEnemy(x, y, health, attack, speed, maxDistance, textureManager.getTexture("zombie")));
 }
 
 void EnemyController::draw(sf::RenderWindow& window) {
