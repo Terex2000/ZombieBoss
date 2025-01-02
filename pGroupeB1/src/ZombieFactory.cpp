@@ -8,7 +8,7 @@ Enemy* ZombieFactory::createEnemy(float x, float y, float health, float attack, 
     return new Zombie(x, y, health, attack, speed, maxDistance, coins, texture);
 }
 
-Enemy* ZombieFactory::createBoss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture) {
+Enemy* ZombieFactory::createBoss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss) {
     // This factory does not create bosses, return nullptr or handle appropriately
     return nullptr;
 }

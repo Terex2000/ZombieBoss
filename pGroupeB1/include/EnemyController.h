@@ -17,7 +17,7 @@ public:
     virtual ~EnemyController();
 
     void createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, int coins);
-    void createBoss(float x, float y, float health, float attack, float speed, int coins);
+    void createBoss(float x, float y, float health, float attack, float speed, int coins, bool isFinalBoss = false);
     void draw(sf::RenderWindow& window);
     void update(float deltaTime, const sf::Vector2f& playerPosition, Player& player);
     std::vector<Enemy*>& getEnemies();

@@ -31,7 +31,8 @@ GameController::GameController(TextureManager& textureManager)
     zombieController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
 
     // Create a boss
-    bossController.createBoss(900.0f, 734.0f, 10.0f, 20.0f, 30.0f, 50); // Example boss
+    bossController.createBoss(900.0f, 734.0f, 10.0f, 20.0f, 30.0f, 50, true); // Example boss
+    
 }
 
 void GameController::run(sf::RenderWindow& window) {

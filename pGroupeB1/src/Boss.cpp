@@ -1,10 +1,10 @@
 #include "Boss.h"
 
-Boss::Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture)
-    : position(x, y), health(health), attack(attack), speed(speed), coins(coins) {
+Boss::Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss)
+    : position(x, y), health(health), attack(attack), speed(speed), coins(coins), finalBoss(isFinalBoss) {
     sprite.setTexture(texture);
     sprite.setPosition(position);
-    sprite.setScale(150.0f / texture.getSize().x, 150.0f / texture.getSize().y); // Scale the sprite to 60 pixels
+    sprite.setScale(150.0f / texture.getSize().x, 150.0f / texture.getSize().y); // Scale the sprite to 150 pixels
     sprite.setOrigin(texture.getSize().x / 2.0f, texture.getSize().y / 2.0f); // Center the sprite
 }
 
@@ -58,4 +58,8 @@ const sf::Sprite& Boss::getSprite() const {
 
 int Boss::getCoins() const {
     return coins;
+}
+
+bool Boss::isFinalBoss() const {
+    return finalBoss;
 }

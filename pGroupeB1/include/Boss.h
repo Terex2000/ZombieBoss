@@ -6,7 +6,7 @@
 
 class Boss : public Enemy {
 public:
-    Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture);
+    Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss = false);
     virtual ~Boss();
 
     void setPosition(float x, float y) override;
@@ -29,6 +29,8 @@ public:
 
     int getCoins() const;
 
+    bool isFinalBoss() const;
+
 private:
     sf::Vector2f position;
     float health;
@@ -36,6 +38,7 @@ private:
     float speed;
     int coins;
     sf::Sprite sprite;
+    bool finalBoss;
 };
 
 #endif // BOSS_H
