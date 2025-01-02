@@ -7,7 +7,7 @@ SoundManager::SoundManager(float volume) : volume(volume) {
 
 SoundManager::~SoundManager() {
     if (backgroundSound.getStatus() == sf::SoundSource::Playing) {
-        backgroundSound.stop(); // Arrêter la musique si elle est encore en cours
+        backgroundSound.stop(); // Arrï¿½ter la musique si elle est encore en cours
     }
     std::cout << "SoundManager destroyed, music stopped." << std::endl;
 }
@@ -40,7 +40,7 @@ void SoundManager::stopMusic() {
 }
 
 void SoundManager::changeMusic(const std::string& filename) {
-    stopMusic(); // Arrêter la musique actuelle proprement
+    stopMusic(); // Arrï¿½ter la musique actuelle proprement
     if (loadMusic(filename)) {
         playMusic();
     }
@@ -52,6 +52,6 @@ int SoundManager::getVolume() {
 
 void SoundManager::setVolume(int newVolume) {
     volume = static_cast<float>(newVolume);
-    backgroundSound.setVolume(volume); // Appliquer immédiatement le nouveau volume
+    backgroundSound.setVolume(volume); // Appliquer immï¿½diatement le nouveau volume
     std::cout << "Volume set to: " << volume << std::endl;
 }

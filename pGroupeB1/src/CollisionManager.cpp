@@ -1,17 +1,18 @@
 #include "CollisionManager.h"
 #include "PlayerController.h"
+#include "Boss.h" // Inclure la classe Boss
+#include "Zombie.h"
 #include "Map.h"
+#include <iostream> // Include for std::cout
 
 CollisionManager::CollisionManager() {}
 
 CollisionManager::~CollisionManager() {}
 
-// Checks if the player shape is colliding with a tile shape.
 bool CollisionManager::isColliding(const sf::CircleShape& playerShape, const sf::RectangleShape& tileShape) {
     return playerShape.getGlobalBounds().intersects(tileShape.getGlobalBounds());
 }
 
-// Helper function to check if a shape is colliding with any collision tiles in the map.
 bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& mapData = map.getData();
     for (size_t i = 0; i < mapData.size(); ++i) {
@@ -29,13 +30,51 @@ bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const M
     return false;
 }
 
-// Checks if the player is colliding with any collision tiles in the map.
 bool CollisionManager::checkPlayerCollisions(const PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& playerShape = playerController.getPlayerShape();
     return isCollidingWithTile(playerShape, map, collisionTypes);
 }
 
-// Checks if a projectile is colliding with any collision tiles in the map.
 bool CollisionManager::checkProjectileCollisions(const Projectile& projectile, const Map& map, const std::unordered_set<int>& collisionTypes) {
     return isCollidingWithTile(projectile.getShape(), map, collisionTypes);
+}
+
+void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& projectiles, EnemyController& enemyController) {
+    for (auto it = projectiles.begin(); it != projectiles.end();) {
+        bool hit = false;
+        for (auto enemy : enemyController.getEnemies()) {
+            sf::FloatRect enemyBounds;
+            if (dynamic_cast<Boss*>(enemy)) {
+                enemyBounds = dynamic_cast<Boss*>(enemy)->getSprite().getGlobalBounds();
+            } else if (dynamic_cast<Zombie*>(enemy)) {
+                enemyBounds = dynamic_cast<Zombie*>(enemy)->getSprite().getGlobalBounds();
+            }
+            if (it->getShape().getGlobalBounds().intersects(enemyBounds)) {
+                enemy->takeDamage(it->getDamage()); // Use the damage value from the projectile
+                hit = true;
+                break;
+            }
+        }
+        if (hit) {
+            it = projectiles.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+void CollisionManager::checkEnemyProjectileCollisions(std::vector<Projectile>& projectiles, PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes, const sf::View& cameraView) {
+    const auto& playerShape = playerController.getPlayerShape();
+    sf::FloatRect cameraBounds(cameraView.getCenter() - cameraView.getSize() / 2.0f, cameraView.getSize());
+
+    for (auto it = projectiles.begin(); it != projectiles.end();) {
+        if (it->getShape().getGlobalBounds().intersects(playerShape.getGlobalBounds())) {
+            std::cout << "Player hit by enemy projectile!" << std::endl;
+            it = projectiles.erase(it);
+        } else if (checkProjectileCollisions(*it, map, collisionTypes) || !cameraBounds.intersects(it->getShape().getGlobalBounds())) {
+            it = projectiles.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }

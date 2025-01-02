@@ -1,37 +1,33 @@
 #include "Map.h"
 
-// Constructor for Map
-// Initializes the map with the provided map data.
-Map::Map(const std::vector<std::vector<int>>& mapData, const sf::Texture& tileset) {
-    // Iterate through the map data to create tiles
+Map::Map(const std::vector<std::vector<int>>& mapData, const sf::Texture& tileset, const std::unordered_set<int>& teleportTiles)
+    : teleportTiles(teleportTiles) {
     for (size_t i = 0; i < mapData.size(); ++i) {
         std::vector<Tiles> tileRow;
         for (size_t j = 0; j < mapData[i].size(); ++j) {
-            // Create a tile with the type and position
             tileRow.emplace_back(mapData[i][j], j, i);
         }
-        // Add the row of tiles to the map data
         data.push_back(tileRow);
     }
-    createVertices(tileset); // Create the vertex array
+    createVertices(tileset);
 }
 
-// Returns a constant reference to the map data
-// This method provides access to the 2D vector of tiles representing the map.
 const std::vector<std::vector<Tiles>>& Map::getData() const {
     return data;
 }
 
-// Returns a vertex array representing the map
 const sf::VertexArray& Map::getVertices() const {
     return vertices;
 }
 
-// Helper method to create the vertex array
+bool Map::isTeleportTile(int tileType) const {
+    return teleportTiles.find(tileType) != teleportTiles.end();
+}
+
 void Map::createVertices(const sf::Texture& tileset) {
-    int tileSize = 32; // Size of each tile in pixels
+    int tileSize = 32;
     vertices.setPrimitiveType(sf::Triangles);
-    vertices.resize(data.size() * data[0].size() * 6); // 6 vertices per tile (2 triangles)
+    vertices.resize(data.size() * data[0].size() * 6);
 
     for (size_t i = 0; i < data.size(); ++i) {
         for (size_t j = 0; j < data[i].size(); ++j) {

@@ -18,11 +18,11 @@ void StateManager::update(double deltaTime) {
     if (currentState) {
         currentState->update(window, deltaTime);
 
-        // Transition vers un nouvel état si nécessaire
+        // Transition vers un nouvel ï¿½tat si nï¿½cessaire
         if (currentState->shouldChangeState()) {
             std::string nextState = currentState->getNextState();
             if (!nextState.empty()) {
-                // Chargez ici le nouvel état en fonction de `nextState`
+                // Chargez ici le nouvel ï¿½tat en fonction de `nextState`
                 // Exemple : setState(std::make_unique<NextState>(window));
             }
         }

@@ -32,7 +32,7 @@ private:
     bool fullscreen;
 
     std::vector<std::string> options; // "Difficulty", "Volume", "Fullscreen", "Back"
-    int selectedOption; // Option actuellement sélectionnée
+    int selectedOption; // Option actuellement sï¿½lectionnï¿½e
 };
 
 #endif // SETTINGS_H

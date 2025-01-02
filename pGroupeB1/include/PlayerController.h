@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "TextureManager.h"
 #include <unordered_set>
+#include <iostream>
 
 // The PlayerController class is responsible for managing the player's state and behavior.
 class PlayerController {

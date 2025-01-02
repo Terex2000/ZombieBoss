@@ -35,11 +35,18 @@ public:
     // Returns the direction the player is facing.
     float getDirection() const;
 
+    // Adds coins to the player's total.
+    void addCoins(int amount);
+
+    // Returns the number of coins the player has.
+    int getCoins() const;
+
 private:
-    sf::Vector2f position; // Position of the player
-    sf::Color color; // Color of the player
-    float radius; // Radius of the player
-    float direction; // Direction the player is facing
+    sf::Vector2f position;
+    sf::Color color;
+    float radius;
+    float direction;
+    int coins;
 };
 
 #endif // PLAYER_H

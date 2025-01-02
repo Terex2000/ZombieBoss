@@ -17,7 +17,7 @@ MainMenuView::MainMenuView(sf::RenderWindow& window, TextureManager& textureMana
 void MainMenuView::render(const MainMenu& menu) {
     window.clear();
 
-     // Ajuster dynamiquement le fond à la taille de la fenêtre
+     // Ajuster dynamiquement le fond ï¿½ la taille de la fenï¿½tre
     textureManager.adjustSpriteToWindow(backgroundSprite, window);
     window.draw(backgroundSprite);
 

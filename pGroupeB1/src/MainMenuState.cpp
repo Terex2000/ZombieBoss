@@ -17,9 +17,9 @@ MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManage
 void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::F11) {
-            toggleFullscreen(); // Basculer entre plein écran et fenêtré
+            toggleFullscreen(); // Basculer entre plein ï¿½cran et fenï¿½trï¿½
         } else if (event.key.code == sf::Keyboard::Escape) {
-            window.close(); // Fermer la fenêtre si Échap est pressée
+            window.close(); // Fermer la fenï¿½tre si ï¿½chap est pressï¿½e
         }
     }
     if (currentMenu == MenuType::MainMenu) {
@@ -35,7 +35,7 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
             }else if (event.key.code == sf::Keyboard::F11) {
                 toggleFullscreen();
             } else if (event.key.code == sf::Keyboard::Escape) {
-                window.close(); // Fermer la fenêtre
+                window.close(); // Fermer la fenï¿½tre
             }
         }
     } else if (currentMenu == MenuType::Settings) {
@@ -46,7 +46,7 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
                 selectedSettingOption = (selectedSettingOption + 1) % 4;
             } else if (event.key.code == sf::Keyboard::Enter) {
                 switch (selectedSettingOption) {
-                    case 0: // Changer la difficulté
+                    case 0: // Changer la difficultï¿½
                         settings.setDifficulty(static_cast<Settings::Difficulty>((settings.getDifficulty() + 1) % 3));
                         break;
                     case 1: // Modifier le volume
@@ -77,7 +77,7 @@ void MainMenuState::toggleFullscreen() {
         window.create(sf::VideoMode(800, 600), "Game Menu");
     }
 
-    // Ajuster les fonds après le changement de mode
+    // Ajuster les fonds aprï¿½s le changement de mode
     textureManager.adjustSpriteToWindow(settingsBackgroundSprite, window);
 }
 
