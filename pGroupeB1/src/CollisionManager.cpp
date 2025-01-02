@@ -1,5 +1,7 @@
 #include "CollisionManager.h"
 #include "PlayerController.h"
+#include "Boss.h" // Inclure la classe Boss
+#include "Zombie.h"
 #include "Map.h"
 #include <iostream> // Include for std::cout
 
@@ -37,25 +39,17 @@ bool CollisionManager::checkProjectileCollisions(const Projectile& projectile, c
     return isCollidingWithTile(projectile.getShape(), map, collisionTypes);
 }
 
-bool CollisionManager::checkEnemyCollisions(EnemyController& enemyController, const Map& map, const std::unordered_set<int>& collisionTypes) {
-    for (auto enemy : enemyController.getEnemies()) {
-        sf::CircleShape enemyShape(15.0f); // Assuming enemy radius is 15.0f
-        enemyShape.setPosition(enemy->getPosition());
-        if (isCollidingWithTile(enemyShape, map, collisionTypes)) {
-            // Handle enemy collision logic here
-            enemy->takeDamage(10.0f); // Example damage value
-        }
-    }
-    return false;
-}
-
 void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& projectiles, EnemyController& enemyController) {
     for (auto it = projectiles.begin(); it != projectiles.end();) {
         bool hit = false;
         for (auto enemy : enemyController.getEnemies()) {
-            sf::CircleShape enemyShape(15.0f); // Assuming enemy radius is 15.0f
-            enemyShape.setPosition(enemy->getPosition());
-            if (it->getShape().getGlobalBounds().intersects(enemyShape.getGlobalBounds())) {
+            sf::FloatRect enemyBounds;
+            if (dynamic_cast<Boss*>(enemy)) {
+                enemyBounds = dynamic_cast<Boss*>(enemy)->getSprite().getGlobalBounds();
+            } else if (dynamic_cast<Zombie*>(enemy)) {
+                enemyBounds = dynamic_cast<Zombie*>(enemy)->getSprite().getGlobalBounds();
+            }
+            if (it->getShape().getGlobalBounds().intersects(enemyBounds)) {
                 enemy->takeDamage(it->getDamage()); // Use the damage value from the projectile
                 hit = true;
                 break;
