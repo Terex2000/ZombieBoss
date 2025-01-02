@@ -28,6 +28,7 @@ private:
     MapController* mapController;
     FileReader fileReader;
     std::unordered_set<int> collisionTypes;
+    std::unordered_set<int> teleportTiles;
     sf::Sprite backgroundSprite;
     TextureManager textureManager;
     EnemyController zombieController;

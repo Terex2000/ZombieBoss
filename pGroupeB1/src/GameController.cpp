@@ -19,8 +19,12 @@ GameController::GameController(TextureManager& textureManager)
     }
 
     // Initialize map controller with map data and textures
-    mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager);
+    mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager, fileReader.readTeleportTiles("assets/map/map.txt"));
     collisionTypes = fileReader.readCollisionTypes("assets/map/map.txt");
+    teleportTiles = fileReader.readTeleportTiles("assets/map/map.txt");
+    std::cout << "Total teleport tiles: " << teleportTiles.size() << std::endl;
+
+
     std::cout << "Total collision types: " << collisionTypes.size() << std::endl;
 
     // Create the sprite for the background
@@ -30,8 +34,7 @@ GameController::GameController(TextureManager& textureManager)
     zombieController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
     zombieController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
 
-    // Create a boss
-    bossController.createBoss(900.0f, 734.0f, 10.0f, 20.0f, 30.0f, 50, true, 50.0); // Example boss
+    
     
 }
 
@@ -76,6 +79,24 @@ void GameController::run(sf::RenderWindow& window) {
         }
 
         playerController.setOnGround(onGround);
+
+        if (mapController->checkTeleport(playerController.getPlayer().getPosition())) {
+            if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
+        std::cerr << "Error: Failed to load tileset texture" << std::endl;
+    }
+            std::cout << "Teleporting to boss room!" << std::endl;
+            mapController = new MapController(fileReader.readMap("assets/map/bossMap.txt"), textureManager, fileReader.readTeleportTiles("assets/map/bossMap.txt"));
+            collisionTypes = fileReader.readCollisionTypes("assets/map/bossMap.txt");
+            std::cout << "Total Collision tiles: " << collisionTypes.size() << std::endl;
+            teleportTiles = fileReader.readTeleportTiles("assets/map/bossMap.txt");
+            std::cout << "Total teleport tiles: " << teleportTiles.size() << std::endl;
+            
+            playerController.setPosition(100.0f, 100.0f); // Set player position in the boss room
+            zombieController.getEnemies().clear(); // Clear the zombies
+            // Create a boss
+            bossController.createBoss(544.0f, 510.0f, 10.0f, 20.0f, 30.0f, 50, true, 50.0); // Example boss
+
+        }
 
         // Check projectile collisions
         auto& projectiles = playerController.getProjectiles();
