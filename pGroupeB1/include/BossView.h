@@ -13,6 +13,7 @@ public:
 
 private:
     sf::CircleShape shape;
+    sf::CircleShape shieldOverlay; // Change to sf::CircleShape for oval shield
 };
 
 #endif // BOSSVIEW_H

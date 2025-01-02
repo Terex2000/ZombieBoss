@@ -9,6 +9,6 @@ Enemy* BossFactory::createEnemy(float x, float y, float health, float attack, fl
     return nullptr;
 }
 
-Enemy* BossFactory::createBoss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss) {
-    return new Boss(x, y, health, attack, speed, coins, texture, isFinalBoss);
+Enemy* BossFactory::createBoss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss, float shield) {
+    return new Boss(x, y, health, attack, speed, coins, texture, isFinalBoss, shield);
 }

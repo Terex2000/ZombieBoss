@@ -6,7 +6,7 @@
 
 class Boss : public Enemy {
 public:
-    Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss = false);
+    Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss = false, float shield = 0.0f);
     virtual ~Boss();
 
     void setPosition(float x, float y) override;
@@ -31,6 +31,9 @@ public:
 
     bool isFinalBoss() const;
 
+    void setShield(float shield);
+    float getShield() const;
+
 private:
     sf::Vector2f position;
     float health;
@@ -39,6 +42,7 @@ private:
     int coins;
     sf::Sprite sprite;
     bool finalBoss;
+    float shield; // New attribute for the shield
 };
 
 #endif // BOSS_H

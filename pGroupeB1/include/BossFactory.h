@@ -9,7 +9,7 @@ public:
     BossFactory();
     virtual ~BossFactory();
     Enemy* createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, int coins, const sf::Texture& texture) override;
-    Enemy* createBoss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss) override;
+    Enemy* createBoss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss, float shield) override;
 };
 
 #endif // BOSSFACTORY_H

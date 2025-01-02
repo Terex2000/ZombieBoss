@@ -1,7 +1,7 @@
 #include "Boss.h"
 
-Boss::Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss)
-    : position(x, y), health(health), attack(attack), speed(speed), coins(coins), finalBoss(isFinalBoss) {
+Boss::Boss(float x, float y, float health, float attack, float speed, int coins, const sf::Texture& texture, bool isFinalBoss, float shield)
+    : position(x, y), health(health), attack(attack), speed(speed), coins(coins), finalBoss(isFinalBoss), shield(shield) {
     sprite.setTexture(texture);
     sprite.setPosition(position);
     sprite.setScale(150.0f / texture.getSize().x, 150.0f / texture.getSize().y); // Scale the sprite to 150 pixels
@@ -45,7 +45,15 @@ float Boss::getSpeed() const {
 }
 
 void Boss::takeDamage(float damage) {
-    health -= damage;
+    if (shield > 0) {
+        shield -= damage;
+        if (shield < 0) {
+            health += shield; // Apply remaining damage to health
+            shield = 0;
+        }
+    } else {
+        health -= damage;
+    }
 }
 
 void Boss::update(float deltaTime) {
@@ -62,4 +70,12 @@ int Boss::getCoins() const {
 
 bool Boss::isFinalBoss() const {
     return finalBoss;
+}
+
+void Boss::setShield(float shield) {
+    this->shield = shield;
+}
+
+float Boss::getShield() const {
+    return shield;
 }
