@@ -31,8 +31,8 @@ GameController::GameController(TextureManager& textureManager)
     backgroundSprite.setTexture(textureManager.getTexture("background"));
 
     // Create some enemies
-    zombieController.createEnemy(800.0f, 256.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
-    zombieController.createEnemy(128.0f, 768.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
+    zombieController.createEnemy(800.0f, 544.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
+    zombieController.createEnemy(600.0f, 544.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
 
     
     
