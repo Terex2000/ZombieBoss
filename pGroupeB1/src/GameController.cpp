@@ -3,7 +3,7 @@
 
 GameController::GameController(TextureManager& textureManager)
     : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), 
-      zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager) {
+      zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager), currentWorld(nullptr), currentLevelIndex(0) {
     // Load textures
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
         std::cerr << "Error: Failed to load tileset texture" << std::endl;
@@ -12,20 +12,50 @@ GameController::GameController(TextureManager& textureManager)
         std::cerr << "Error: Failed to load background texture" << std::endl;
     }
 
-    // Initialize map controller with map data and textures
-    mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager, fileReader.readTeleportTiles("assets/map/map.txt"));
-    collisionTypes = fileReader.readCollisionTypes("assets/map/map.txt");
-    teleportTiles = fileReader.readTeleportTiles("assets/map/map.txt");
-
     // Create the sprite for the background
     backgroundSprite.setTexture(textureManager.getTexture("background"));
 
-    // Create some enemies
+    // Initialize the world and levels
+    std::cerr << "Create Level" << std::endl;
+    std::vector<Level> levels = {
+        Level("assets/map/map.txt", "assets/map/bossMap.txt"),
+        Level("assets/map/map2.txt", "assets/map/bossMap2.txt")
+    };
+    std::cerr << "Create World" << std::endl;
+    currentWorld = new World(levels);
+    std::cerr << "Load Level" << std::endl;
+    // Load the first level
+    if (currentWorld && !currentWorld->getLevels().empty()) {
+        loadLevel(currentWorld->getLevels()[currentLevelIndex]);
+    } else {
+        std::cerr << "Error: World or levels are not properly initialized." << std::endl;
+    }
+    std::cerr << "End Constructor" << std::endl;
+}
+
+void GameController::loadMap(const std::string& filename) {
+        // Load textures
+    if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
+        std::cerr << "Error: Failed to load tileset texture" << std::endl;
+    }
+    std::cerr << "Loading map: " << filename << std::endl;
+    mapController.reset(); // Reset the smart pointer
+    mapController = std::make_unique<MapController>(fileReader.readMap(filename), textureManager, fileReader.readTeleportTiles(filename));
+    collisionTypes = fileReader.readCollisionTypes(filename);
+    teleportTiles = fileReader.readTeleportTiles(filename);
+    std::cout << "Total collision types: " << collisionTypes.size() << std::endl;
+    std::cout << "Total teleport tiles: " << teleportTiles.size() << std::endl;
+}
+
+void GameController::loadLevel(const Level& level) {
+    std::cerr << "Loading level: " << level.getMapFile() << std::endl;
+    loadMap(level.getMapFile());
+    playerController.setPosition(100.0f, 100.0f); // Set player position at the start of the level
+    zombieController.getEnemies().clear(); // Clear the zombies
+    bossController.getEnemies().clear(); // Clear the bosses
+    // Create some enemies for the level
     zombieController.createEnemy(800.0f, 544.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
     zombieController.createEnemy(600.0f, 544.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
-
-    
-    
 }
 
 void GameController::run(sf::RenderWindow& window) {
@@ -70,20 +100,14 @@ void GameController::run(sf::RenderWindow& window) {
 
         playerController.setOnGround(onGround);
 
+        // Check for teleportation
         if (mapController->checkTeleport(playerController.getPlayer().getPosition())) {
-            if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
-        std::cerr << "Error: Failed to load tileset texture" << std::endl;
-    }
             std::cout << "Teleporting to boss room!" << std::endl;
-            mapController = new MapController(fileReader.readMap("assets/map/bossMap.txt"), textureManager, fileReader.readTeleportTiles("assets/map/bossMap.txt"));
-            collisionTypes = fileReader.readCollisionTypes("assets/map/bossMap.txt");
-            teleportTiles = fileReader.readTeleportTiles("assets/map/bossMap.txt");
-            
+            loadMap(currentWorld->getLevels()[currentLevelIndex].getBossMapFile());
             playerController.setPosition(100.0f, 100.0f); // Set player position in the boss room
             zombieController.getEnemies().clear(); // Clear the zombies
             // Create a boss
             bossController.createBoss(544.0f, 510.0f, 10.0f, 20.0f, 30.0f, 50, true, 50.0); // Example boss
-
         }
 
         // Check projectile collisions
@@ -128,6 +152,4 @@ void GameController::run(sf::RenderWindow& window) {
 
         window.display();
     }
-
-    delete mapController;
 }
