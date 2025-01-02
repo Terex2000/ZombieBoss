@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "MapView.h"
 #include "TextureManager.h"
+#include <iostream>
 
 class MapController {
 public:

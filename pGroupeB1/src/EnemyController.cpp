@@ -5,7 +5,14 @@
 #include <cmath> // Include for sqrt and pow
 
 EnemyController::EnemyController(EnemyFactory& factory, TextureManager& textureManager)
-    : factory(factory), textureManager(textureManager) {}
+    : factory(factory), textureManager(textureManager) {   
+    if (!textureManager.loadTexture("zombie", "assets/img/zombie.png")) {
+        std::cerr << "Error: Failed to load zombie texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
+        std::cerr << "Error: Failed to load bullet texture" << std::endl;
+    }
+    }
 
 EnemyController::~EnemyController() {
     for (auto enemy : enemies) {

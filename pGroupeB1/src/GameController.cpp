@@ -11,21 +11,11 @@ GameController::GameController(TextureManager& textureManager)
     if (!textureManager.loadTexture("background", "assets/img/background.jpg")) {
         std::cerr << "Error: Failed to load background texture" << std::endl;
     }
-    if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
-        std::cerr << "Error: Failed to load bullet texture" << std::endl;
-    }
-    if (!textureManager.loadTexture("zombie", "assets/img/zombie.png")) {
-        std::cerr << "Error: Failed to load zombie texture" << std::endl;
-    }
 
     // Initialize map controller with map data and textures
     mapController = new MapController(fileReader.readMap("assets/map/map.txt"), textureManager, fileReader.readTeleportTiles("assets/map/map.txt"));
     collisionTypes = fileReader.readCollisionTypes("assets/map/map.txt");
     teleportTiles = fileReader.readTeleportTiles("assets/map/map.txt");
-    std::cout << "Total teleport tiles: " << teleportTiles.size() << std::endl;
-
-
-    std::cout << "Total collision types: " << collisionTypes.size() << std::endl;
 
     // Create the sprite for the background
     backgroundSprite.setTexture(textureManager.getTexture("background"));
@@ -87,9 +77,7 @@ void GameController::run(sf::RenderWindow& window) {
             std::cout << "Teleporting to boss room!" << std::endl;
             mapController = new MapController(fileReader.readMap("assets/map/bossMap.txt"), textureManager, fileReader.readTeleportTiles("assets/map/bossMap.txt"));
             collisionTypes = fileReader.readCollisionTypes("assets/map/bossMap.txt");
-            std::cout << "Total Collision tiles: " << collisionTypes.size() << std::endl;
             teleportTiles = fileReader.readTeleportTiles("assets/map/bossMap.txt");
-            std::cout << "Total teleport tiles: " << teleportTiles.size() << std::endl;
             
             playerController.setPosition(100.0f, 100.0f); // Set player position in the boss room
             zombieController.getEnemies().clear(); // Clear the zombies

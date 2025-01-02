@@ -6,6 +6,9 @@ PlayerController::PlayerController(float startX, float startY, TextureManager& t
     : player(), playerView(player), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
     player.setColor(sf::Color::Red);
+    if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
+        std::cerr << "Error: Failed to load bullet texture" << std::endl;
+    }
 }
 
 // Copy constructor for PlayerController
