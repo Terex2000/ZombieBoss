@@ -44,6 +44,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add directory="C:/Program Files/CodeBlocks/SFML-2.5.1/include" />
+			<Add directory="C:/Users/jonat/Documents/school/Jeux_VIdeo/ZombieBoss/pGroupeB1/assets" />
 		</Compiler>
 		<Linker>
 			<Add library="mingw32" />
@@ -52,6 +53,7 @@
 			<Add library="winmm" />
 			<Add library="dxguid" />
 			<Add directory="C:/Program Files/CodeBlocks/SFML-2.5.1/lib" />
+			<Add directory="C:/Users/jonat/Documents/school/Jeux_VIdeo/ZombieBoss/pGroupeB1/assets" />
 		</Linker>
 		<Unit filename="assets/img/background.jpg" />
 		<Unit filename="assets/img/tileset.png" />

@@ -2,7 +2,7 @@
 #include <iostream>
 
 GameController::GameController(TextureManager& textureManager)
-    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), 
+    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager),
       zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager) {
     // Load textures
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
@@ -16,6 +16,18 @@ GameController::GameController(TextureManager& textureManager)
     }
     if (!textureManager.loadTexture("zombie", "assets/img/zombie.png")) {
         std::cerr << "Error: Failed to load zombie texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Idle", "assets/player/idle.png")) {
+        std::cerr << "Error: Failed to load Idle texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Jump", "assets/player/jump.png")) {
+        std::cerr << "Error: Failed to load Jump texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Run", "assets/player/run.png")) {
+        std::cerr << "Error: Failed to load Run texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Shot_2", "assets/player/shot_2.png")) {
+        std::cerr << "Error: Failed to load Shot_2 texture" << std::endl;
     }
 
     // Initialize map controller with map data and textures
@@ -32,7 +44,7 @@ GameController::GameController(TextureManager& textureManager)
 
     // Create a boss
     bossController.createBoss(900.0f, 734.0f, 10.0f, 20.0f, 30.0f, 50, true, 50.0); // Example boss
-    
+
 }
 
 void GameController::run(sf::RenderWindow& window) {
@@ -55,7 +67,7 @@ void GameController::run(sf::RenderWindow& window) {
         playerController.update(deltaTime, cameraManager.getView());
 
         // Check player collisions
-        const auto& playerShape = playerController.getPlayerShape();
+        const auto& playerShape = playerController.getPlayerSprite();
         const auto& mapData = mapController->getMap().getData();
         bool onGround = false;
 
@@ -118,6 +130,7 @@ void GameController::run(sf::RenderWindow& window) {
         bossController.draw(window);
 
         window.display();
+
     }
 
     delete mapController;

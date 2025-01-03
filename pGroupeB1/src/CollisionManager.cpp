@@ -9,11 +9,28 @@ CollisionManager::CollisionManager() {}
 
 CollisionManager::~CollisionManager() {}
 
-bool CollisionManager::isColliding(const sf::CircleShape& playerShape, const sf::RectangleShape& tileShape) {
-    return playerShape.getGlobalBounds().intersects(tileShape.getGlobalBounds());
+bool CollisionManager::isColliding(const sf::Sprite& playerSprite, const sf::RectangleShape& tileShape) {
+    return playerSprite.getGlobalBounds().intersects(tileShape.getGlobalBounds());
 }
 
-bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const Map& map, const std::unordered_set<int>& collisionTypes) {
+bool CollisionManager::isCollidingWithTile(const sf::Sprite& sprite, const Map& map, const std::unordered_set<int>& collisionTypes) {
+    const auto& mapData = map.getData();
+    for (size_t i = 0; i < mapData.size(); ++i) {
+        for (size_t j = 0; j < mapData[i].size(); ++j) {
+            const auto& tile = mapData[i][j];
+            if (collisionTypes.find(tile.getType()) != collisionTypes.end()) {
+                sf::RectangleShape tileShape(sf::Vector2f(32, 32));
+                tileShape.setPosition(tile.getX() * 32, tile.getY() * 32);
+                if (sprite.getGlobalBounds().intersects(tileShape.getGlobalBounds())) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool CollisionManager::isCollidingProjectileWithTile(const sf::CircleShape& shape, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& mapData = map.getData();
     for (size_t i = 0; i < mapData.size(); ++i) {
         for (size_t j = 0; j < mapData[i].size(); ++j) {
@@ -31,12 +48,12 @@ bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const M
 }
 
 bool CollisionManager::checkPlayerCollisions(const PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes) {
-    const auto& playerShape = playerController.getPlayerShape();
+    const auto& playerShape = playerController.getPlayerSprite();
     return isCollidingWithTile(playerShape, map, collisionTypes);
 }
 
 bool CollisionManager::checkProjectileCollisions(const Projectile& projectile, const Map& map, const std::unordered_set<int>& collisionTypes) {
-    return isCollidingWithTile(projectile.getShape(), map, collisionTypes);
+    return isCollidingProjectileWithTile(projectile.getShape(), map, collisionTypes);
 }
 
 void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& projectiles, EnemyController& enemyController) {
@@ -64,7 +81,7 @@ void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& p
 }
 
 void CollisionManager::checkEnemyProjectileCollisions(std::vector<Projectile>& projectiles, PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes, const sf::View& cameraView) {
-    const auto& playerShape = playerController.getPlayerShape();
+    const auto& playerShape = playerController.getPlayerSprite();
     sf::FloatRect cameraBounds(cameraView.getCenter() - cameraView.getSize() / 2.0f, cameraView.getSize());
 
     for (auto it = projectiles.begin(); it != projectiles.end();) {
