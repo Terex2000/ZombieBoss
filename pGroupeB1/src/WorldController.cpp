@@ -5,7 +5,7 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
     : textureManager(textureManager), playerController(playerController), zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager), currentWorldIndex(0), currentLevelIndex(0), cameraManager(800.0f, 600.0f), inBossRoom(false) {
     // Initialize the worlds and levels
     std::cerr << "Create Worlds" << std::endl;
-std::vector<World> worlds = {
+    std::vector<World> worlds = {
         World({
             Level("assets/map/level.txt", "assets/map/bossMap.txt", 
                   {{800.0f, 544.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10}, {600.0f, 544.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5}}, 
@@ -48,8 +48,10 @@ void WorldController::loadMap(const std::string& filename) {
     mapController = std::make_unique<MapController>(fileReader.readMap(filename), textureManager, fileReader.readTeleportTiles(filename));
     collisionTypes = fileReader.readCollisionTypes(filename);
     teleportTiles = fileReader.readTeleportTiles(filename);
+    instantDeathTiles = fileReader.readInstantDeathTiles(filename); // Load instant death tiles
     std::cout << "Total collision types: " << collisionTypes.size() << std::endl;
     std::cout << "Total teleport tiles: " << teleportTiles.size() << std::endl;
+    std::cout << "Total instant death tiles: " << instantDeathTiles.size() << std::endl;
 }
 
 void WorldController::loadLevel(const Level& level) {
@@ -139,6 +141,13 @@ void WorldController::update(float deltaTime) {
         }
     }
 
+    // Check if the player is on an instant death tile
+        if (checkInstantDeath(playerController.getPlayer().getPosition())) {
+            std::cerr << "Player hit an instant death tile! Respawning..." << std::endl;
+            playerController.setPosition(100.0f, 100.0f); // Reset player position to the start of the level
+        }
+    
+
     // Check if the boss is defeated
     if (inBossRoom && bossController.getEnemies().empty()) {
         if (currentLevelIndex == worlds[currentWorldIndex].getLevels().size() - 1) {
@@ -187,6 +196,19 @@ bool WorldController::checkTeleport(const sf::Vector2f& position) {
     if (tileX >= 0 && tileX < mapData[0].size() && tileY >= 0 && tileY < mapData.size()) {
         int tileType = mapData[tileY][tileX].getType();
         return teleportTiles.find(tileType) != teleportTiles.end();
+    }
+
+    return false;
+}
+
+bool WorldController::checkInstantDeath(const sf::Vector2f& position) {
+    const auto& mapData = mapController->getMap().getData();
+    int tileX = static_cast<int>(position.x / 32);
+    int tileY = static_cast<int>(position.y / 32);
+
+    if (tileX >= 0 && tileX < mapData[0].size() && tileY >= 0 && tileY < mapData.size()) {
+        int tileType = mapData[tileY][tileX].getType();
+        return instantDeathTiles.find(tileType) != instantDeathTiles.end();
     }
 
     return false;

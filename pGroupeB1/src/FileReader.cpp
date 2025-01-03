@@ -9,7 +9,7 @@ std::vector<std::vector<int>> FileReader::readMap(const std::string& filename) {
     std::string line;
 
     while (std::getline(file, line)) {
-        if (line.find("#COLLISION") == std::string::npos && line.find("#TELEPORT") == std::string::npos) {
+        if (line.find("#COLLISION") == std::string::npos && line.find("#TELEPORT") == std::string::npos && line.find("#INSTANTDEATH") == std::string::npos) {
             std::vector<int> row;
             std::istringstream iss(line);
             int tile;
@@ -60,4 +60,24 @@ std::unordered_set<int> FileReader::readTeleportTiles(const std::string& filenam
         }
     }
     return teleportTiles;
+}
+
+std::unordered_set<int> FileReader::readInstantDeathTiles(const std::string& filename) {
+    std::unordered_set<int> instantDeathTiles;
+    std::ifstream file(filename);
+    std::string line;
+
+    while (std::getline(file, line)) {
+        if (line.find("#INSTANTDEATH") != std::string::npos) {
+            std::istringstream iss(line);
+            std::string temp;
+            int type;
+            iss >> temp; // Skip the "#INSTANTDEATH" part
+            while (iss >> type) {
+                instantDeathTiles.insert(type);
+                std::cout << "Instant death tile detected: " << type << std::endl; // Debug message
+            }
+        }
+    }
+    return instantDeathTiles;
 }

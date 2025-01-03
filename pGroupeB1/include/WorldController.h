@@ -24,6 +24,7 @@ public:
     void loadLevel(const Level& level);
     void loadBossRoom(const Level& level);
     bool checkTeleport(const sf::Vector2f& position);
+    bool checkInstantDeath(const sf::Vector2f& position);
     void loadNextWorld(); // Add this method to load the next world
 
 private:
@@ -35,6 +36,7 @@ private:
     FileReader fileReader;
     std::unordered_set<int> collisionTypes;
     std::unordered_set<int> teleportTiles;
+    std::unordered_set<int> instantDeathTiles; // Add this member to store instant death tiles
     TextureManager& textureManager;
     EnemyController zombieController;
     EnemyController bossController;
