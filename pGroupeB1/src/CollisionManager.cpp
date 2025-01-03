@@ -63,15 +63,14 @@ void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& p
     }
 }
 
-void CollisionManager::checkEnemyProjectileCollisions(std::vector<Projectile>& projectiles, PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes, const sf::View& cameraView) {
+void CollisionManager::checkEnemyProjectileCollisions(std::vector<Projectile>& projectiles, PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& playerShape = playerController.getPlayerShape();
-    sf::FloatRect cameraBounds(cameraView.getCenter() - cameraView.getSize() / 2.0f, cameraView.getSize());
 
     for (auto it = projectiles.begin(); it != projectiles.end();) {
         if (it->getShape().getGlobalBounds().intersects(playerShape.getGlobalBounds())) {
             std::cout << "Player hit by enemy projectile!" << std::endl;
             it = projectiles.erase(it);
-        } else if (checkProjectileCollisions(*it, map, collisionTypes) || !cameraBounds.intersects(it->getShape().getGlobalBounds())) {
+        } else if (checkProjectileCollisions(*it, map, collisionTypes)) {
             it = projectiles.erase(it);
         } else {
             ++it;

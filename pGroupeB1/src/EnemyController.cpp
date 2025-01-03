@@ -35,11 +35,17 @@ void EnemyController::draw(sf::RenderWindow& window) {
         } else if (dynamic_cast<Boss*>(enemy)) {
             bossView.draw(window, *enemy);
         }
+        // Draw detection range overlay
+        sf::CircleShape detectionRange(150.0f); // Example detection range
+        detectionRange.setFillColor(sf::Color(255, 0, 0, 50)); // Semi-transparent red
+        detectionRange.setOrigin(detectionRange.getRadius(), detectionRange.getRadius());
+        detectionRange.setPosition(enemy->getPosition());
+        window.draw(detectionRange);
     }
     projectileController.draw(window);
 }
 
-void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition, Player& player) {
+void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition, Player& player, const sf::View& view) {
     for (auto it = enemies.begin(); it != enemies.end();) {
         if ((*it)->getHealth() <= 0) {
             if (dynamic_cast<Zombie*>(*it)) {
@@ -64,7 +70,7 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
             // Check if the enemy should shoot
             sf::Vector2f enemyPosition = (*it)->getPosition();
             float distance = std::sqrt(std::pow(playerPosition.x - enemyPosition.x, 2) + std::pow(playerPosition.y - enemyPosition.y, 2));
-            if (distance < 350.0f && projectileController.getProjectiles().size() < 3) { // Example distance
+            if (distance < 150.0f && projectileController.getProjectiles().size() < 3) { // Example distance
                 sf::Vector2f direction = playerPosition - enemyPosition;
                 float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
                 direction /= length; // Normalize the direction vector
@@ -74,7 +80,7 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
             ++it;
         }
     }
-    projectileController.update(deltaTime, sf::View());
+    projectileController.update(deltaTime, view);
 }
 
 std::vector<Enemy*>& EnemyController::getEnemies() {
