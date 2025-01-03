@@ -6,8 +6,7 @@
 
 class State {
 public:
-    State();
-    virtual ~State();
+    virtual ~State() = default;
 
     virtual void handleInput(sf::RenderWindow& window, sf::Event event) = 0;
     virtual void update(sf::RenderWindow& window, double deltaTime) = 0;

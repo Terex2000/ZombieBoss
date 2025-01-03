@@ -75,3 +75,7 @@ void Player::addCoins(int amount) {
 int Player::getCoins() const {
     return coins;
 }
+
+const sf::CircleShape& Player::getShape() const {
+    return shape;
+}

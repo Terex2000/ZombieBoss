@@ -1,22 +1,20 @@
-#ifndef INGAMESTATE_H
-#define INGAMESTATE_H
+#ifndef ONPAUSESTATE_H
+#define ONPAUSESTATE_H
 
 #include "State.h"
-#include <SFML/Graphics.hpp>
 #include "StateManager.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
 #include "InputManager.h"
-#include "GameController.h"
+#include "MenuController.h"
+#include "MainMenu.h"
 
-
-class InGameState : public State {
+class OnPauseState : public State {
 public:
-    InGameState(sf::RenderWindow& window, SoundManager& soundManager,
-                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
+    OnPauseState(sf::RenderWindow& window, StateManager* stateManager, SoundManager& soundManager,
+                 TextureManager& textureManager, InputManager& inputManager);
 
-    virtual ~InGameState();
-
+                 
     void handleInput(sf::RenderWindow& window, sf::Event event) override;
     void update(sf::RenderWindow& window, double deltaTime) override;
     void draw(sf::RenderWindow& window) override;
@@ -27,7 +25,9 @@ private:
     SoundManager& soundManager;
     TextureManager& textureManager;
     InputManager& inputManager;
-    GameController gameController;
+
+    MainMenu model; // Réutilisation du modèle pour le menu
+    MenuController controller; // Contrôleur pour gérer les entrées
 };
 
-#endif // INGAMESTATE_H
+#endif // ONPAUSESTATE_H

@@ -53,7 +53,7 @@ void PlayerController::update(float deltaTime, const sf::View& cameraView) {
     }
     projectileController.update(deltaTime, cameraView);
 
-
+    
 }
 
 // Sets the player's position.

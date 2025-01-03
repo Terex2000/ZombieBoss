@@ -2,8 +2,9 @@
 #include <iostream>
 
 MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManager,
-                             TextureManager& textureManager, InputManager& inputManager)
-    : window(window), view(window, textureManager), textureManager(textureManager), controller(model, inputManager), soundManager(soundManager),
+                             TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
+    : window(window), view(window, textureManager), textureManager(textureManager),inputManager(inputManager),
+    stateManager(stateManager), controller(model, inputManager), soundManager(soundManager),
       currentMenu(MenuType::MainMenu), selectedSettingOption(0), launchGame(false), isFullscreen(false) {
     soundManager.loadMusic("assets/sound/mainMenuSound.wav");
     soundManager.playMusic();
@@ -93,13 +94,14 @@ void MainMenuState::adjustWindowToScreen() {
 
 
 void MainMenuState::update(sf::RenderWindow& window, double deltaTime) {
+
     if (launchGame) {
-        soundManager.changeMusic("assets/sound/gameSound.wav");
-        GameController gameController(textureManager);
-        gameController.run(window);
-        launchGame = false;
-    }
+            // Change l'état vers InGameState
+            stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager,stateManager));
+            launchGame = false;
+        }
 }
+
 
 void MainMenuState::draw(sf::RenderWindow& window) {
     if (currentMenu == MenuType::MainMenu) {

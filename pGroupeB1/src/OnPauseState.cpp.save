@@ -2,8 +2,8 @@
 #include "MainMenuState.h"
 #include <iostream>
 
-OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
-                           TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
+OnPauseState::OnPauseState(sf::RenderWindow& window, StateManager* stateManager, SoundManager& soundManager,
+                           TextureManager& textureManager, InputManager& inputManager)
     : window(window), stateManager(stateManager), soundManager(soundManager),
       textureManager(textureManager), inputManager(inputManager), selectedOption(0) {
 
@@ -32,7 +32,7 @@ void OnPauseState::handleInput(sf::RenderWindow& window, sf::Event event) {
             executeOption();
         } else if (event.key.code == sf::Keyboard::Escape) {
             // Retourner directement au jeu
-            stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
+            stateManager->setState(std::make_unique<InGameState>(window, stateManager, soundManager, textureManager, inputManager));
         }
     }
 }
@@ -99,7 +99,7 @@ void OnPauseState::executeOption() {
     const std::string& option = options[selectedOption];
 
     if (option == "Resume") {
-        stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
+        stateManager->setState(std::make_unique<InGameState>(window, stateManager, soundManager, textureManager, inputManager));
     } else if (option == "Shop") {
         //stateManager->setState(std::make_unique<ShopState>(window, stateManager, soundManager, textureManager, inputManager));
     } else if (option == "Quit to Main Menu") {

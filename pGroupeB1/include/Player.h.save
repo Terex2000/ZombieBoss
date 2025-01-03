@@ -41,8 +41,6 @@ public:
     // Returns the number of coins the player has.
     int getCoins() const;
 
-    const sf::CircleShape& getShape() const;
-
 private:
     sf::CircleShape shape;
     sf::Vector2f position;

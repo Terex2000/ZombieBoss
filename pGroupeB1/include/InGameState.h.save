@@ -8,6 +8,7 @@
 #include "TextureManager.h"
 #include "InputManager.h"
 #include "GameController.h"
+#include "OnPauseState.h"
 
 
 class InGameState : public State {
@@ -28,6 +29,7 @@ private:
     TextureManager& textureManager;
     InputManager& inputManager;
     GameController gameController;
+    OnPauseState
 };
 
 #endif // INGAMESTATE_H

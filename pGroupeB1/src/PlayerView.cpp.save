@@ -26,7 +26,7 @@ PlayerView::~PlayerView() {}
 // Draws the player to the window.
 void PlayerView::draw(sf::RenderWindow& window) {
     updateShape();
-    window.draw(shape);
+    window.draw(player.getShape());
 }
 
 // Updates the shape's position and color based on the player's state.
