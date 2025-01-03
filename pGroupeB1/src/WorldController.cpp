@@ -7,7 +7,7 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
     std::cerr << "Create Worlds" << std::endl;
     std::vector<World> worlds = {
         World({
-            Level("assets/map/level.txt", "assets/map/bossMap.txt", 
+            Level("assets/map/mapW1L1.txt", "assets/map/bossMap.txt", 
                   {{800.0f, 544.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10}, {600.0f, 544.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5}}, 
                   {{800.0f, 544.0f, 500.0f, 50.0f, 30.0f, 200.0f, true, 20}}),
             Level("assets/map/map.txt", "assets/map/bossMap.txt", 
@@ -74,6 +74,8 @@ void WorldController::loadBossRoom(const Level& level) {
     playerController.setPosition(100.0f, 100.0f); // Set player position at the start of the boss room
     zombieController.getEnemies().clear(); // Clear the zombies
     bossController.getEnemies().clear(); // Clear the bosses
+    playerController.getProjectiles().clear();
+    zombieController.getProjectileController().getProjectiles().clear();
     inBossRoom = true; // Set the boss room flag
 
     // Create the boss for the boss room
