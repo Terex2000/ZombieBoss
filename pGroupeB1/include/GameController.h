@@ -1,20 +1,10 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
-#include "FileReader.h"
+#include "TextureManager.h"
 #include "PlayerController.h"
-#include "ProjectileController.h"
-#include "CollisionManager.h"
-#include "CameraManager.h"
-#include "InputManager.h"
-#include "MapController.h"
-#include "EnemyController.h"
-#include "ZombieFactory.h"
-#include "BossFactory.h"
-#include "World.h"
+#include "WorldController.h"
 #include <SFML/Graphics.hpp>
-#include <unordered_set>
-#include <memory> // Include for smart pointers
 
 class GameController {
 public:
@@ -23,25 +13,11 @@ public:
 
 private:
     PlayerController playerController;
-    ProjectileController projectileController;
-    CollisionManager collisionManager;
-    CameraManager cameraManager;
-    InputManager inputManager;
-    std::unique_ptr<MapController> mapController; // Use smart pointer
-    FileReader fileReader;
-    std::unordered_set<int> collisionTypes;
-    std::unordered_set<int> teleportTiles;
-    sf::Sprite backgroundSprite;
-    TextureManager textureManager;
-    EnemyController zombieController;
-    EnemyController bossController;
-    ZombieFactory zombieFactory;
-    BossFactory bossFactory;
-    World* currentWorld;
-    int currentLevelIndex;
+    WorldController worldController;
+    TextureManager& textureManager;
+    sf::Sprite backgroundSprite; // Add this member to manage the background
 
-    void loadMap(const std::string& filename);
-    void loadLevel(const Level& level);
+    void handleInput(sf::Event event); // Add this method to handle input
 };
 
 #endif // GAMECONTROLLER_H
