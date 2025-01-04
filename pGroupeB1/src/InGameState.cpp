@@ -2,6 +2,7 @@
 #include "OnPauseState.h"
 #include "MainMenuState.h"
 #include "WinState.h"
+#include "LoseState.h"
 
 InGameState::InGameState(sf::RenderWindow& window, SoundManager& soundManager,
                          TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
@@ -27,8 +28,10 @@ void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
 
                 }
             }
+        } else if(gameController.getWorldController().getPlayerLives()){
+                    stateManager->setState(std::make_unique<LoseState>(window, soundManager, textureManager, inputManager, stateManager));
         }
-         
+
 }
 
 
