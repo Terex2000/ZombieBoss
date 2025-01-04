@@ -2,7 +2,7 @@
 
 // Constructor for Player
 Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle) {
-    hitbox = sf::FloatRect(position.x, position.y, 40, 80); // Adjust hitbox size
+    hitbox = sf::FloatRect(position.x, position.y, 10, 10); // Adjust hitbox size
 }
 
 // Copy constructor for Player
@@ -31,7 +31,7 @@ void Player::move(float dx, float dy) {
     position.x += dx;
     position.y += dy;
 
-    // Update hitbox positio
+    // Update hitbox position
     hitbox.left = position.x;
     hitbox.top = position.y;
     if (dx != 0) {

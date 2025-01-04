@@ -20,27 +20,13 @@ public:
     // Returns the shape of the player.
     const sf::Sprite& getSprite() const;
 
-    void updateHitboxVisual();
-    void updateSpriteBounds();
-
 private:
     Player& player; // Reference to the player object
     TextureManager& textureManager; // Shape for rendering the player
     sf::Sprite sprite;
 
-    std::vector<sf::IntRect> frames;  // Frames for the current animation
-    std::size_t currentFrame;         // Current frame index
-    sf::Clock clock;                  // Clock to control animation timing
-    float animationTime;              // Time accumulator for animation
-    sf::RectangleShape hitboxShape;
-    sf::RectangleShape spriteRectangle;
-
     // Updates the shape's position and color based on the player's state.
     void updateSprite();
-
-    // Sets up the animation frames for a specific state
-    void setAnimation(const std::string& state, int frameCount);
-
 
 };
 

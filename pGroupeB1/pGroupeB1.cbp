@@ -58,6 +58,10 @@
 		<Unit filename="assets/img/background.jpg" />
 		<Unit filename="assets/img/tileset.png" />
 		<Unit filename="assets/map/map.txt" />
+		<Unit filename="assets/player/idle.png" />
+		<Unit filename="assets/player/jump.png" />
+		<Unit filename="assets/player/run.png" />
+		<Unit filename="assets/player/shot_2.png" />
 		<Unit filename="include/Boss.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
