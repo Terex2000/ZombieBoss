@@ -79,8 +79,6 @@ void PlayerController::update(float deltaTime, const sf::View& cameraView) {
     handleState();
     projectileController.update(deltaTime, cameraView);
 
-     std::cout << "Lives" << player.getLives() << std::endl;
-    std::cout << "health" << player.getHealth() << std::endl;
     // Check if the player has no lives left
     if (player.getLives() <= 0) {
         std::cout << "Game Over! The player has no lives left." << std::endl;
