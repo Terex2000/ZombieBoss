@@ -6,7 +6,7 @@
 // The Player class represents the player character.
 class Player {
 public:
-    enum class State{Idle, Jump, Run, Shot_2};
+    enum class State { Idle, Jump, Run, Shot_2 };
 
     Player();
     Player(const Player& other); // Copy constructor
@@ -47,8 +47,20 @@ public:
     void setState(State newState);
     State getState() const;
 
-        // Hitbox management
+    // Hitbox management
     sf::FloatRect getHitbox() const;
+
+    // Health management
+    void setHealth(float health);
+    float getHealth() const;
+    void takeDamage(float damage);
+    void heal(float amount);
+
+    // Lives management
+    void setLives(int lives);
+    int getLives() const;
+    void loseLife();
+    void gainLife();
 
 private:
     sf::Vector2f position;
@@ -57,7 +69,9 @@ private:
     float direction;
     int coins;
     State state;
-    sf::FloatRect hitbox; 
+    sf::FloatRect hitbox;
+    float health;
+    int lives;
 };
 
 #endif // PLAYER_H

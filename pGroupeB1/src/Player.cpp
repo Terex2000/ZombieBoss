@@ -1,13 +1,12 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle) {
+Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3) {
     hitbox = sf::FloatRect(position.x, position.y, 42, 69); // Adjust hitbox size
-
 }
 
 // Copy constructor for Player
-Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction), coins(other.coins), state(State::Idle) {
+Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction), coins(other.coins), state(State::Idle), health(other.health), lives(other.lives) {
     hitbox = other.hitbox;
 }
 
@@ -20,6 +19,8 @@ Player& Player::operator=(const Player& other) {
         direction = other.direction;
         coins = other.coins;
         hitbox = other.hitbox;
+        health = other.health;
+        lives = other.lives;
     }
     return *this;
 }
@@ -101,4 +102,54 @@ Player::State Player::getState() const {
 // Returns the player's hitbox
 sf::FloatRect Player::getHitbox() const {
     return hitbox;
+}
+
+// Sets the player's health.
+void Player::setHealth(float health) {
+    this->health = health;
+}
+
+// Returns the player's health.
+float Player::getHealth() const {
+    return health;
+}
+
+// Reduces the player's health by the specified amount.
+void Player::takeDamage(float damage) {
+    health -= damage;
+    if (health <= 0) {
+        loseLife();
+        health = 100.0f; // Reset health after losing a life
+    }
+}
+
+// Increases the player's health by the specified amount.
+void Player::heal(float amount) {
+    health += amount;
+    if (health > 100.0f) {
+        health = 100.0f; // Cap health at 100
+    }
+}
+
+// Sets the player's lives.
+void Player::setLives(int lives) {
+    this->lives = lives;
+}
+
+// Returns the player's lives.
+int Player::getLives() const {
+    return lives;
+}
+
+// Reduces the player's lives by one.
+void Player::loseLife() {
+    lives--;
+    if (lives < 0) {
+        lives = 0; // Ensure lives don't go below 0
+    }
+}
+
+// Increases the player's lives by one.
+void Player::gainLife() {
+    lives++;
 }
