@@ -1,10 +1,14 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0) {}
+Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle) {
+    hitbox = sf::FloatRect(position.x, position.y, 10, 10); // Adjust hitbox size
+}
 
 // Copy constructor for Player
-Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction), coins(other.coins) {}
+Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction), coins(other.coins), state(State::Idle) {
+    hitbox = other.hitbox;
+}
 
 // Copy assignment operator for Player
 Player& Player::operator=(const Player& other) {
@@ -14,6 +18,7 @@ Player& Player::operator=(const Player& other) {
         radius = other.radius;
         direction = other.direction;
         coins = other.coins;
+        hitbox = other.hitbox;
     }
     return *this;
 }
@@ -25,6 +30,10 @@ Player::~Player() {}
 void Player::move(float dx, float dy) {
     position.x += dx;
     position.y += dy;
+
+    // Update hitbox position
+    hitbox.left = position.x;
+    hitbox.top = position.y;
     if (dx != 0) {
         direction = (dx > 0) ? 1.0f : -1.0f;
     }
@@ -39,6 +48,10 @@ const sf::Vector2f& Player::getPosition() const {
 void Player::setPosition(float x, float y) {
     position.x = x;
     position.y = y;
+
+    // Update hitbox position
+    hitbox.left = position.x;
+    hitbox.top = position.y;
 }
 
 // Sets the color of the player.
@@ -75,3 +88,17 @@ void Player::addCoins(int amount) {
 int Player::getCoins() const {
     return coins;
 }
+
+void Player::setState(State newState) {
+    state = newState;
+}
+
+Player::State Player::getState() const {
+    return state;
+}
+
+// Returns the player's hitbox
+sf::FloatRect Player::getHitbox() const {
+    return hitbox;
+}
+

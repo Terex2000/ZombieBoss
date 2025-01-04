@@ -34,5 +34,10 @@ void TextureManager::adjustSpriteToWindow(sf::Sprite& sprite, sf::RenderWindow& 
 
 // Retrieves a texture by name.
 sf::Texture& TextureManager::getTexture(const std::string& name) {
-    return textures.at(name);
+    auto it = textures.find(name);
+    if (it != textures.end()) {
+        return it->second;
+    } else {
+        throw std::runtime_error("Error: Texture '" + name + "' not found in TextureManager.");
+    }
 }

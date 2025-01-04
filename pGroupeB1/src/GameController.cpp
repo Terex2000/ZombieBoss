@@ -2,7 +2,7 @@
 #include <iostream>
 
 GameController::GameController(TextureManager& textureManager)
-    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager), 
+    : playerController(100.0f, 100.0f, textureManager), cameraManager(800.0f, 600.0f), textureManager(textureManager),
       zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager) {
     // Load textures
     if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
@@ -24,8 +24,6 @@ GameController::GameController(TextureManager& textureManager)
     zombieController.createEnemy(800.0f, 544.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10); // Example max distance and coins
     zombieController.createEnemy(600.0f, 544.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5); // Example max distance and coins
 
-    
-    
 }
 
 void GameController::run(sf::RenderWindow& window) {
@@ -48,7 +46,7 @@ void GameController::run(sf::RenderWindow& window) {
         playerController.update(deltaTime, cameraManager.getView());
 
         // Check player collisions
-        const auto& playerShape = playerController.getPlayerShape();
+        const auto& playerShape = playerController.getPlayerSprite();
         const auto& mapData = mapController->getMap().getData();
         bool onGround = false;
 
@@ -127,6 +125,7 @@ void GameController::run(sf::RenderWindow& window) {
         bossController.draw(window);
 
         window.display();
+
     }
 
     delete mapController;
