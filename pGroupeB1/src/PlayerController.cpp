@@ -48,13 +48,19 @@ void PlayerController::update(float deltaTime, const sf::View& cameraView) {
     if (!onGround) {
         verticalSpeed += gravity * deltaTime;
         player.move(0, verticalSpeed * deltaTime);
+        if (player.getPosition().y >= 544.0f) { // Exemple de sol à 544 pixels
+            player.setPosition(player.getPosition().x, 544.0f);
+            onGround = true;
+            verticalSpeed = 0.0f;
+        }
     } else {
         verticalSpeed = 0.0f;
     }
+
+    // Mise à jour des projectiles
     projectileController.update(deltaTime, cameraView);
-
-
 }
+
 
 // Sets the player's position.
 void PlayerController::setPosition(float x, float y) {
@@ -67,6 +73,7 @@ void PlayerController::jump() {
         isJumping = true;
         onGround = false;
         verticalSpeed = jumpSpeed;
+        std::cout << "Jumping: verticalSpeed = " << verticalSpeed << std::endl;
     }
 }
 
@@ -121,54 +128,18 @@ std::vector<Projectile>& PlayerController::getProjectiles() {
 // Handles collisions between the player and a tile.
 void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     const auto& playerShape = getPlayerShape();
-    float playerX = playerShape.getPosition().x;
-    float playerY = playerShape.getPosition().y;
-    float tileX = tileShape.getPosition().x;
-    float tileY = tileShape.getPosition().y;
+    float playerBottom = playerShape.getPosition().y + playerShape.getRadius() * 2;
+    float tileTop = tileShape.getPosition().y;
 
-    float playerRadius = playerShape.getRadius();
-    float tileSize = tileShape.getSize().x;
-
-    float overlapLeft = (playerX + playerRadius * 2) - tileX;
-    float overlapRight = (tileX + tileSize) - playerX;
-    float overlapTop = (playerY + playerRadius * 2) - tileY;
-    float overlapBottom = (tileY + tileSize) - playerY;
-
-    enum CollisionType { NONE, LEFT, RIGHT, TOP, BOTTOM };
-    CollisionType collision = NONE;
-
-    if (overlapTop < overlapBottom && overlapTop < overlapLeft && overlapTop < overlapRight) {
-        collision = TOP;
-    } else if (overlapBottom < overlapTop && overlapBottom < overlapLeft && overlapBottom < overlapRight) {
-        collision = BOTTOM;
-    } else if (overlapLeft < overlapRight && overlapLeft < overlapTop && overlapLeft < overlapBottom) {
-        collision = LEFT;
-    } else if (overlapRight < overlapLeft && overlapRight < overlapTop && overlapRight < overlapBottom) {
-        collision = RIGHT;
-    }
-
-    const float marginH = 2.0f; // Adjust this value to increase the distance between the player and the tile
-    const float marginV = 0.0f; // Adjust this value to increase the distance between the player and the tile
-
-    switch (collision) {
-        case TOP:
-            setPosition(playerX, tileY - playerRadius * 2 - marginV);
-            resetVerticalSpeed();
-            setJumping(false);
-            setOnGround(true);
-            break;
-        case BOTTOM:
-            setPosition(playerX, tileY + tileSize + marginV);
-            resetVerticalSpeed();
-            setOnGround(false);
-            break;
-        case LEFT:
-            setPosition(tileX - playerRadius * 2 - marginH, playerY);
-            break;
-        case RIGHT:
-            setPosition(tileX + tileSize + marginH, playerY);
-            break;
-        default:
-            break;
+    if (playerBottom > tileTop && playerBottom - tileTop < 5.0f) {
+        setPosition(playerShape.getPosition().x, tileTop - playerShape.getRadius() * 2);
+        setOnGround(true);
+        resetVerticalSpeed();
+        std::cout << "Collision detected: Player landed on tile.\n";
+    } else {
+        std::cout << "No collision: Player not on tile.\n";
+        setOnGround(false);
     }
 }
+
+

@@ -13,7 +13,8 @@ InGameState::~InGameState() {
 }
 
 void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
-    if (event.type == sf::Event::KeyPressed) {
+    if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
+        gameController.handleInput(event);
         std::cout << "Key pressed: " << event.key.code << std::endl;
         if (event.key.code == sf::Keyboard::P) {
             std::cout << "Escape pressed: Switching to OnPauseState" << std::endl;
