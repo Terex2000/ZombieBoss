@@ -4,11 +4,7 @@
 // Constructor for PlayerView
 // Initializes the player view with a reference to the player.
 PlayerView::PlayerView(Player& player, TextureManager& textureManager) : player(player), textureManager(textureManager) {
-    sprite.setTexture(textureManager.getTexture("Idle"));
-    sprite.setTextureRect(sf::IntRect(0, 0, 42, 69));
     sprite.setPosition(player.getPosition());
-
-
 }
 
 // Copy constructor for PlayerView
@@ -42,15 +38,19 @@ void PlayerView::updateSprite() {
     switch (player.getState()) {
         case Player::State::Idle:
             sprite.setTexture(textureManager.getTexture("Idle"));
+            sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
             break;
         case Player::State::Jump:
             sprite.setTexture(textureManager.getTexture("Jump"));
+            sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
             break;
         case Player::State::Run:
             sprite.setTexture(textureManager.getTexture("Run"));
+            sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
             break;
         case Player::State::Shot_2:
             sprite.setTexture(textureManager.getTexture("Shot_2"));
+            sprite.setScale(30.0f / 57.0f, 30.0f / 69.0f); 
             break;
     }
 }
