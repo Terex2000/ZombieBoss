@@ -35,23 +35,44 @@ void PlayerView::draw(sf::RenderWindow& window) {
 void PlayerView::updateSprite() {
     sprite.setPosition(player.getHitbox().left, player.getHitbox().top);
 
-    switch (player.getState()) {
-        case Player::State::Idle:
-            sprite.setTexture(textureManager.getTexture("Idle"));
-            sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
-            break;
-        case Player::State::Jump:
-            sprite.setTexture(textureManager.getTexture("Jump"));
-            sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
-            break;
-        case Player::State::Run:
-            sprite.setTexture(textureManager.getTexture("Run"));
-            sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
-            break;
-        case Player::State::Shot_2:
-            sprite.setTexture(textureManager.getTexture("Shot_2"));
-            sprite.setScale(30.0f / 57.0f, 30.0f / 69.0f); 
-            break;
+    if (player.getDirection() > 0) {
+        switch (player.getState()) {
+            case Player::State::Idle:
+                sprite.setTexture(textureManager.getTexture("Idle"));
+                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
+                break;
+            case Player::State::Jump:
+                sprite.setTexture(textureManager.getTexture("Jump"));
+                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
+                break;
+            case Player::State::Run:
+                sprite.setTexture(textureManager.getTexture("Run"));
+                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
+                break;
+            case Player::State::Shot_2:
+                sprite.setTexture(textureManager.getTexture("Shot_2"));
+                sprite.setScale(30.0f / 57.0f, 30.0f / 69.0f); 
+                break;
+        }
+    } else {
+        switch (player.getState()) {
+            case Player::State::Idle:
+                sprite.setTexture(textureManager.getTexture("Idle_Left"));
+                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
+                break;
+            case Player::State::Jump:
+                sprite.setTexture(textureManager.getTexture("Jump_Left"));
+                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
+                break;
+            case Player::State::Run:
+                sprite.setTexture(textureManager.getTexture("Run_Left"));
+                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
+                break;
+            case Player::State::Shot_2:
+                sprite.setTexture(textureManager.getTexture("Shot_2_Left"));
+                sprite.setScale(30.0f / 57.0f, 30.0f / 69.0f); 
+                break;
+        }
     }
 }
 
