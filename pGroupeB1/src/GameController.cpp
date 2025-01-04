@@ -2,19 +2,10 @@
 #include <iostream>
 
 GameController::GameController(TextureManager& textureManager)
-    : playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {
-    // Load background texture
-    if (!textureManager.loadTexture("background", "assets/img/background.jpg")) {
-        std::cerr << "Error: Failed to load background texture" << std::endl;
-    }
-    backgroundSprite.setTexture(textureManager.getTexture("background"));
-}
+    : playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {}
 
 void GameController::run(sf::RenderWindow& window) {
     sf::Clock clock;
-
-    // Adjust background
-    textureManager.adjustSpriteToWindow(backgroundSprite, window);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -30,10 +21,6 @@ void GameController::run(sf::RenderWindow& window) {
         worldController.update(deltaTime);
 
         window.clear();
-
-        // Draw background
-        window.setView(window.getDefaultView());
-        window.draw(backgroundSprite);
 
         // Draw world
         worldController.draw(window);

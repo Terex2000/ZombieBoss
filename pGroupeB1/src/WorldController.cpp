@@ -5,8 +5,6 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
     : textureManager(textureManager), playerController(playerController), zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager), currentWorldIndex(0), currentLevelIndex(0), cameraManager(800.0f, 600.0f), inBossRoom(false) {
     // Initialize the worlds and levels
     std::cerr << "Create Worlds" << std::endl;
-    //Zombie(float x, float y, float health, float attack, float speed, float maxDistance, int coins);
-    //Boss(float x, float y, float health, float attack, float speed, int coins, bool isFinalBoss = false, float shield = 0.0f);
     std::vector<World> worlds = {
         World({
             Level("assets/map/mapW1L1.txt", "assets/map/bossMapW1.txt",
@@ -36,15 +34,36 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
                     {2432.0f, 288.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}
                   },
                   {{544.0f, 475.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}})
-        }, "assets/img/tileset.png"),
+        }, "assets/img/tilesetW1.png", "assets/img/backgroundW1.jpg"),
         World({
-            Level("assets/map/map2.txt", "assets/map/bossMap2.txt",
-                  {{700.0f, 544.0f, 120.0f, 15.0f, 60.0f, 120.0f, 15}, {500.0f, 544.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8}},
-                  {{700.0f, 544.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}}),
-            Level("assets/map/map2.txt", "assets/map/bossMap2.txt",
-                  {{600.0f, 544.0f, 110.0f, 12.0f, 55.0f, 110.0f, 12}, {400.0f, 544.0f, 80.0f, 7.0f, 35.0f, 55.0f, 7}},
-                  {{600.0f, 544.0f, 550.0f, 55.0f, 32.0f, 230.0f, true, 22}})
-        }, "assets/img/tileset2.png")
+            Level("assets/map/mapW2L1.txt", "assets/map/bossMapW2.txt",
+                  {
+                    {704.0f, 512.0f, 120.0f, 15.0f, 60.0f, 120.0f, 15}, 
+                    {1184.0f, 384.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {1728.0f, 512.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {1984.0f, 512.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {1728.0f, 160.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {1152.0f, 160.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8}
+                  },
+                  {{544.0f, 475.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}}),
+            Level("assets/map/mapW2L2.txt", "assets/map/bossMapW2.txt",
+                  {
+                    {1024.0f, 128.0f, 120.0f, 15.0f, 60.0f, 60.0f, 15}, 
+                    {1152.0f, 128.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {1184.0f, 384.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {1312.0f, 512.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {1728.0f, 416.0f, 90.0f, 8.0f, 40.0f, 30.0f, 8},
+                    {1952.0f, 416.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {2208.0f, 416.0f, 90.0f, 8.0f, 40.0f, 30.0f, 8},
+                    {2976.0f, 192.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {3328.0f, 192.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {3328.0f, 384.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {3104.0f, 384.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {3072.0f, 544.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
+                    {3456.0f, 544.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8}
+                  },
+                  {{544.0f, 475.0f, 600.0f, 60.0f, 35.0f, 250.0f, true, 25}})
+        }, "assets/img/tilesetW2.png", "assets/img/backgroundW2.png")
     };
     std::cerr << "Create Worlds" << std::endl;
     this->worlds = worlds;
@@ -211,6 +230,13 @@ void WorldController::update(float deltaTime) {
 
 void WorldController::draw(sf::RenderWindow& window) {
     // Set the camera view
+    window.setView(window.getDefaultView());
+
+    // Draw the background
+    const sf::Sprite& background = worlds[currentWorldIndex].getBackground();
+    textureManager.adjustSpriteToWindow(const_cast<sf::Sprite&>(background), window);
+    window.draw(background);
+
     window.setView(cameraManager.getView());
 
     // Draw the map, player, and enemies
