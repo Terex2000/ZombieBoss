@@ -38,3 +38,7 @@ void GameController::draw(sf::RenderWindow& window) {
 
     worldController.draw(window);
 }
+
+WorldController& GameController::getWorldController() {
+    return worldController;
+}

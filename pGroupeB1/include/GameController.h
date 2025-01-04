@@ -13,6 +13,7 @@ public:
     void run(sf::RenderWindow& window);
     void update(float deltaTime);   
     void draw(sf::RenderWindow& window);
+    WorldController& getWorldController();
 
 private:
     StateManager* stateManager;
