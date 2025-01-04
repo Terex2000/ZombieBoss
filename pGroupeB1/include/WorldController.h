@@ -26,6 +26,12 @@ public:
     bool checkTeleport(const sf::Vector2f& position);
     bool checkInstantDeath(const sf::Vector2f& position);
     void loadNextWorld(); // Add this method to load the next world
+    int getCurrentWorldIndex() const; // Add this method to get the current world index
+    int getWorldSize() const; // Add this method to get the size of the worlds vector
+    int getCurrentLevelIndex() const; // Add this method to get the current level index
+    int getLevelSize() const; // Add this method to get the size of the levels vector
+    bool isInBossRoom() const; // Add this method to check if the player is in the boss room
+    bool isBossRoomEmpty() const; // Add this method to check if the boss room is empty
 
 private:
     PlayerController& playerController;
@@ -46,6 +52,7 @@ private:
     int currentWorldIndex; // Add this member to track the current world
     int currentLevelIndex;
     bool inBossRoom; // Add this flag to track if the player is in the boss room
+    bool isBossDead;
 
     void loadMap(const std::string& filename);
     void loadTileset(const std::string& tileset); // Add this method to load the tileset

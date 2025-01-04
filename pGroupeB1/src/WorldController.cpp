@@ -201,6 +201,7 @@ void WorldController::update(float deltaTime) {
 
     // Check if the boss is defeated
     if (inBossRoom && bossController.getEnemies().empty()) {
+        isBossDead = true;
         if (currentLevelIndex == worlds[currentWorldIndex].getLevels().size() - 1) {
             std::cerr << "Final boss defeated! Game completed." << std::endl;
             // Optionally, you can reset the game or load the next world here
@@ -222,6 +223,8 @@ void WorldController::update(float deltaTime) {
                 std::cerr << "Error: Invalid level index " << currentLevelIndex << std::endl;
             }
         }
+    } else {
+        isBossDead = false;
     }
 
     // Update camera position
@@ -270,3 +273,27 @@ bool WorldController::checkInstantDeath(const sf::Vector2f& position) {
 
     return false;
 }
+
+    int WorldController::getCurrentWorldIndex() const {
+        return currentWorldIndex;
+    }
+
+    int WorldController::getWorldSize() const {
+        return worlds.size();
+    }
+
+    int WorldController::getCurrentLevelIndex() const {
+        return currentLevelIndex;
+    }
+
+    int WorldController::getLevelSize() const {
+        return worlds[currentWorldIndex].getLevels().size();
+    }
+
+    bool WorldController::isInBossRoom() const {
+        return inBossRoom;
+    }
+
+    bool WorldController::isBossRoomEmpty() const {
+        return isBossDead;
+    }
