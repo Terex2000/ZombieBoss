@@ -4,8 +4,8 @@ Zombie::Zombie(float x, float y, float health, float attack, float speed, float 
     : position(x, y), origin(x, y), health(health), attack(attack), speed(speed), maxDistance(maxDistance), direction(1.0f), coins(coins) {
     sprite.setTexture(texture);
     sprite.setPosition(position);
-    sprite.setScale(50.0f / texture.getSize().x, 50.0f / texture.getSize().y); // Scale the sprite to 15 pixels
-    sprite.setOrigin(texture.getSize().x / 3.0f, texture.getSize().y / 3.0f); // Center the sprite
+    sprite.setScale(32.0f / texture.getSize().x, 32.0f / texture.getSize().y); // Scale the sprite to 15 pixels
+    sprite.setOrigin(texture.getSize().x / 2.0f, texture.getSize().y / 2.0f); // Center the sprite
 }
 
 Zombie::~Zombie() {}

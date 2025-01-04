@@ -69,13 +69,14 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
 
             // Check if the enemy should shoot
             sf::Vector2f enemyPosition = (*it)->getPosition();
+            enemyPosition.y -= 10.0f; // Example offset
             float distance = std::sqrt(std::pow(playerPosition.x - enemyPosition.x, 2) + std::pow(playerPosition.y - enemyPosition.y, 2));
             if (distance < 150.0f && projectileController.getProjectiles().size() < 3) { // Example distance
                 sf::Vector2f direction = playerPosition - enemyPosition;
                 float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
                 direction /= length; // Normalize the direction vector
                 projectileController.shoot(enemyPosition, direction, textureManager.getTexture("bullet"), 20.0f); // Example damage
-                projectileController.getProjectiles().back().setScale(4.0f, 3.0f);
+                projectileController.getProjectiles().back().setScale(2.0f, 2.0f);
             }
             ++it;
         }
