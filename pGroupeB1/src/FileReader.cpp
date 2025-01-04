@@ -35,7 +35,6 @@ std::unordered_set<int> FileReader::readCollisionTypes(const std::string& filena
             iss >> temp; // Skip the "#COLLISION" part
             while (iss >> type) {
                 collisionTypes.insert(type);
-                std::cout << "Collision type detected: " << type << std::endl; // Debug message
             }
         }
     }
@@ -55,7 +54,6 @@ std::unordered_set<int> FileReader::readTeleportTiles(const std::string& filenam
             iss >> temp; // Skip the "#TELEPORT" part
             while (iss >> type) {
                 teleportTiles.insert(type);
-                std::cout << "Teleport tile detected: " << type << std::endl; // Debug message
             }
         }
     }
@@ -75,7 +73,6 @@ std::unordered_set<int> FileReader::readInstantDeathTiles(const std::string& fil
             iss >> temp; // Skip the "#INSTANTDEATH" part
             while (iss >> type) {
                 instantDeathTiles.insert(type);
-                std::cout << "Instant death tile detected: " << type << std::endl; // Debug message
             }
         }
     }
