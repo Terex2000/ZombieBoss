@@ -5,21 +5,44 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
     : textureManager(textureManager), playerController(playerController), zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager), currentWorldIndex(0), currentLevelIndex(0), cameraManager(800.0f, 600.0f), inBossRoom(false) {
     // Initialize the worlds and levels
     std::cerr << "Create Worlds" << std::endl;
+    //Zombie(float x, float y, float health, float attack, float speed, float maxDistance, int coins);
+    //Boss(float x, float y, float health, float attack, float speed, int coins, bool isFinalBoss = false, float shield = 0.0f);
     std::vector<World> worlds = {
         World({
-            Level("assets/map/mapW1L1.txt", "assets/map/bossMap.txt", 
-                  {{800.0f, 544.0f, 100.0f, 10.0f, 50.0f, 100.0f, 10}, {600.0f, 544.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5}}, 
-                  {{800.0f, 544.0f, 500.0f, 50.0f, 30.0f, 200.0f, true, 20}}),
-            Level("assets/map/map.txt", "assets/map/bossMap.txt", 
-                  {{700.0f, 544.0f, 120.0f, 15.0f, 60.0f, 120.0f, 15}, {500.0f, 544.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8}}, 
-                  {{700.0f, 544.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}})
+            Level("assets/map/mapW1L1.txt", "assets/map/bossMapW1.txt",
+                  {{288.0f, 256.0f, 100.0f, 10.0f, 50.0f, 16.0f, 10},
+                    {480.0f, 512.0f, 100.0f, 10.0f, 50.0f, 50.0f, 5},
+                    {1184.0f, 192.0f, 100.0f, 10.0f, 50.0f, 90.0f, 10},
+                    {1440.0f, 512.0f, 100.0f, 10.0f, 50.0f, 20.0f, 5},
+                    {1696.0f, 512.0f, 100.0f, 10.0f, 50.0f, 100.0f, 5},
+                    {2016.0f, 512.0f, 100.0f, 10.0f, 50.0f, 32.0f, 5},
+                    {2464.0f, 512.0f, 100.0f, 10.0f, 50.0f, 10.0f, 5}},
+                  {{544.0f, 475.0f, 500.0f, 50.0f, 30.0f, 200.0f, false, 20}}),
+            Level("assets/map/mapW1L2.txt", "assets/map/bossMapW1.txt",
+                  {
+                    {704.0f, 544.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}, 
+                    {1280.0f, 288.0f, 90.0f, 8.0f, 40.0f, 50.0f, 8},
+                    {1856.0f, 544.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}, 
+                    {2304.0f, 288.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
+                    {2624.0f, 544.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}
+                  },
+                  {{544.0f, 475.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}}),
+            Level("assets/map/mapW1L3.txt", "assets/map/bossMapW1.txt",
+                  {
+                    {416.0f, 192.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
+                    {720.0f, 192.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
+                    {1216.0f, 352.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
+                    {2048.0f, 192.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
+                    {2432.0f, 288.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}
+                  },
+                  {{544.0f, 475.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}})
         }, "assets/img/tileset.png"),
         World({
-            Level("assets/map/map2.txt", "assets/map/bossMap2.txt", 
-                  {{700.0f, 544.0f, 120.0f, 15.0f, 60.0f, 120.0f, 15}, {500.0f, 544.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8}}, 
+            Level("assets/map/map2.txt", "assets/map/bossMap2.txt",
+                  {{700.0f, 544.0f, 120.0f, 15.0f, 60.0f, 120.0f, 15}, {500.0f, 544.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8}},
                   {{700.0f, 544.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}}),
-            Level("assets/map/map2.txt", "assets/map/bossMap2.txt", 
-                  {{600.0f, 544.0f, 110.0f, 12.0f, 55.0f, 110.0f, 12}, {400.0f, 544.0f, 80.0f, 7.0f, 35.0f, 55.0f, 7}}, 
+            Level("assets/map/map2.txt", "assets/map/bossMap2.txt",
+                  {{600.0f, 544.0f, 110.0f, 12.0f, 55.0f, 110.0f, 12}, {400.0f, 544.0f, 80.0f, 7.0f, 35.0f, 55.0f, 7}},
                   {{600.0f, 544.0f, 550.0f, 55.0f, 32.0f, 230.0f, true, 22}})
         }, "assets/img/tileset2.png")
     };
@@ -90,8 +113,8 @@ void WorldController::update(float deltaTime) {
     playerController.update(deltaTime, cameraManager.getView());
 
     // Update enemies
-    zombieController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer());
-    bossController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer());
+    zombieController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer(), cameraManager.getView());
+    bossController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer(), cameraManager.getView());
 
     // Check player collisions
     const auto& playerShape = playerController.getPlayerShape();
@@ -123,8 +146,15 @@ void WorldController::update(float deltaTime) {
     collisionManager.checkProjectileEnemyCollisions(playerController.getProjectiles(), bossController);
 
     // Check enemy projectile collisions
-    collisionManager.checkEnemyProjectileCollisions(zombieController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes, cameraManager.getView());
-    collisionManager.checkEnemyProjectileCollisions(bossController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes, cameraManager.getView());
+    collisionManager.checkEnemyProjectileCollisions(zombieController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes);
+    collisionManager.checkEnemyProjectileCollisions(bossController.getProjectileController().getProjectiles(), playerController, mapController->getMap(), collisionTypes);
+
+    // Check projectile collisions with the map
+    for (auto& projectile : playerController.getProjectiles()) {
+        if (collisionManager.checkProjectileCollisions(projectile, mapController->getMap(), collisionTypes)) {
+            playerController.getProjectiles().clear();
+        }
+    }
 
     // Check teleportation
     if (checkTeleport(playerController.getPlayer().getPosition())) {
@@ -202,7 +232,6 @@ bool WorldController::checkTeleport(const sf::Vector2f& position) {
 
     return false;
 }
-
 bool WorldController::checkInstantDeath(const sf::Vector2f& position) {
     const auto& mapData = mapController->getMap().getData();
     int tileX = static_cast<int>(position.x / 32);
