@@ -15,6 +15,8 @@ public:
     Option getSelectedOption() const;
     void selectNext();
     void selectPrevious();
+    void addOption(const std::string& option);
+
 
 private:
     std::vector<std::string> options;

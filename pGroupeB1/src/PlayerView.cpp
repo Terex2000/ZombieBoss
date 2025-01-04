@@ -7,6 +7,8 @@ PlayerView::PlayerView(Player& player, TextureManager& textureManager) : player(
     sprite.setTexture(textureManager.getTexture("Idle"));
     sprite.setTextureRect(sf::IntRect(0, 0, 42, 69));
     sprite.setPosition(player.getPosition());
+
+
 }
 
 // Copy constructor for PlayerView

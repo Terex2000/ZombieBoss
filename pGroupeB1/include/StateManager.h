@@ -3,8 +3,6 @@
 
 #include "State.h"
 #include <memory>
-#include <unordered_map>
-#include <string>
 #include <SFML/Graphics.hpp>
 
 class StateManager {
@@ -17,10 +15,13 @@ public:
     ~StateManager();
 
     void setState(std::unique_ptr<State> newState);
-
     void handleInput(sf::Event event);
     void update(double deltaTime);
     void draw();
+
+    State* getCurrentState() const {
+        return currentState.get();
+    }
 };
 
 #endif // STATEMANAGER_H

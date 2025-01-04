@@ -4,13 +4,13 @@
 #include "TextureManager.h"
 #include "InputManager.h"
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Game Menu");
-    TextureManager textureManager;
-    SoundManager soundManager(50);
-    InputManager inputManager;
+     try {
+        sf::RenderWindow window(sf::VideoMode(800, 600), "Game Menu");
+        TextureManager textureManager;
+        SoundManager soundManager(50);
+        InputManager inputManager;
 
     if (!textureManager.loadTexture("Idle", "assets/player/idle.png")) {
         std::cerr << "Error: Failed to load Idle texture" << std::endl;
@@ -24,23 +24,28 @@ int main() {
     if (!textureManager.loadTexture("Shot_2", "assets/player/shot_2.png")) {
         std::cerr << "Error: Failed to load Shot_2 texture" << std::endl;
     }
+    
+        StateManager stateManager(window);
+        stateManager.setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, &stateManager));
 
-    StateManager stateManager(window);
-    stateManager.setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager));
-
-    sf::Clock clock;
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
+        sf::Clock clock;
+        while (window.isOpen()) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
+                }
+                stateManager.handleInput(event);
             }
-            stateManager.handleInput(event);
-        }
 
-        double deltaTime = clock.restart().asSeconds();
-        stateManager.update(deltaTime);
-        stateManager.draw();
+            double deltaTime = clock.restart().asSeconds();
+            stateManager.update(deltaTime);
+            stateManager.draw();
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "Unknown exception occurred!" << std::endl;
     }
 
     return 0;

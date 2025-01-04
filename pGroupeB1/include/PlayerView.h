@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "TextureManager.h"
 
+
 // The PlayerView class is responsible for rendering the player.
 class PlayerView {
 public:
@@ -27,7 +28,6 @@ private:
 
     // Updates the shape's position and color based on the player's state.
     void updateSprite();
-
 };
 
 #endif // PLAYERVIEW_H

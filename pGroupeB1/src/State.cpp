@@ -1,11 +1,5 @@
 #include "State.h"
 
-State::State()
-{
-    //ctor
-}
+State::State() = default;
 
-State::~State()
-{
-    //dtor
-}
+State::~State() = default; // Add this line to define the destructor

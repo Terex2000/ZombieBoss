@@ -3,7 +3,7 @@
 // Constructor for PlayerController
 // Initializes the player controller with a starting position and texture manager.
 PlayerController::PlayerController(float startX, float startY, TextureManager& textureManager)
-    : player(), playerView(player, textureManager), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(true) {
+    : player(), playerView(player, textureManager), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
     player.setColor(sf::Color::Red);
     if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
@@ -41,7 +41,6 @@ void PlayerController::draw(sf::RenderWindow& window) {
 // Moves the player by the specified amounts.
 void PlayerController::move(float dx, float dy) {
     player.move(dx, dy);
-
     if(dx != 0){
         player.setState(Player::State::Run);
     }
@@ -53,7 +52,6 @@ void PlayerController::update(float deltaTime, const sf::View& cameraView) {
         verticalSpeed += gravity * deltaTime;
         move(0, verticalSpeed * deltaTime);
     }
-
     handleState();
     projectileController.update(deltaTime, cameraView);
 }
@@ -79,7 +77,6 @@ void PlayerController::shoot() {
     sf::Vector2f direction = sf::Vector2f(player.getDirection(), 0.0f); // Use a Vector2f for the direction
     projectileController.shoot(position, direction, textureManager.getTexture("bullet"), 10.0f); // Example damage
     projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Adjust the scale here
-
     player.setState(Player::State::Shot_2);
 }
 
@@ -138,7 +135,7 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     enum CollisionType { NONE, LEFT, RIGHT, TOP, BOTTOM };
     CollisionType collision = NONE;
 
-    // Déterminer la collision avec le chevauchement le plus petit
+    // Dï¿½terminer la collision avec le chevauchement le plus petit
     if (overlapTop < overlapBottom && overlapTop < overlapLeft && overlapTop < overlapRight) {
         collision = TOP;
     } else if (overlapBottom < overlapTop && overlapBottom < overlapLeft && overlapBottom < overlapRight) {
@@ -149,7 +146,7 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
         collision = RIGHT;
     }
 
-    // Ajuster la position du joueur en fonction de la collision détectée
+    // Ajuster la position du joueur en fonction de la collision dï¿½tectï¿½e
     const float marginH = 2.0f; // Distance horizontale entre le joueur et la tuile
     const float marginV = 0.0f; // Distance verticale entre le joueur et la tuile
 
@@ -175,7 +172,6 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
             break;
     }
 }
-
 
 void PlayerController::handleState() {
     if (onGround) {

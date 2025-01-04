@@ -1,40 +1,27 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
 
-#include "FileReader.h"
+#include "TextureManager.h"
 #include "PlayerController.h"
-#include "ProjectileController.h"
-#include "CollisionManager.h"
-#include "CameraManager.h"
-#include "InputManager.h"
-#include "MapController.h"
-#include "EnemyController.h"
-#include "ZombieFactory.h"
-#include "BossFactory.h"
+#include "WorldController.h"
+#include "StateManager.h"
 #include <SFML/Graphics.hpp>
-#include <unordered_set>
 
 class GameController {
 public:
-    GameController(TextureManager& textureManager);
+    GameController(StateManager* stateManager, TextureManager& textureManager);
     void run(sf::RenderWindow& window);
+    void update(float deltaTime);   
+    void draw(sf::RenderWindow& window);
 
 private:
+    StateManager* stateManager;
     PlayerController playerController;
-    ProjectileController projectileController;
-    CollisionManager collisionManager;
-    CameraManager cameraManager;
-    InputManager inputManager;
-    MapController* mapController;
-    FileReader fileReader;
-    std::unordered_set<int> collisionTypes;
-    std::unordered_set<int> teleportTiles;
+    WorldController worldController;
+    TextureManager& textureManager;
     sf::Sprite backgroundSprite;
-    TextureManager textureManager;
-    EnemyController zombieController;
-    EnemyController bossController;
-    ZombieFactory zombieFactory;
-    BossFactory bossFactory;
+
+    
 };
 
 #endif // GAMECONTROLLER_H

@@ -47,9 +47,8 @@ public:
     void setState(State newState);
     State getState() const;
 
-    // Hitbox management
+        // Hitbox management
     sf::FloatRect getHitbox() const;
-
 
 private:
     sf::Vector2f position;
@@ -58,7 +57,7 @@ private:
     float direction;
     int coins;
     State state;
-    sf::FloatRect hitbox; // Hitbox for collision detection
+    sf::FloatRect hitbox; 
 };
 
 #endif // PLAYER_H

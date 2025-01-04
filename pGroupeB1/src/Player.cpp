@@ -3,6 +3,7 @@
 // Constructor for Player
 Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle) {
     hitbox = sf::FloatRect(position.x, position.y, 42, 69); // Adjust hitbox size
+
 }
 
 // Copy constructor for Player
@@ -101,4 +102,3 @@ Player::State Player::getState() const {
 sf::FloatRect Player::getHitbox() const {
     return hitbox;
 }
-
