@@ -1,6 +1,7 @@
 #include "InGameState.h"
 #include "OnPauseState.h"
 #include "MainMenuState.h"
+#include "WinState.h"
 
 InGameState::InGameState(sf::RenderWindow& window, SoundManager& soundManager,
                          TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
@@ -19,7 +20,15 @@ void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
         }else if (event.key.code == sf::Keyboard::Escape) {
             std::cout << "Escape pressed: Switching to OnPauseState" << std::endl;
             stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager));
+        } else if(gameController.getWorldController().isBossRoomEmpty() && gameController.getWorldController().isInBossRoom()){
+            if(gameController.getWorldController().getCurrentLevelIndex() == gameController.getWorldController().getLevelSize() -1){
+                if(gameController.getWorldController().getCurrentWorldIndex() == gameController.getWorldController().getWorldSize() -1){
+                    stateManager->setState(std::make_unique<WinState>(window, soundManager, textureManager, inputManager, stateManager));
+
+                }
+            }
         }
+         
 }
 
 
