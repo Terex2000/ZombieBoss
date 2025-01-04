@@ -18,9 +18,6 @@ PlayerView& PlayerView::operator=(const PlayerView& other) {
         player = other.player;
         textureManager = other.textureManager;
         sprite = other.sprite;
-        frames = other.frames;
-        currentFrame = other.currentFrame;
-        animationTime = other.animationTime;
     }
     return *this;
 }
