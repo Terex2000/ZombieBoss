@@ -2,15 +2,7 @@
 #include <iostream>
 
 GameController::GameController(StateManager* stateManager, TextureManager& textureManager)
-    : stateManager(stateManager), playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {
-    // Load textures
-    if (!textureManager.loadTexture("background", "assets/img/background.jpg")) {
-        std::cerr << "Error: Failed to load background texture" << std::endl;
-    }
-
-    // Create the sprite for the background
-    backgroundSprite.setTexture(textureManager.getTexture("background"));
-}
+    : stateManager(stateManager), playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {}
 
 void GameController::run(sf::RenderWindow& window) {
     sf::Clock clock;
