@@ -1,4 +1,6 @@
 #include "Projectile.h"
+#include <cmath> // Include for atan2 and M_PI
+
 
 // Constructor for Projectile
 // Initializes the projectile with a position, direction, texture, and damage.
@@ -40,6 +42,8 @@ Projectile& Projectile::operator=(Projectile&& other) noexcept {
 // Updates the projectile's position based on the elapsed time.
 void Projectile::update(float deltaTime) {
     shape.move(velocity * speed * deltaTime);
+    float scaleX = (velocity.x < 0) ? -1.0f : 1.0f;
+    shape.setScale(scaleX, 2.5f);
 }
 
 // Draws the projectile to the window.
