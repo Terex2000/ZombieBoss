@@ -53,9 +53,26 @@
 			<Add library="dxguid" />
 			<Add directory="C:/Program Files/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="assets/img/background.jpg" />
-		<Unit filename="assets/img/tileset.png" />
-		<Unit filename="assets/map/map.txt" />
+		<Unit filename="assets/img/backgroundW1.jpg" />
+		<Unit filename="assets/img/backgroundW2.png" />
+		<Unit filename="assets/img/bullet.png" />
+		<Unit filename="assets/img/mainMenuBackground.gif" />
+		<Unit filename="assets/img/settings.jpg" />
+		<Unit filename="assets/img/tilesetW1.png" />
+		<Unit filename="assets/img/tilesetW2.png" />
+		<Unit filename="assets/img/zombie.png" />
+		<Unit filename="assets/map/bossMapW1.txt" />
+		<Unit filename="assets/map/bossMapW2.txt" />
+		<Unit filename="assets/map/mapW1L1.txt" />
+		<Unit filename="assets/map/mapW1L2.txt" />
+		<Unit filename="assets/map/mapW1L3.txt" />
+		<Unit filename="assets/map/mapW2L1.txt" />
+		<Unit filename="assets/map/mapW2L2.txt" />
+		<Unit filename="assets/police/Arial.ttf" />
+		<Unit filename="assets/police/ZOMBIE.TTF" />
+		<Unit filename="assets/sound/gameSound.wav" />
+		<Unit filename="assets/sound/mainMenuSound.ogg" />
+		<Unit filename="assets/sound/mainMenuSound.wav" />
 		<Unit filename="include/Boss.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -115,6 +132,9 @@
 		</Unit>
 		<Unit filename="include/InputManager.h">
 			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="include/Level.h">
+			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="include/LoseState.h">
 			<Option virtualFolder="Model/" />
@@ -203,6 +223,12 @@
 		<Unit filename="include/WinState.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
+		<Unit filename="include/World.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="include/WorldController.h">
+			<Option virtualFolder="Controller/" />
+		</Unit>
 		<Unit filename="include/Zombie.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
@@ -271,6 +297,9 @@
 		</Unit>
 		<Unit filename="src/InputManager.cpp">
 			<Option virtualFolder="Utils/" />
+		</Unit>
+		<Unit filename="src/Level.cpp">
+			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="src/LoseState.cpp">
 			<Option virtualFolder="Model/" />
@@ -358,6 +387,12 @@
 		</Unit>
 		<Unit filename="src/WinState.cpp">
 			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/World.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/WorldController.cpp">
+			<Option virtualFolder="Controller/" />
 		</Unit>
 		<Unit filename="src/Zombie.cpp">
 			<Option virtualFolder="Model/" />
