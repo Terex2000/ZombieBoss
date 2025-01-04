@@ -1,8 +1,16 @@
 #include "GameController.h"
 #include <iostream>
 
-GameController::GameController(TextureManager& textureManager)
-    : playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {}
+GameController::GameController(StateManager* stateManager, TextureManager& textureManager)
+    : stateManager(stateManager), playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {
+    // Load textures
+    if (!textureManager.loadTexture("background", "assets/img/background.jpg")) {
+        std::cerr << "Error: Failed to load background texture" << std::endl;
+    }
+
+    // Create the sprite for the background
+    backgroundSprite.setTexture(textureManager.getTexture("background"));
+}
 
 void GameController::run(sf::RenderWindow& window) {
     sf::Clock clock;
@@ -12,7 +20,6 @@ void GameController::run(sf::RenderWindow& window) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-            handleInput(event);
         }
 
         float deltaTime = clock.restart().asSeconds();
@@ -29,12 +36,13 @@ void GameController::run(sf::RenderWindow& window) {
     }
 }
 
-void GameController::handleInput(sf::Event event) {
-    if (event.type == sf::Event::KeyPressed) {
-        if (event.key.code == sf::Keyboard::F11) {
-            // Handle fullscreen toggle
-        } else if (event.key.code == sf::Keyboard::Escape) {
-            // Handle game exit
-        }
-    }
+void GameController::update(float deltaTime) {
+
+    // Update world
+    worldController.update(deltaTime);
+}
+
+void GameController::draw(sf::RenderWindow& window) {
+
+    worldController.draw(window);
 }

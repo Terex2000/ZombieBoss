@@ -1,16 +1,33 @@
 #ifndef INGAMESTATE_H
 #define INGAMESTATE_H
 
+#include "State.h"
+#include <SFML/Graphics.hpp>
+#include "StateManager.h"
+#include "SoundManager.h"
+#include "TextureManager.h"
+#include "InputManager.h"
+#include "GameController.h"
 
-class InGameState
-{
-    public:
-        InGameState();
-        virtual ~InGameState();
 
-    protected:
+class InGameState : public State {
+public:
+    InGameState(sf::RenderWindow& window, SoundManager& soundManager,
+                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
 
-    private:
+    virtual ~InGameState();
+
+    void handleInput(sf::RenderWindow& window, sf::Event event) override;
+    void update(sf::RenderWindow& window, double deltaTime) override;
+    void draw(sf::RenderWindow& window) override;
+
+private:
+    sf::RenderWindow& window;
+    StateManager* stateManager;
+    SoundManager& soundManager;
+    TextureManager& textureManager;
+    InputManager& inputManager;
+    GameController gameController;
 };
 
 #endif // INGAMESTATE_H

@@ -49,6 +49,7 @@ private:
 
     void loadMap(const std::string& filename);
     void loadTileset(const std::string& tileset); // Add this method to load the tileset
+    void handleCollisions(); // Add this method to handle collisions
 };
 
 #endif // WORLDCONTROLLER_H

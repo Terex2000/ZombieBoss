@@ -1,0 +1,49 @@
+#ifndef GAMECONTROLLER_H
+#define GAMECONTROLLER_H
+
+#include "FileReader.h"
+#include "PlayerController.h"
+#include "ProjectileController.h"
+#include "CollisionManager.h"
+#include "CameraManager.h"
+#include "InputManager.h"
+#include "MapController.h"
+#include "EnemyController.h"
+#include "ZombieFactory.h"
+#include "BossFactory.h"
+#include <SFML/Graphics.hpp>
+#include <unordered_set>
+#include "StateManager.h"
+
+class GameController {
+public:
+    GameController(StateManager* stateManager, TextureManager& textureManager);
+    ~GameController();
+
+    void handleInput(const sf::Event& event); // Gérer les entrées
+    void update(float deltaTime);            // Mettre à jour la logique du jeu
+    void draw(sf::RenderWindow& window);
+
+private:
+    StateManager* stateManager;
+    PlayerController playerController;
+    ProjectileController projectileController;
+    CollisionManager collisionManager;
+    CameraManager cameraManager;
+    InputManager inputManager;
+    MapController* mapController;
+    FileReader fileReader;
+    std::unordered_set<int> collisionTypes;
+    std::unordered_set<int> teleportTiles;
+    sf::Sprite backgroundSprite;
+    TextureManager textureManager;
+    EnemyController zombieController;
+    EnemyController bossController;
+    ZombieFactory zombieFactory;
+    BossFactory bossFactory;
+
+    void loadMap(const std::string& mapPath); // Fonction pour charger la carte
+    void handleCollisions();
+};
+
+#endif // GAMECONTROLLER_H

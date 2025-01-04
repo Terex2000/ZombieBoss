@@ -14,6 +14,11 @@ MainMenu::Option MainMenu::getSelectedOption() const {
     return static_cast<Option>(selectedIndex);
 }
 
+void MainMenu::addOption(const std::string& option) {
+    options.push_back(option);
+}
+
+
 void MainMenu::selectNext() {
     selectedIndex = (selectedIndex + 1) % options.size();
 }

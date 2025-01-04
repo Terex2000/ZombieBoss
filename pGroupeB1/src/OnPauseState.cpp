@@ -1,11 +1,104 @@
 #include "OnPauseState.h"
+#include "MainMenuState.h"
+#include <iostream>
 
-OnPauseState::OnPauseState()
-{
-    //ctor
+OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
+                           TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
+    : window(window), stateManager(stateManager), soundManager(soundManager),
+      textureManager(textureManager), inputManager(inputManager), selectedOption(0) {
+
+    std::cout << "OnPauseState initialized" << std::endl;
+
+    // Charger la police
+    if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
+    std::cerr << "Error loading font for OnPauseState!" << std::endl;
+    }
+
+    options = {"Resume", "Shop", "Quit to Main Menu"};
 }
 
-OnPauseState::~OnPauseState()
-{
-    //dtor
+OnPauseState::~OnPauseState() {
+    std::cout << "OnPauseState destroyed" << std::endl;
+}
+
+
+void OnPauseState::handleInput(sf::RenderWindow& window, sf::Event event) {
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Up) {
+            navigateUp();
+        } else if (event.key.code == sf::Keyboard::Down) {
+            navigateDown();
+        } else if (event.key.code == sf::Keyboard::Enter) {
+            executeOption();
+        } else if (event.key.code == sf::Keyboard::Escape) {
+            // Retourner directement au jeu
+            stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
+        }
+    }
+}
+
+
+void OnPauseState::update(sf::RenderWindow& window, double deltaTime) {
+}
+
+void OnPauseState::draw(sf::RenderWindow& window) {
+    try {
+        // Fond semi-transparent
+        window.clear(sf::Color::Green);
+
+        // Rectangle pour le fond du menu
+        sf::RectangleShape rectangle(sf::Vector2f(400.f, 200.f));
+        rectangle.setFillColor(sf::Color(128, 128, 128, 200));
+        rectangle.setPosition(200.f, 150.f);
+        window.draw(rectangle);
+
+        // Chargement de la police
+        sf::Font font;
+        if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
+            std::cerr << "Error loading font for OnPauseState!" << std::endl;
+        }
+        // Affichage des options
+        for (size_t i = 0; i < options.size(); ++i) {
+            sf::Text text(options[i], font, 30);
+            text.setPosition(250.f, 180.f + i * 50.f); // Ajustez les positions
+            text.setFillColor(i == selectedOption ? sf::Color::Red : sf::Color::White);
+            window.draw(text);
+        }
+
+
+        window.display(); // Rafra�chir l'affichage
+    } catch (const std::exception& e) {
+        std::cerr << "Exception in OnPauseState::draw: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "Unknown exception in OnPauseState::draw" << std::endl;
+    }
+}
+
+
+void OnPauseState::navigateUp() {
+    if (selectedOption > 0) {
+        selectedOption--;
+    } else {
+        selectedOption = options.size() - 1; // Retourner � la derni�re option
+    }
+}
+
+void OnPauseState::navigateDown() {
+    if (selectedOption < options.size() - 1) {
+        selectedOption++;
+    } else {
+        selectedOption = 0; // Retourner � la premi�re option
+    }
+}
+
+void OnPauseState::executeOption() {
+    const std::string& option = options[selectedOption];
+
+    if (option == "Resume") {
+        stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
+    } else if (option == "Shop") {
+        //stateManager->setState(std::make_unique<ShopState>(window, stateManager, soundManager, textureManager, inputManager));
+    } else if (option == "Quit to Main Menu") {
+        stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager));
+    }
 }

@@ -4,20 +4,24 @@
 #include "TextureManager.h"
 #include "PlayerController.h"
 #include "WorldController.h"
+#include "StateManager.h"
 #include <SFML/Graphics.hpp>
 
 class GameController {
 public:
-    GameController(TextureManager& textureManager);
+    GameController(StateManager* stateManager, TextureManager& textureManager);
     void run(sf::RenderWindow& window);
+    void update(float deltaTime);   
+    void draw(sf::RenderWindow& window);
 
 private:
+    StateManager* stateManager;
     PlayerController playerController;
     WorldController worldController;
     TextureManager& textureManager;
-    sf::Sprite backgroundSprite; // Add this member to manage the background
+    sf::Sprite backgroundSprite;
 
-    void handleInput(sf::Event event); // Add this method to handle input
+    
 };
 
 #endif // GAMECONTROLLER_H
