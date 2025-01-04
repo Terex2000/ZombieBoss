@@ -35,12 +35,6 @@ void EnemyController::draw(sf::RenderWindow& window) {
         } else if (dynamic_cast<Boss*>(enemy)) {
             bossView.draw(window, *enemy);
         }
-        // Draw detection range overlay
-        sf::CircleShape detectionRange(150.0f); // Example detection range
-        detectionRange.setFillColor(sf::Color(255, 0, 0, 50)); // Semi-transparent red
-        detectionRange.setOrigin(detectionRange.getRadius(), detectionRange.getRadius());
-        detectionRange.setPosition(enemy->getPosition());
-        window.draw(detectionRange);
     }
     projectileController.draw(window);
 }
