@@ -9,6 +9,32 @@ PlayerController::PlayerController(float startX, float startY, TextureManager& t
     if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
         std::cerr << "Error: Failed to load bullet texture" << std::endl;
     }
+        if (!textureManager.loadTexture("Idle", "assets/player/idle.png")) {
+        std::cerr << "Error: Failed to load Idle texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Jump", "assets/player/jump.png")) {
+        std::cerr << "Error: Failed to load Jump texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Run", "assets/player/run.png")) {
+        std::cerr << "Error: Failed to load Run texture" << std::endl;
+    }
+
+            if (!textureManager.loadTexture("Shot_2", "assets/player/Shot_2.png")) {
+        std::cerr << "Error: Failed to load Shot_2 texture" << std::endl;
+    }
+    
+        if (!textureManager.loadTexture("Idle_Left", "assets/player/idle_left.png")) {
+        std::cerr << "Error: Failed to load Shot_2 texture" << std::endl;
+    }
+            if (!textureManager.loadTexture("Jump_Left", "assets/player/jump_left.png")) {
+        std::cerr << "Error: Failed to load Shot_2 texture" << std::endl;
+    }
+        if (!textureManager.loadTexture("Run_Left", "assets/player/run_left.png")) {
+        std::cerr << "Error: Failed to load Run texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Shot_2_Left", "assets/player/Shot_2_left.png")) {
+        std::cerr << "Error: Failed to load Shot_2 texture" << std::endl;
+    }
 }
 
 // Copy constructor for PlayerController
