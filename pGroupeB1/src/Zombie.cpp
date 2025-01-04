@@ -52,6 +52,7 @@ void Zombie::update(float deltaTime) {
     position.x += direction * speed * deltaTime;
     if (std::abs(position.x - origin.x) > maxDistance) {
         direction = -direction;
+        sprite.setScale(direction * std::abs(sprite.getScale().x), sprite.getScale().y); // Flip the sprite horizontally
     }
     sprite.setPosition(position);
 }
