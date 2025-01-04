@@ -70,13 +70,13 @@ void GameController::run(sf::RenderWindow& window) {
 
         if (mapController->checkTeleport(playerController.getPlayer().getPosition())) {
             if (!textureManager.loadTexture("tileset", "assets/img/tileset.png")) {
-        std::cerr << "Error: Failed to load tileset texture" << std::endl;
-    }
+                std::cerr << "Error: Failed to load tileset texture" << std::endl;
+            }
             std::cout << "Teleporting to boss room!" << std::endl;
             mapController = new MapController(fileReader.readMap("assets/map/bossMap.txt"), textureManager, fileReader.readTeleportTiles("assets/map/bossMap.txt"));
             collisionTypes = fileReader.readCollisionTypes("assets/map/bossMap.txt");
             teleportTiles = fileReader.readTeleportTiles("assets/map/bossMap.txt");
-            
+
             playerController.setPosition(100.0f, 100.0f); // Set player position in the boss room
             zombieController.getEnemies().clear(); // Clear the zombies
             // Create a boss

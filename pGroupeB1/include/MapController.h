@@ -15,6 +15,7 @@ public:
     int getMapWidth() const;
     int getMapHeight() const;
     bool checkTeleport(const sf::Vector2f& playerPosition); // New method to check for teleportation
+    void debugPlayerTile(const sf::Vector2f& playerPosition);
 
 private:
     Map map;
