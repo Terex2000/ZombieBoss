@@ -18,9 +18,9 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
                   {{544.0f, 475.0f, 500.0f, 50.0f, 30.0f, 200.0f, false, 20}}),
             Level("assets/map/mapW1L2.txt", "assets/map/bossMapW1.txt",
                   {
-                    {704.0f, 560.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}, 
+                    {704.0f, 560.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
                     {1280.0f, 304.0f, 90.0f, 8.0f, 40.0f, 50.0f, 8},
-                    {1856.0f, 560.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}, 
+                    {1856.0f, 560.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
                     {2304.0f, 304.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15},
                     {2624.0f, 560.0f, 120.0f, 15.0f, 60.0f, 50.0f, 15}
                   },
@@ -38,7 +38,7 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
         World({
             Level("assets/map/mapW2L1.txt", "assets/map/bossMapW2.txt",
                   {
-                    {704.0f, 528.0f, 120.0f, 15.0f, 60.0f, 120.0f, 15}, 
+                    {704.0f, 528.0f, 120.0f, 15.0f, 60.0f, 120.0f, 15},
                     {1184.0f, 400.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
                     {1728.0f, 528.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
                     {1984.0f, 528.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
@@ -48,7 +48,7 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
                   {{544.0f, 475.0f, 600.0f, 60.0f, 35.0f, 250.0f, false, 25}}),
             Level("assets/map/mapW2L2.txt", "assets/map/bossMapW2.txt",
                   {
-                    {1024.0f, 144.0f, 120.0f, 15.0f, 60.0f, 60.0f, 15}, 
+                    {1024.0f, 144.0f, 120.0f, 15.0f, 60.0f, 60.0f, 15},
                     {1152.0f, 144.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
                     {1184.0f, 400.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
                     {1312.0f, 528.0f, 90.0f, 8.0f, 40.0f, 60.0f, 8},
@@ -197,7 +197,7 @@ void WorldController::update(float deltaTime) {
             std::cerr << "Player hit an instant death tile! Respawning..." << std::endl;
             playerController.setPosition(100.0f, 100.0f); // Reset player position to the start of the level
         }
-    
+
 
     // Check if the boss is defeated
     if (inBossRoom && bossController.getEnemies().empty()) {
@@ -225,6 +225,10 @@ void WorldController::update(float deltaTime) {
         }
     } else {
         isBossDead = false;
+    }
+
+    if(playerController.getPlayer().getLives() <= 0) {
+        isPlayerDead = true;
     }
 
     // Update camera position
@@ -296,4 +300,8 @@ bool WorldController::checkInstantDeath(const sf::Vector2f& position) {
 
     bool WorldController::isBossRoomEmpty() const {
         return isBossDead;
+    }
+
+    bool WorldController::getPlayerLives() const {
+        return isPlayerDead;
     }

@@ -32,6 +32,7 @@ public:
     int getLevelSize() const; // Add this method to get the size of the levels vector
     bool isInBossRoom() const; // Add this method to check if the player is in the boss room
     bool isBossRoomEmpty() const; // Add this method to check if the boss room is empty
+    bool getPlayerLives() const; // Add this method to get the player's lives
 
 private:
     PlayerController& playerController;
@@ -53,6 +54,7 @@ private:
     int currentLevelIndex;
     bool inBossRoom; // Add this flag to track if the player is in the boss room
     bool isBossDead;
+    bool isPlayerDead;
 
     void loadMap(const std::string& filename);
     void loadTileset(const std::string& tileset); // Add this method to load the tileset
