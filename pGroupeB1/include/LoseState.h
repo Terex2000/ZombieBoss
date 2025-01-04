@@ -3,10 +3,17 @@
 
 #include "State.h"
 #include <SFML/Graphics.hpp>
+#include "StateManager.h"
+#include "SoundManager.h"
+#include "TextureManager.h"
+#include "InputManager.h"
+#include <vector>
+#include <string>
 
 class LoseState : public State {
 public:
-    LoseState(sf::RenderWindow& window); // Ajout du constructeur avec fen�tre
+    LoseState(sf::RenderWindow& window, SoundManager& soundManager,
+                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
     ~LoseState() override;
 
     void handleInput(sf::RenderWindow& window, sf::Event event) override;
@@ -15,6 +22,19 @@ public:
 
 private:
     sf::RenderWindow& window;
+    StateManager* stateManager;
+    SoundManager& soundManager;
+    TextureManager& textureManager;
+    InputManager& inputManager;
+
+    sf::Font font;
+    std::vector<std::string> options;
+    size_t selectedOption;
+    sf::Text loseText;
+
+    void navigateUp();
+    void navigateDown();
+    void executeOption();
 };
 
 #endif // LOSESTATE_H
