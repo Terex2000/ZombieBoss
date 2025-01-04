@@ -6,6 +6,8 @@
 // The Player class represents the player character.
 class Player {
 public:
+    enum class State{Idle, Jump, Run, Shot_2};
+
     Player();
     Player(const Player& other); // Copy constructor
     Player& operator=(const Player& other); // Copy assignment operator
@@ -41,12 +43,21 @@ public:
     // Returns the number of coins the player has.
     int getCoins() const;
 
+    // State management
+    void setState(State newState);
+    State getState() const;
+
+        // Hitbox management
+    sf::FloatRect getHitbox() const;
+
 private:
     sf::Vector2f position;
     sf::Color color;
     float radius;
     float direction;
     int coins;
+    State state;
+    sf::FloatRect hitbox; 
 };
 
 #endif // PLAYER_H

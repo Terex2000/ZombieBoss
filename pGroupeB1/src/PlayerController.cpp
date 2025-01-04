@@ -3,7 +3,7 @@
 // Constructor for PlayerController
 // Initializes the player controller with a starting position and texture manager.
 PlayerController::PlayerController(float startX, float startY, TextureManager& textureManager)
-    : player(), playerView(player), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
+    : player(), playerView(player, textureManager), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
     player.setColor(sf::Color::Red);
     if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
@@ -13,13 +13,13 @@ PlayerController::PlayerController(float startX, float startY, TextureManager& t
 
 // Copy constructor for PlayerController
 PlayerController::PlayerController(const PlayerController& other)
-    : player(other.player), playerView(player), projectileController(), textureManager(other.textureManager), verticalSpeed(other.verticalSpeed), isJumping(other.isJumping), onGround(other.onGround) {}
+    : player(other.player), playerView(player, textureManager), projectileController(), textureManager(other.textureManager), verticalSpeed(other.verticalSpeed), isJumping(other.isJumping), onGround(other.onGround) {}
 
 // Copy assignment operator for PlayerController
 PlayerController& PlayerController::operator=(const PlayerController& other) {
     if (this != &other) {
         player = other.player;
-        playerView = PlayerView(player);
+        playerView = PlayerView(player, other.textureManager);
         projectileController = other.projectileController;
         textureManager = other.textureManager;
         verticalSpeed = other.verticalSpeed;
@@ -41,6 +41,9 @@ void PlayerController::draw(sf::RenderWindow& window) {
 // Moves the player by the specified amounts.
 void PlayerController::move(float dx, float dy) {
     player.move(dx, dy);
+    if(dx != 0){
+        player.setState(Player::State::Run);
+    }
 }
 
 // Updates the player's state based on the elapsed time and camera view.
@@ -49,6 +52,7 @@ void PlayerController::update(float deltaTime, const sf::View& cameraView) {
         verticalSpeed += gravity * deltaTime;
         move(0, verticalSpeed * deltaTime);
     }
+    handleState();
     projectileController.update(deltaTime, cameraView);
 }
 
@@ -63,6 +67,7 @@ void PlayerController::jump() {
         isJumping = true;
         onGround = false;
         verticalSpeed = jumpSpeed;
+        player.setState(Player::State::Jump);
     }
 }
 
@@ -72,6 +77,7 @@ void PlayerController::shoot() {
     sf::Vector2f direction = sf::Vector2f(player.getDirection(), 0.0f); // Use a Vector2f for the direction
     projectileController.shoot(position, direction, textureManager.getTexture("bullet"), 10.0f); // Example damage
     projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Adjust the scale here
+    player.setState(Player::State::Shot_2);
 }
 
 // Resets the player's vertical speed.
@@ -95,8 +101,8 @@ bool PlayerController::isOnGround() const {
 }
 
 // Returns the shape of the player.
-const sf::CircleShape& PlayerController::getPlayerShape() const {
-    return playerView.getShape();
+const sf::Sprite& PlayerController::getPlayerSprite() const {
+    return playerView.getSprite();
 }
 
 // Returns the direction the player is facing.
@@ -116,23 +122,20 @@ std::vector<Projectile>& PlayerController::getProjectiles() {
 
 // Handles collisions between the player and a tile.
 void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
-    const auto& playerShape = getPlayerShape();
-    float playerX = playerShape.getPosition().x;
-    float playerY = playerShape.getPosition().y;
-    float tileX = tileShape.getPosition().x;
-    float tileY = tileShape.getPosition().y;
+    const auto& playerSprite = getPlayerSprite();
+    sf::FloatRect playerBounds = playerSprite.getGlobalBounds();
+    sf::FloatRect tileBounds = tileShape.getGlobalBounds();
 
-    float playerRadius = playerShape.getRadius();
-    float tileSize = tileShape.getSize().x;
-
-    float overlapLeft = (playerX + playerRadius * 2) - tileX;
-    float overlapRight = (tileX + tileSize) - playerX;
-    float overlapTop = (playerY + playerRadius * 2) - tileY;
-    float overlapBottom = (tileY + tileSize) - playerY;
+    // Calculer les chevauchements
+    float overlapLeft = (playerBounds.left + playerBounds.width) - tileBounds.left;
+    float overlapRight = (tileBounds.left + tileBounds.width) - playerBounds.left;
+    float overlapTop = (playerBounds.top + playerBounds.height) - tileBounds.top;
+    float overlapBottom = (tileBounds.top + tileBounds.height) - playerBounds.top;
 
     enum CollisionType { NONE, LEFT, RIGHT, TOP, BOTTOM };
     CollisionType collision = NONE;
 
+    // D�terminer la collision avec le chevauchement le plus petit
     if (overlapTop < overlapBottom && overlapTop < overlapLeft && overlapTop < overlapRight) {
         collision = TOP;
     } else if (overlapBottom < overlapTop && overlapBottom < overlapLeft && overlapBottom < overlapRight) {
@@ -143,28 +146,45 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
         collision = RIGHT;
     }
 
-    const float marginH = 2.0f; // Adjust this value to increase the distance between the player and the tile
-    const float marginV = 0.0f; // Adjust this value to increase the distance between the player and the tile
+    // Ajuster la position du joueur en fonction de la collision d�tect�e
+    const float marginH = 2.0f; // Distance horizontale entre le joueur et la tuile
+    const float marginV = 0.0f; // Distance verticale entre le joueur et la tuile
 
     switch (collision) {
         case TOP:
-            setPosition(playerX, tileY - playerRadius * 2 - marginV);
+            setPosition(playerBounds.left, tileBounds.top - playerBounds.height - marginV);
             resetVerticalSpeed();
             setJumping(false);
             setOnGround(true);
             break;
         case BOTTOM:
-            setPosition(playerX, tileY + tileSize + marginV);
+            setPosition(playerBounds.left, tileBounds.top + tileBounds.height + marginV);
             resetVerticalSpeed();
             setOnGround(false);
             break;
         case LEFT:
-            setPosition(tileX - playerRadius * 2 - marginH, playerY);
+            setPosition(tileBounds.left - playerBounds.width - marginH, playerBounds.top);
             break;
         case RIGHT:
-            setPosition(tileX + tileSize + marginH, playerY);
+            setPosition(tileBounds.left + tileBounds.width + marginH, playerBounds.top);
             break;
         default:
             break;
+    }
+}
+
+void PlayerController::handleState() {
+    if (onGround) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            player.setState(Player::State::Run);
+        } else if (isJumping) {
+            player.setState(Player::State::Jump);
+        } else {
+            player.setState(Player::State::Idle);
+        }
+    } else {
+        if (isJumping) {
+            player.setState(Player::State::Jump);
+        }
     }
 }

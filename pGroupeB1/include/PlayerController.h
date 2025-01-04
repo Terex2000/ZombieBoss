@@ -48,8 +48,8 @@ public:
     // Returns whether the player is on the ground.
     bool isOnGround() const;
 
-    // Returns the shape of the player.
-    const sf::CircleShape& getPlayerShape() const;
+    // Returns the sprite of the player.
+    const sf::Sprite& getPlayerSprite() const;
 
     // Returns the direction the player is facing.
     float getDirection() const;
@@ -73,6 +73,7 @@ private:
     bool onGround; // Whether the player is on the ground
     const float gravity = 980.0f; // Gravity constant (pixels per second squared)
     const float jumpSpeed = -350.0f; // Initial jump speed (pixels per second)
+    void handleState();
 };
 
 #endif // PLAYERCONTROLLER_H

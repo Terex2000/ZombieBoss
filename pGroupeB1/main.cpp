@@ -12,6 +12,19 @@ int main() {
         SoundManager soundManager(50);
         InputManager inputManager;
 
+    if (!textureManager.loadTexture("Idle", "assets/player/idle.png")) {
+        std::cerr << "Error: Failed to load Idle texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Jump", "assets/player/jump.png")) {
+        std::cerr << "Error: Failed to load Jump texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Run", "assets/player/run.png")) {
+        std::cerr << "Error: Failed to load Run texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("Shot_2", "assets/player/shot_2.png")) {
+        std::cerr << "Error: Failed to load Shot_2 texture" << std::endl;
+    }
+    
         StateManager stateManager(window);
         stateManager.setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, &stateManager));
 

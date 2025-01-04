@@ -136,7 +136,7 @@ void WorldController::update(float deltaTime) {
     bossController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer(), cameraManager.getView());
 
     // Check player collisions
-    const auto& playerShape = playerController.getPlayerShape();
+    const auto& playerShape = playerController.getPlayerSprite();
     const auto& mapData = mapController->getMap().getData();
     bool onGround = false;
 
