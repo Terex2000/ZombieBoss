@@ -6,7 +6,7 @@
 
 class MainMenu {
 public:
-    enum Option { Play, Shop, Settings, Quit };
+    enum Option { Play, LoadGame, Shop, Settings, Quit };
 
     MainMenu();
     ~MainMenu();
