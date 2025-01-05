@@ -43,7 +43,7 @@ void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
                 changeState = true;
             }
         }
-    } else if (gameController.getWorldController().getPlayer().getHealth() <= 0) {
+    } else if (gameController.getWorldController().getPlayer().getLives() <= 0) {
         std::cout << "Player health <= 0: Switching to LoseState" << std::endl;
         nextState = "LoseState";
         changeState = true;
