@@ -66,13 +66,10 @@ void ShopView::draw(sf::RenderWindow& window, const Player& player) {
     }
 }
 
-void ShopView::update(int coins) {
-    // Mettre à jour l'affichage des coins
-    errorMessage.setString(""); // Efface tout ancien message d'erreur
-
-    // Met à jour l'affichage des coins
-    sf::Text coinsText("Coins: " + std::to_string(coins), font, 20);
-    coinsText.setPosition(220.f, 200.f);
+void ShopView::update(const Player& player) {
+    coinsText.setString("Coins: " + std::to_string(player.getCoins()));
+    lifeText.setString("Lives: " + std::to_string(player.getLives()));
+    damageText.setString("Damage: " + std::to_string(player.getBulletDamage()));
 }
 
 void ShopView::navigateUp() {

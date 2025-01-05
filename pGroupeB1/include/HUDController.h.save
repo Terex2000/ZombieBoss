@@ -4,19 +4,24 @@
 #include "HUDView.h"
 #include "Player.h"
 #include "Boss.h"
-#include "ShopView.h"
 
 class HUDController {
 public:
     HUDController(Player& player, Boss* boss);
-    void updateCoins(int coins, ShopView& shopView);
+    void update();
     void draw(sf::RenderWindow& window);
     void setBoss(Boss* boss); // Add this method to set the current boss
+    void setCoins(int coins);
+    void setDamages(int damages);
+    void setLives(int lives);
 
 private:
     Player& player;
     Boss* boss;
     HUDView hudView;
+    int currentCoins;
+    int currentLives;
+    int currentDamages;
 };
 
 #endif // HUDCONTROLLER_H

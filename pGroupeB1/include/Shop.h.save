@@ -2,8 +2,8 @@
 #define SHOP_H
 
 #include "Player.h"
-class HUDController; // Forward declaration
-class ShopView; // Forward declaration
+#include "Shop.h"
+#include "ShopView.h"
 
 class Shop {
 public:

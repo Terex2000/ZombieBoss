@@ -1,20 +1,16 @@
 #include "HUDController.h"
-#include <iostream>
 
 HUDController::HUDController(Player& player, Boss* boss)
     : player(player), boss(boss) {}
 
-void HUDController::updateCoins(int coins, ShopView& shopView) {
-    if (&shopView == nullptr) {
-        std::cerr << "Error: ShopView is null!" << std::endl;
-        return;
-    }
+void HUDController::update(int coins, ShopView& shopView) {
     hudView.update(player, boss);
-    shopView.update(coins);
+
 }
 
 void HUDController::draw(sf::RenderWindow& window) {
     hudView.draw(window);
+    shopView.update(coins);
 }
 
 void HUDController::setBoss(Boss* boss) {

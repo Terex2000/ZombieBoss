@@ -28,7 +28,7 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
     if (currentMenu == MenuType::MainMenu) {
         controller.handleInput();
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
-            if (model.getSelectedOption() == static_cast<size_t>(MainMenu::Settings)) {
+            if (model.getSelectedOption() == static_cast<int>(MainMenu::Settings)) {
                 currentMenu = MenuType::Settings;
                 selectedSettingOption = 0;
             } else if (model.getSelectedOption() == MainMenu::Quit) {

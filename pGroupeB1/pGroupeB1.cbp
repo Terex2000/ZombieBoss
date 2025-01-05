@@ -201,6 +201,9 @@
 		<Unit filename="include/Shop.h">
 			<Option virtualFolder="Model/" />
 		</Unit>
+		<Unit filename="include/ShopState.h">
+			<Option virtualFolder="Model/" />
+		</Unit>
 		<Unit filename="include/ShopView.h">
 			<Option virtualFolder="View/" />
 		</Unit>
@@ -364,6 +367,9 @@
 			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="src/Shop.cpp">
+			<Option virtualFolder="Model/" />
+		</Unit>
+		<Unit filename="src/ShopState.cpp">
 			<Option virtualFolder="Model/" />
 		</Unit>
 		<Unit filename="src/ShopView.cpp">

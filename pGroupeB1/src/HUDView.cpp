@@ -1,49 +1,40 @@
 #include "HUDView.h"
 #include <iostream>
-#include <sstream> // Include this header for std::ostringstream
-#include <iomanip> // Include this header for std::setprecision
 
 HUDView::HUDView() {
     if (!font.loadFromFile("assets/police/Arial.ttf")) {
-        std::cerr << "Error loading font!" << std::endl;
+        std::cerr << "Error loading font for HUDView!" << std::endl;
     }
 
     playerHealthText.setFont(font);
-    playerHealthText.setCharacterSize(24);
+    playerHealthText.setCharacterSize(20);
     playerHealthText.setFillColor(sf::Color::White);
 
     playerDamageText.setFont(font);
-    playerDamageText.setCharacterSize(24);
+    playerDamageText.setCharacterSize(20);
     playerDamageText.setFillColor(sf::Color::White);
 
     playerLivesText.setFont(font);
-    playerLivesText.setCharacterSize(24);
+    playerLivesText.setCharacterSize(20);
     playerLivesText.setFillColor(sf::Color::White);
 
-    bossHealthText.setFont(font);
-    bossHealthText.setCharacterSize(24);
-    bossHealthText.setFillColor(sf::Color::Red);
+    playerCoinsText.setFont(font);
+    playerCoinsText.setCharacterSize(20);
+    playerCoinsText.setFillColor(sf::Color::White);
 
-    playerHealthText.setString("Health: ");
-    playerDamageText.setString("Damage: ");
-    playerLivesText.setString("Lives: ");
+    bossHealthText.setFont(font);
+    bossHealthText.setCharacterSize(20);
+    bossHealthText.setFillColor(sf::Color::Red);
 }
 
 void HUDView::update(const Player& player, const Boss* boss) {
-    std::ostringstream healthStream;
-    healthStream << std::fixed << std::setprecision(1) << player.getHealth();
-    playerHealthText.setString("Health: " + healthStream.str());
-
-    std::ostringstream damageStream;
-    damageStream << std::fixed << std::setprecision(1) << player.getBulletDamage();
-    playerDamageText.setString("Damage: " + damageStream.str());
-
+    playerHealthText.setString("Health: " + std::to_string(player.getHealth()));
+    playerDamageText.setString("Damage: " + std::to_string(player.getBulletDamage()));
     playerLivesText.setString("Lives: " + std::to_string(player.getLives()));
+    playerCoinsText.setString("Coins: " + std::to_string(player.getCoins()));
 
     if (boss) {
-        std::ostringstream bossHealthStream;
-        bossHealthStream << std::fixed << std::setprecision(1) << boss->getHealth();
-        bossHealthText.setString("Boss Health: " + bossHealthStream.str());
+        bossHealthText.setString("Boss Health: " + std::to_string(boss->getHealth()));
     } else {
         bossHealthText.setString("");
     }
@@ -53,10 +44,14 @@ void HUDView::draw(sf::RenderWindow& window) {
     playerHealthText.setPosition(10, 10);
     playerDamageText.setPosition(10, 40);
     playerLivesText.setPosition(10, 70);
-    bossHealthText.setPosition(10, 100);
+    playerCoinsText.setPosition(10, 100);
+    bossHealthText.setPosition(10, 130);
 
     window.draw(playerHealthText);
     window.draw(playerDamageText);
     window.draw(playerLivesText);
-    window.draw(bossHealthText);
+    window.draw(playerCoinsText);
+    if (!bossHealthText.getString().isEmpty()) {
+        window.draw(bossHealthText);
+    }
 }

@@ -1,7 +1,7 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
+Player::Player() : position(0, 0), direction(1.0f), coins(50), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
     hitbox = sf::FloatRect(position.x, position.y, 42, 69); // Adjust hitbox size
 }
 

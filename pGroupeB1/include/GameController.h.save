@@ -13,7 +13,7 @@ public:
     GameController(StateManager* stateManager, TextureManager& textureManager);
     GameController(StateManager* stateManager, TextureManager& textureManager, const std::string& saveFile); // Add constructor for loading game
     void run(sf::RenderWindow& window);
-    void update(float deltaTime);
+    void update(float deltaTime);   
     void draw(sf::RenderWindow& window);
     WorldController& getWorldController();
         void saveGame(const std::string& filename); // Add this method to save the game state
@@ -32,7 +32,7 @@ private:
     sf::Sprite backgroundSprite;
     FileWriter fileWriter; // Add this member to handle file writing
 
-
+    
 };
 
 #endif // GAMECONTROLLER_H

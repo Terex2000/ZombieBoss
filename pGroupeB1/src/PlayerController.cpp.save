@@ -76,7 +76,7 @@ void PlayerController::update(float deltaTime, const sf::View& cameraView) {
         move(0, verticalSpeed * deltaTime);
     }
     handleState();
-    //player.setCoins(player.getCoins()); // Reflect coin changes
+    player.setCoins(player.getCoins()); // Reflect coin changes
     projectileController.update(deltaTime, cameraView);
 
     // Check if the player has no lives left

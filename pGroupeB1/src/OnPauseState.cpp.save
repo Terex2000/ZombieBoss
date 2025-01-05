@@ -7,7 +7,7 @@
 OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
                            TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager, Player& player,HUDController& hudController)
     : window(window), stateManager(stateManager), soundManager(soundManager),
-      textureManager(textureManager), inputManager(inputManager), player(player), hudController(hudController), gameController(stateManager, textureManager), selectedOption(0) {
+      textureManager(textureManager), inputManager(inputManager), player(player), gameController(stateManager, textureManager), selectedOption(0) {
 
     std::cout << "OnPauseState initialized" << std::endl;
 

@@ -6,8 +6,6 @@
 #include "SoundManager.h"
 #include "TextureManager.h"
 #include "GameController.h"
-#include "HUDController.h"
-#include "Player.h"
 #include "InputManager.h"
 #include <SFML/Graphics.hpp>
 #include "ShopState.h"
@@ -18,7 +16,7 @@
 class OnPauseState : public State {
 public:
     OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
-                 TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, Player& player, HUDController& hudController);
+                 TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
 
     virtual ~OnPauseState();
 
@@ -32,9 +30,7 @@ private:
     SoundManager& soundManager;
     TextureManager& textureManager;
     InputManager& inputManager;
-    HUDController& hudController;
     GameController gameController;
-    Player& player;
 
 
     sf::Font font;
