@@ -42,3 +42,8 @@ void GameController::draw(sf::RenderWindow& window) {
 WorldController& GameController::getWorldController() {
     return worldController;
 }
+
+void GameController::saveGame(const std::string& filename) {
+    nlohmann::json gameState = worldController.getGameState();
+    fileWriter.saveGameState(filename, gameState);
+}

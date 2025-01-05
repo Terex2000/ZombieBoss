@@ -78,6 +78,10 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
     projectileController.update(deltaTime, view);
 }
 
+const std::vector<Enemy*>& EnemyController::getEnemies() const{
+    return enemies;
+}
+
 std::vector<Enemy*>& EnemyController::getEnemies() {
     return enemies;
 }

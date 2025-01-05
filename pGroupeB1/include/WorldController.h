@@ -15,6 +15,8 @@
 #include <SFML/Graphics.hpp>
 #include <unordered_set>
 #include <memory> // Include for smart pointers
+#include <nlohmann/json.hpp> // Include the JSON library
+
 
 class WorldController {
 public:
@@ -33,6 +35,8 @@ public:
     bool isInBossRoom() const; // Add this method to check if the player is in the boss room
     bool isBossRoomEmpty() const; // Add this method to check if the boss room is empty
     bool getPlayerLives() const; // Add this method to get the player's lives
+
+    nlohmann::json getGameState() const; // Add this method to get the game state as JSON
 
 private:
     PlayerController& playerController;

@@ -5,6 +5,7 @@
 #include "PlayerController.h"
 #include "WorldController.h"
 #include "StateManager.h"
+#include "FileWriter.h"
 #include <SFML/Graphics.hpp>
 
 class GameController {
@@ -14,6 +15,8 @@ public:
     void update(float deltaTime);   
     void draw(sf::RenderWindow& window);
     WorldController& getWorldController();
+        void saveGame(const std::string& filename); // Add this method to save the game state
+
 
 private:
     StateManager* stateManager;
@@ -21,6 +24,7 @@ private:
     WorldController worldController;
     TextureManager& textureManager;
     sf::Sprite backgroundSprite;
+    FileWriter fileWriter; // Add this member to handle file writing
 
     
 };
