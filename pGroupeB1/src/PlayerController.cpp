@@ -5,7 +5,6 @@
 PlayerController::PlayerController(float startX, float startY, TextureManager& textureManager)
     : player(), playerView(player, textureManager), projectileController(), textureManager(textureManager), verticalSpeed(0.0f), isJumping(false), onGround(false) {
     player.setPosition(startX, startY);
-    player.setColor(sf::Color::Red);
     if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
         std::cerr << "Error: Failed to load bullet texture" << std::endl;
     }
@@ -105,7 +104,7 @@ void PlayerController::jump() {
 void PlayerController::shoot() {
     sf::Vector2f position = player.getPosition();
     sf::Vector2f direction = sf::Vector2f(player.getDirection(), 0.0f); // Use a Vector2f for the direction
-    projectileController.shoot(position, direction, textureManager.getTexture("bullet"), 10.0f); // Example damage
+    projectileController.shoot(position, direction, textureManager.getTexture("bullet"), player.getBulletDamage()); // Example damage
     projectileController.getProjectiles().back().setScale(4.0f, 3.0f); // Adjust the scale here
     player.setState(Player::State::Shot_2);
 }

@@ -1,7 +1,7 @@
 #include "Zombie.h"
 
 Zombie::Zombie(float x, float y, float health, float attack, float speed, float maxDistance, int coins, const sf::Texture& texture)
-    : position(x, y), origin(x, y), health(health), attack(attack), speed(speed), maxDistance(maxDistance), direction(1.0f), coins(coins) {
+    : position(x, y), origin(x, y), health(health), attack(attack), speed(speed), maxDistance(maxDistance), direction(1.0f), coins(coins), shield(0.0f), finalBoss(false) {
     sprite.setTexture(texture);
     sprite.setPosition(position);
     sprite.setScale(32.0f / texture.getSize().x, 32.0f / texture.getSize().y); // Scale the sprite to 15 pixels
@@ -44,6 +44,42 @@ float Zombie::getSpeed() const {
     return speed;
 }
 
+void Zombie::setMaxDistance(float maxDistance) {
+    this->maxDistance = maxDistance;
+}
+
+float Zombie::getMaxDistance() const {
+    return maxDistance;
+}
+
+void Zombie::setCoins(int coins) {
+    this->coins = coins;
+}
+
+int Zombie::getCoins() const {
+    return coins;
+}
+
+void Zombie::setShield(float shield) {
+    this->shield = shield;
+}
+
+float Zombie::getShield() const {
+    return shield;
+}
+
+void Zombie::setFinalBoss(bool isFinalBoss) {
+    this->finalBoss = isFinalBoss;
+}
+
+bool Zombie::isFinalBoss() const {
+    return finalBoss;
+}
+
+const sf::Vector2f& Zombie::getinitialPosition() const {
+    return origin;
+}
+
 void Zombie::takeDamage(float damage) {
     health -= damage;
 }
@@ -59,8 +95,4 @@ void Zombie::update(float deltaTime) {
 
 const sf::Sprite& Zombie::getSprite() const {
     return sprite;
-}
-
-int Zombie::getCoins() const {
-    return coins;
 }

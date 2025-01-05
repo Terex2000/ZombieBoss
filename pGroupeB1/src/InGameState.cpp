@@ -30,6 +30,8 @@ void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
             }
         } else if(gameController.getWorldController().getPlayerLives()){
                     stateManager->setState(std::make_unique<LoseState>(window, soundManager, textureManager, inputManager, stateManager));
+        } else if(event.key.code == sf::Keyboard::S) {
+            gameController.saveGame("save.json");
         }
 
 }

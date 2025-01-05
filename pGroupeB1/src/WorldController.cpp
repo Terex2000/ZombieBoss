@@ -306,3 +306,47 @@ bool WorldController::checkInstantDeath(const sf::Vector2f& position) {
     bool WorldController::getPlayerLives() const {
         return isPlayerDead;
     }
+
+nlohmann::json WorldController::getGameState() const {
+    nlohmann::json gameState;
+
+    // Save player state
+    gameState["player"]["position"] = { playerController.getPlayer().getPosition().x, playerController.getPlayer().getPosition().y };
+    gameState["player"]["health"] = playerController.getPlayer().getHealth();
+    gameState["player"]["lives"] = playerController.getPlayer().getLives();
+    gameState["player"]["coins"] = playerController.getPlayer().getCoins();
+    gameState["player"]["bulletDamage"] = playerController.getPlayer().getBulletDamage();
+    gameState["player"]["direction"] = playerController.getPlayer().getDirection();
+    gameState["player"]["state"] = playerController.getPlayer().getState();
+    gameState["player"]["onGround"] = playerController.isOnGround();
+
+    // Save world state
+    gameState["world"]["currentWorldIndex"] = currentWorldIndex;
+    gameState["world"]["currentLevelIndex"] = currentLevelIndex;
+    gameState["world"]["inBossRoom"] = inBossRoom;
+
+    // Save enemies state
+    for (const auto& enemy : zombieController.getEnemies()) {
+        gameState["enemies"]["zombies"].push_back({
+            { "position", { enemy->getinitialPosition().x, enemy->getinitialPosition().y } },
+            { "health", enemy->getHealth() },
+            {"attack", enemy->getAttack() },
+            {"speed", enemy->getSpeed() },
+            {"maxDistance", enemy->getMaxDistance() },
+            {"coins", enemy->getCoins() }
+        });
+    }
+
+    for (const auto& boss : bossController.getEnemies()) {
+        gameState["enemies"]["bosses"].push_back({
+            { "position", { boss->getinitialPosition().x, boss->getinitialPosition().y } },
+            { "health", boss->getHealth() },
+            {"attack", boss->getAttack() },
+            {"speed", boss->getSpeed() },
+            {"maxDistance", boss->isFinalBoss() },
+            {"coins", boss->getCoins() }
+        });
+    }
+
+    return gameState;
+}

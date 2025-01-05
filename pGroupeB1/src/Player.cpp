@@ -1,7 +1,7 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3) {
+Player::Player() : position(0, 0), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
     hitbox = sf::FloatRect(position.x, position.y, 42, 69); // Adjust hitbox size
 }
 
@@ -54,21 +54,6 @@ void Player::setPosition(float x, float y) {
     // Update hitbox position
     hitbox.left = position.x;
     hitbox.top = position.y;
-}
-
-// Sets the color of the player.
-void Player::setColor(const sf::Color& color) {
-    this->color = color;
-}
-
-// Returns the color of the player.
-const sf::Color& Player::getColor() const {
-    return color;
-}
-
-// Returns the radius of the player.
-float Player::getRadius() const {
-    return radius;
 }
 
 // Sets the direction the player is facing.
@@ -152,4 +137,14 @@ void Player::loseLife() {
 // Increases the player's lives by one.
 void Player::gainLife() {
     lives++;
+}
+
+// Sets the damage dealt by the player's bullets.
+void Player::setBulletDamage(int damage) {
+    bulletDamage = damage;
+}
+
+// Returns the damage dealt by the player's bullets.
+int Player::getBulletDamage() const {
+    return bulletDamage;
 }
