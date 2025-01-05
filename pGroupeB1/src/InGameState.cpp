@@ -4,20 +4,24 @@
 #include "WinState.h"
 #include "LoseState.h"
 
+// Constructor: Initializes the InGameState with necessary managers and controllers
 InGameState::InGameState(sf::RenderWindow& window, SoundManager& soundManager,
                          TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
     : window(window), soundManager(soundManager),
       textureManager(textureManager), inputManager(inputManager), stateManager(stateManager), gameController(stateManager, textureManager), hudController(gameController.getWorldController().getPlayer(), nullptr), changeState(false) {}
 
+// Constructor: Initializes the InGameState and loads a saved game state from a file
 InGameState::InGameState(sf::RenderWindow& window, SoundManager& soundManager,
                          TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, const std::string& saveFile)
     : window(window), soundManager(soundManager),
       textureManager(textureManager), inputManager(inputManager), stateManager(stateManager), gameController(stateManager, textureManager, saveFile), hudController(gameController.getWorldController().getPlayer(), nullptr), changeState(false) {}
 
+// Destructor: Cleans up resources used by the InGameState
 InGameState::~InGameState() {
     std::cout << "InGameState destroyed" << std::endl;
 }
 
+// Handles user input for the in-game state
 void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
     if (event.type == sf::Event::KeyReleased) {
         if (event.key.code == sf::Keyboard::P) {
@@ -35,6 +39,7 @@ void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
         }
     }
 
+    // Check if the boss room is empty and the player is in the final level and world
     if (gameController.getWorldController().isBossRoomEmpty() && gameController.getWorldController().isInBossRoom()) {
         if (gameController.getWorldController().getCurrentLevelIndex() == gameController.getWorldController().getLevelSize() - 1) {
             if (gameController.getWorldController().getCurrentWorldIndex() == gameController.getWorldController().getWorldSize() - 1) {
@@ -50,6 +55,7 @@ void InGameState::handleInput(sf::RenderWindow& window, sf::Event event) {
     }
 }
 
+// Updates the game state
 void InGameState::update(sf::RenderWindow& window, double deltaTime) {
     gameController.update(deltaTime);
     Boss* currentBoss = nullptr;
@@ -59,6 +65,7 @@ void InGameState::update(sf::RenderWindow& window, double deltaTime) {
     hudController.setBoss(currentBoss); // Update the HUDController with the current boss
     hudController.update(); // Update the HUD
 
+    // Change state if needed
     if (changeState) {
         std::cout << "Changing state to " << nextState << std::endl;
         if (nextState == "OnPauseState") {
@@ -74,13 +81,14 @@ void InGameState::update(sf::RenderWindow& window, double deltaTime) {
     }
 }
 
+// Draws the game state
 void InGameState::draw(sf::RenderWindow& window) {
     window.clear();
     gameController.draw(window);
     sf::View originalView = window.getView();
     window.setView(hudView);
     hudController.draw(window); // Draw the HUD
-        window.setView(originalView);
+    window.setView(originalView);
 
     window.display();
 }

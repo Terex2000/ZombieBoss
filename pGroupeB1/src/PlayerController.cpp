@@ -7,6 +7,7 @@ PlayerController::PlayerController(float startX, float startY, TextureManager& t
     player.setPosition(startX, startY);
     player.setColor(sf::Color::Red);
 
+    // Load textures for player animations and projectiles
     if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
         std::cerr << "Error: Failed to load bullet texture" << std::endl;
     }
@@ -155,6 +156,7 @@ std::vector<Projectile>& PlayerController::getProjectiles() {
     return projectileController.getProjectiles();
 }
 
+// Handles collision between the player and a tile.
 void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     const auto& playerShape = getPlayerShape();
     float playerX = playerShape.getPosition().x;
@@ -164,7 +166,7 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     float playerRadius = playerShape.getRadius();
     float tileSize = tileShape.getSize().x;
 
-    // Calculer les chevauchements
+    // Calculate overlaps
     float overlapLeft = (playerX + playerRadius * 2) - tileX;
     float overlapRight = (tileX + tileSize) - playerX;
     float overlapTop = (playerY + playerRadius * 2) - tileY;
@@ -173,7 +175,7 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     enum CollisionType { NONE, LEFT, RIGHT, TOP, BOTTOM };
     CollisionType collision = NONE;
 
-    // Déterminer la collision avec le chevauchement le plus petit
+    // Determine the collision with the smallest overlap
     if (overlapTop < overlapBottom && overlapTop < overlapLeft && overlapTop < overlapRight) {
         collision = TOP;
     } else if (overlapBottom < overlapTop && overlapBottom < overlapLeft && overlapBottom < overlapRight) {
@@ -184,9 +186,9 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
         collision = RIGHT;
     }
 
-    // Ajuster la position du joueur en fonction de la collision détectée
-    const float marginH = 4.5f; // Distance horizontale entre le joueur et la tuile
-    const float marginV = 0.0f; // Distance verticale entre le joueur et la tuile
+    // Adjust the player's position based on the detected collision
+    const float marginH = 4.5f; // Horizontal distance between the player and the tile
+    const float marginV = 0.0f; // Vertical distance between the player and the tile
 
     switch (collision) {
         case TOP:
@@ -211,7 +213,7 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     }
 }
 
-
+// Handles the player's state based on input and conditions.
 void PlayerController::handleState() {
     if (onGround) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {

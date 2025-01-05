@@ -33,6 +33,7 @@ void ProjectileController::draw(sf::RenderWindow& window) {
 std::vector<Projectile>& ProjectileController::getProjectiles() {
     return projectiles;
 }
+
 // Handles collisions between projectiles and other objects.
 std::vector<Projectile>::iterator ProjectileController::handleCollision(std::vector<Projectile>::iterator it) {
     return projectiles.erase(it);

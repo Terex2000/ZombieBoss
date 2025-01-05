@@ -3,8 +3,10 @@
 #include <iostream>
 #include <fstream>
 
+// Constructor: Initializes the Shop with the path to the temporary save file
 Shop::Shop(const std::string& tempFilePath) : tempFilePath(tempFilePath) {}
 
+// Loads the game state from the temporary save file
 nlohmann::json Shop::loadGameState() {
     nlohmann::json gameState;
     std::ifstream file(tempFilePath);
@@ -17,6 +19,7 @@ nlohmann::json Shop::loadGameState() {
     return gameState;
 }
 
+// Saves the game state to the temporary save file
 void Shop::saveGameState(const nlohmann::json& gameState) {
     std::ofstream outFile(tempFilePath);
     if (outFile.is_open()) {
@@ -27,8 +30,9 @@ void Shop::saveGameState(const nlohmann::json& gameState) {
     }
 }
 
+// Buys an extra life for the player if they have enough coins
 bool Shop::buyLife(ShopView& shopView) {
-    const int lifeCost = 50; // Exemple : 50 pièces
+    const int lifeCost = 50; // Example: 50 coins
     nlohmann::json gameState = loadGameState();
 
     int coins = gameState["player"]["coins"];
@@ -53,8 +57,9 @@ bool Shop::buyLife(ShopView& shopView) {
     return false;
 }
 
+// Upgrades the player's bullet damage if they have enough coins
 bool Shop::upgradeDamage(ShopView& shopView) {
-    const int upgradeCost = 50; // Exemple : 50 pièces
+    const int upgradeCost = 50; // Example: 50 coins
     nlohmann::json gameState = loadGameState();
 
     int coins = gameState["player"]["coins"];
@@ -72,7 +77,7 @@ bool Shop::upgradeDamage(ShopView& shopView) {
 
         // Update the shop view
         shopView.update(coins);
-                std::cerr << "Buy damage" << std::endl;
+        std::cerr << "Buy damage" << std::endl;
 
         return true;
     }
@@ -80,6 +85,7 @@ bool Shop::upgradeDamage(ShopView& shopView) {
     return false;
 }
 
+// Returns the number of coins the player has
 int Shop::getCoins() {
     nlohmann::json gameState = loadGameState();
     return gameState["player"]["coins"];

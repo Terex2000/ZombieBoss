@@ -1,55 +1,55 @@
 #include "ShopView.h"
 #include <iostream>
 
-// Constructeur
+// Constructor
 ShopView::ShopView() : selectedOption(0) {
-    // Chargement de la police
+    // Load the font
     if (!font.loadFromFile("assets/police/Arial.ttf")) {
-        std::cerr << "Erreur: Impossible de charger la police pour le ShopView." << std::endl;
+        std::cerr << "Error: Unable to load font for ShopView." << std::endl;
     }
 
-    // Initialisation du fond
+    // Initialize the background
     background.setSize(sf::Vector2f(400.f, 300.f));
     background.setFillColor(sf::Color(128, 128, 128, 200));
     background.setPosition(200.f, 150.f);
 
-    // Initialisation du titre
+    // Initialize the title
     title.setFont(font);
     title.setString("Shop");
     title.setCharacterSize(30);
     title.setFillColor(sf::Color::White);
     title.setPosition(280.f, 160.f);
 
-    // Initialisation du message d'erreur
+    // Initialize the error message
     errorMessage.setFont(font);
     errorMessage.setCharacterSize(20);
     errorMessage.setFillColor(sf::Color::Red);
     errorMessage.setPosition(220.f, 400.f);
 }
 
-// Destructeur
+// Destructor
 ShopView::~ShopView() {}
 
-// Dessine le shop � l'�cran
+// Draws the shop on the screen
 void ShopView::draw(sf::RenderWindow& window, Shop& shop) {
-    // Dessiner le fond
+    // Draw the background
     window.draw(background);
 
-    // Dessiner le titre
+    // Draw the title
     window.draw(title);
 
-    // Afficher le solde du joueur
-    sf::Text coinsText("Coins: "  + std::to_string(shop.getCoins()), font, 20);
+    // Display the player's coin balance
+    sf::Text coinsText("Coins: " + std::to_string(shop.getCoins()), font, 20);
     coinsText.setPosition(220.f, 200.f);
     coinsText.setFillColor(sf::Color::White);
     window.draw(coinsText);
 
-    // Afficher les options
-    sf::Text lifeButton("Acheter une vie (50 coins)", font, 20);
-    sf::Text damageButton("Ameliorer les dommages (50 coins)", font, 20);
-    sf::Text exitButton("Retour", font, 20);
+    // Display the options
+    sf::Text lifeButton("Buy Life (50 coins)", font, 20);
+    sf::Text damageButton("Upgrade Damage (50 coins)", font, 20);
+    sf::Text exitButton("Exit", font, 20);
 
-    // Options de menu
+    // Menu options
     sf::Text options[] = { lifeButton, damageButton, exitButton };
     float yPosition = 250.f;
 
@@ -60,29 +60,33 @@ void ShopView::draw(sf::RenderWindow& window, Shop& shop) {
         yPosition += 40.f;
     }
 
-    // Dessiner le message d'erreur si pr�sent
+    // Draw the error message if present
     if (!errorMessage.getString().isEmpty()) {
         window.draw(errorMessage);
     }
 }
 
+// Updates the display of coins
 void ShopView::update(int coins) {
-    // Mettre � jour l'affichage des coins
-    errorMessage.setString(""); // Efface tout ancien message d'erreur
+    // Update the coin display
+    errorMessage.setString(""); // Clear any previous error message
 
-    // Met � jour l'affichage des coins
+    // Update the coin display
     sf::Text coinsText("Coins: " + std::to_string(coins), font, 20);
     coinsText.setPosition(220.f, 200.f);
 }
 
+// Navigate up through the menu options
 void ShopView::navigateUp() {
-    selectedOption = (selectedOption - 1 + 3) % 3; // 3 options au total
+    selectedOption = (selectedOption - 1 + 3) % 3; // 3 options in total
 }
 
+// Navigate down through the menu options
 void ShopView::navigateDown() {
     selectedOption = (selectedOption + 1) % 3;
 }
 
+// Get the currently selected option
 std::string ShopView::getSelectedOption() const {
     switch (selectedOption) {
         case 0: return "Buy Life";
@@ -92,8 +96,7 @@ std::string ShopView::getSelectedOption() const {
     }
 }
 
-
-// G�re les entr�es utilisateur pour le shop
+// Handles user input for the shop
 void ShopView::handleInput(sf::Event event, Shop& shop, bool& exitShop) {
-
+    // Implementation for handling user input
 }

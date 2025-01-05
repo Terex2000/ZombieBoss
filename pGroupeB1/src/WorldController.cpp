@@ -1,12 +1,13 @@
 #include "WorldController.h"
 #include <iostream>
 
+// Constructor: Initializes the WorldController with texture manager and player controller
 WorldController::WorldController(TextureManager& textureManager, PlayerController& playerController)
     : textureManager(textureManager), playerController(playerController), zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager), currentWorldIndex(0), currentLevelIndex(0), cameraManager(800.0f, 600.0f), inBossRoom(false) {
     // Initialize the worlds and levels
     std::cerr << "Create Worlds" << std::endl;
     //Zombie : x, y, health, attack, speed, maxDistance, coins
-    //Boss : x, y, health, attack, speed,coins, isBoss, maxDistance 
+    //Boss : x, y, health, attack, speed,coins, isBoss, maxDistance
     std::vector<World> worlds = {
         World({
             Level("assets/map/mapW1L1.txt", "assets/map/bossMapW1.txt",
@@ -79,6 +80,7 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
     }
 }
 
+// Loads the tileset texture for the current world
 void WorldController::loadTileset(const std::string& tileset) {
     // Load the tileset texture
     if (!textureManager.loadTexture("tileset", tileset)) {
@@ -86,6 +88,7 @@ void WorldController::loadTileset(const std::string& tileset) {
     }
 }
 
+// Loads the map data from a file
 void WorldController::loadMap(const std::string& filename) {
     std::cerr << "Loading map: " << filename << std::endl;
     mapController.reset(); // Reset the smart pointer
@@ -98,6 +101,7 @@ void WorldController::loadMap(const std::string& filename) {
     std::cout << "Total instant death tiles: " << instantDeathTiles.size() << std::endl;
 }
 
+// Loads a level, setting up the player position and enemies
 void WorldController::loadLevel(const Level& level) {
     std::cerr << "Loading level: " << level.getMapFile() << std::endl;
     loadMap(level.getMapFile());
@@ -112,6 +116,7 @@ void WorldController::loadLevel(const Level& level) {
     }
 }
 
+// Loads the boss room, setting up the player position and the boss
 void WorldController::loadBossRoom(const Level& level) {
     std::cerr << "Loading boss room: " << level.getBossMapFile() << std::endl;
     loadMap(level.getBossMapFile());
@@ -128,6 +133,7 @@ void WorldController::loadBossRoom(const Level& level) {
     }
 }
 
+// Updates the world state, handling player input, enemy updates, and collisions
 void WorldController::update(float deltaTime) {
     // Handle player input
     inputManager.handleInput(playerController);
@@ -215,6 +221,7 @@ void WorldController::update(float deltaTime) {
     cameraManager.update(playerController, *mapController);
 }
 
+// Draws the world, including the map, player, and enemies
 void WorldController::draw(sf::RenderWindow& window) {
     // Set the camera view
     window.setView(window.getDefaultView());
@@ -233,6 +240,7 @@ void WorldController::draw(sf::RenderWindow& window) {
     bossController.draw(window);
 }
 
+// Checks if the player's position is on a teleport tile
 bool WorldController::checkTeleport(const sf::Vector2f& position) {
     const auto& mapData = mapController->getMap().getData();
     int tileX = static_cast<int>(position.x / 32);
@@ -245,6 +253,7 @@ bool WorldController::checkTeleport(const sf::Vector2f& position) {
 
     return false;
 }
+// Checks if the player's position is on an instant death tile
 bool WorldController::checkInstantDeath(const sf::Vector2f& position) {
     const auto& mapData = mapController->getMap().getData();
     int tileX = static_cast<int>(position.x / 32);
@@ -258,34 +267,42 @@ bool WorldController::checkInstantDeath(const sf::Vector2f& position) {
     return false;
 }
 
-    int WorldController::getCurrentWorldIndex() const {
-        return currentWorldIndex;
-    }
+// Returns the current world index
+int WorldController::getCurrentWorldIndex() const {
+    return currentWorldIndex;
+}
 
-    int WorldController::getWorldSize() const {
-        return worlds.size();
-    }
+// Returns the total number of worlds
+int WorldController::getWorldSize() const {
+    return worlds.size();
+}
 
-    int WorldController::getCurrentLevelIndex() const {
-        return currentLevelIndex;
-    }
+// Returns the current level index
+int WorldController::getCurrentLevelIndex() const {
+    return currentLevelIndex;
+}
 
-    int WorldController::getLevelSize() const {
-        return worlds[currentWorldIndex].getLevels().size();
-    }
+// Returns the total number of levels in the current world
+int WorldController::getLevelSize() const {
+    return worlds[currentWorldIndex].getLevels().size();
+}
 
-    bool WorldController::isInBossRoom() const {
-        return inBossRoom;
-    }
+// Returns whether the player is in the boss room
+bool WorldController::isInBossRoom() const {
+    return inBossRoom;
+}
 
-    bool WorldController::isBossRoomEmpty() const {
-        return isBossDead;
-    }
+// Returns whether the boss room is empty (boss defeated)
+bool WorldController::isBossRoomEmpty() const {
+    return isBossDead;
+}
 
-    bool WorldController::getPlayerLives() const {
-        return isPlayerDead;
-    }
+// Returns whether the player has lives left
+bool WorldController::getPlayerLives() const {
+    return isPlayerDead;
+}
 
+// Returns the current game state as a JSON object
 nlohmann::json WorldController::getGameState() const {
     nlohmann::json gameState;
 
@@ -332,31 +349,37 @@ nlohmann::json WorldController::getGameState() const {
     return gameState;
 }
 
+// Sets the current world index
 void WorldController::setCurrentWorldIndex(int index) {
     currentWorldIndex = index;
 }
 
+// Sets the current level index
 void WorldController::setCurrentLevelIndex(int index) {
     currentLevelIndex = index;
 }
 
+// Sets whether the player is in the boss room
 void WorldController::setInBossRoom(bool inBossRoom) {
     this->inBossRoom = inBossRoom;
 }
 
-
+// Returns a reference to the zombie controller
 EnemyController& WorldController::getZombieController() {
     return zombieController;
 }
 
+// Returns a reference to the boss controller
 EnemyController& WorldController::getBossController() {
     return bossController;
 }
 
+// Returns a reference to the player
 Player& WorldController::getPlayer() {
     return playerController.getPlayer();
 }
 
+// Teleports the player to the boss room
 void WorldController::teleportPlayerToBossRoom() {
     if (inBossRoom) {
         if (currentLevelIndex >= 0 && currentLevelIndex < worlds[currentWorldIndex].getLevels().size()) {
@@ -367,6 +390,7 @@ void WorldController::teleportPlayerToBossRoom() {
     }
 }
 
- std::vector<World> WorldController::getWorlds() const {
-     return worlds;
+// Returns the list of worlds
+std::vector<World> WorldController::getWorlds() const {
+    return worlds;
 }

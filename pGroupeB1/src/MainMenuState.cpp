@@ -1,6 +1,7 @@
 #include "MainMenuState.h"
 #include <iostream>
 
+// Constructor: Initializes the MainMenuState with necessary managers and controllers
 MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManager,
                              TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
     : window(window), view(window, textureManager), textureManager(textureManager), inputManager(inputManager),
@@ -9,7 +10,7 @@ MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManage
     soundManager.loadMusic("assets/sound/mainMenuSound.wav");
     soundManager.playMusic();
 
-     if (!settingsBackgroundTexture.loadFromFile("assets/img/settings.jpg")) {
+    if (!settingsBackgroundTexture.loadFromFile("assets/img/settings.jpg")) {
         std::cerr << "Error: Failed to load settings background image!" << std::endl;
     }
     settingsBackgroundSprite.setTexture(settingsBackgroundTexture);
@@ -17,12 +18,13 @@ MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManage
     loadGame = false;
 }
 
+// Handles user input for the main menu state
 void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::F11) {
-            toggleFullscreen(); // Basculer entre plein �cran et fen�tr�
+            toggleFullscreen(); // Toggle between fullscreen and windowed mode
         } else if (event.key.code == sf::Keyboard::Escape) {
-            window.close(); // Fermer la fen�tre si �chap est press�e
+            window.close(); // Close the window if Escape is pressed
         }
     }
     if (currentMenu == MenuType::MainMenu) {
@@ -40,7 +42,7 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
             } else if (event.key.code == sf::Keyboard::F11) {
                 toggleFullscreen();
             } else if (event.key.code == sf::Keyboard::Escape) {
-                window.close(); // Fermer la fen�tre
+                window.close(); // Close the window
             }
         }
     } else if (currentMenu == MenuType::Settings) {
@@ -51,17 +53,17 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
                 selectedSettingOption = (selectedSettingOption + 1) % 4;
             } else if (event.key.code == sf::Keyboard::Enter) {
                 switch (selectedSettingOption) {
-                    case 0: // Changer la difficult�
+                    case 0: // Change difficulty
                         settings.setDifficulty(static_cast<Settings::Difficulty>((settings.getDifficulty() + 1) % 3));
                         break;
-                    case 1: // Modifier le volume
+                    case 1: // Adjust volume
                         settings.setVolume((settings.getVolume() + 10) % 110);
                         soundManager.setVolume(settings.getVolume());
                         break;
                     case 2: // Toggle fullscreen
                         toggleFullscreen();
                         break;
-                    case 3: // Retour au menu principal
+                    case 3: // Return to main menu
                         currentMenu = MenuType::MainMenu;
                         break;
                 }
@@ -70,6 +72,7 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
     }
 }
 
+// Toggles between fullscreen and windowed mode
 void MainMenuState::toggleFullscreen() {
     isFullscreen = !isFullscreen;
 
@@ -82,11 +85,11 @@ void MainMenuState::toggleFullscreen() {
         window.create(sf::VideoMode(800, 600), "Game Menu");
     }
 
-    // Ajuster les fonds apr�s le changement de mode
+    // Adjust backgrounds after changing mode
     textureManager.adjustSpriteToWindow(settingsBackgroundSprite, window);
 }
 
-
+// Adjusts the window size to fit the screen
 void MainMenuState::adjustWindowToScreen() {
     sf::Vector2u windowSize = this->window.getSize();
     sf::Vector2u textureSize = settingsBackgroundTexture.getSize();
@@ -96,38 +99,37 @@ void MainMenuState::adjustWindowToScreen() {
     );
 }
 
-
+// Updates the main menu state
 void MainMenuState::update(sf::RenderWindow& window, double deltaTime) {
-
     if (launchGame) {
-        // Change l'état vers InGameState
+        // Change state to InGameState
         stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
         launchGame = false;
     } else if (loadGame) {
-        // Charger l'état du jeu à partir du fichier save.json
+        // Load game state from save.json
         stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager, "save.json"));
         loadGame = false;
     }
 }
 
-
+// Draws the main menu state
 void MainMenuState::draw(sf::RenderWindow& window) {
-    // Sauvegarder la vue actuelle (qui est affectée par la caméra)
+    // Save the current view (affected by the camera)
     sf::View originalView = window.getView();
 
-    // Utiliser la vue par défaut pour dessiner l'interface utilisateur (menus)
+    // Use the default view to draw the UI (menus)
     window.setView(window.getDefaultView());
 
-    // Affichage du menu principal
+    // Display the main menu
     if (currentMenu == MenuType::MainMenu) {
-        view.render(model); // Ici, tu continues à utiliser ton code habituel pour afficher le menu
+        view.render(model); // Continue using your usual code to display the menu
     } else if (currentMenu == MenuType::Settings) {
         window.clear();
-        window.draw(settingsBackgroundSprite); // Affichage de l'arrière-plan des paramètres
+        window.draw(settingsBackgroundSprite); // Display the settings background
 
         sf::Font font;
         if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
-            std::cerr << "Error loading police!" << std::endl;
+            std::cerr << "Error loading font!" << std::endl;
         }
 
         sf::Text title("Settings", font, 60);
@@ -152,8 +154,6 @@ void MainMenuState::draw(sf::RenderWindow& window) {
         window.display();
     }
 
-    // Restaurer la vue initiale (celle avec la caméra active)
+    // Restore the initial view (with the active camera)
     window.setView(originalView);
 }
-
-

@@ -1,5 +1,6 @@
 #include "Map.h"
 
+// Constructor: Initializes the Map with map data, tileset texture, and teleport tiles
 Map::Map(const std::vector<std::vector<int>>& mapData, const sf::Texture& tileset, const std::unordered_set<int>& teleportTiles)
     : teleportTiles(teleportTiles) {
     for (size_t i = 0; i < mapData.size(); ++i) {
@@ -12,18 +13,22 @@ Map::Map(const std::vector<std::vector<int>>& mapData, const sf::Texture& tilese
     createVertices(tileset);
 }
 
+// Returns the map data as a 2D vector of Tiles
 const std::vector<std::vector<Tiles>>& Map::getData() const {
     return data;
 }
 
+// Returns the vertex array for rendering the map
 const sf::VertexArray& Map::getVertices() const {
     return vertices;
 }
 
+// Checks if a tile type is a teleport tile
 bool Map::isTeleportTile(int tileType) const {
     return teleportTiles.find(tileType) != teleportTiles.end();
 }
 
+// Creates the vertex array for rendering the map using the tileset texture
 void Map::createVertices(const sf::Texture& tileset) {
     int tileSize = 32;
     vertices.setPrimitiveType(sf::Triangles);

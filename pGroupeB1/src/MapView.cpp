@@ -3,8 +3,9 @@
 
 // Constructor for MapView
 // Initializes the map view with the provided map and texture manager.
-MapView::MapView(const Map& map, TextureManager& textureManager) 
+MapView::MapView(const Map& map, TextureManager& textureManager)
     : map(map), tileset(textureManager.getTexture("tileset")) {
+    // Retrieve the vertices from the map
     vertices = map.getVertices();
 }
 

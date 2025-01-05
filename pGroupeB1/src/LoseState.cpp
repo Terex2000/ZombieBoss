@@ -2,6 +2,7 @@
 #include "MainMenuState.h"
 #include <iostream>
 
+// Constructor: Initializes the LoseState with necessary managers and controllers
 LoseState::LoseState(sf::RenderWindow& window, SoundManager& soundManager,
                            TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
     : window(window), stateManager(stateManager), soundManager(soundManager),
@@ -13,10 +14,12 @@ LoseState::LoseState(sf::RenderWindow& window, SoundManager& soundManager,
     options = {"Quit to Main Menu"};
 }
 
+// Destructor: Cleans up resources used by the LoseState
 LoseState::~LoseState(){
     std::cout << "LoseState destroyed" << std::endl;
 }
 
+// Handles user input for the lose state
 void LoseState::handleInput(sf::RenderWindow& window, sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
@@ -29,22 +32,24 @@ void LoseState::handleInput(sf::RenderWindow& window, sf::Event event) {
     }
 }
 
+// Updates the lose state (no specific update logic needed here)
 void LoseState::update(sf::RenderWindow& window, double deltaTime) {
 }
 
+// Draws the lose state screen
 void LoseState::draw(sf::RenderWindow& window) {
     try {
-        // Sauvegarder la vue actuelle
+        // Save the current view
         sf::View originalView = window.getView();
-        // Passer à une vue par défaut, non affectée par la caméra du joueur
+        // Switch to a default view, unaffected by the player's camera
         window.setView(window.getDefaultView());
-        // Rectangle pour le fond du menu
+        // Rectangle for the menu background
         sf::RectangleShape rectangle(sf::Vector2f(400.f, 50.f));
         rectangle.setFillColor(sf::Color(128, 128, 128, 1));
         rectangle.setPosition(200.f, 175.f);
         window.draw(rectangle);
 
-        // Chargement de la police
+        // Load the font
         sf::Font font;
         if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
             std::cerr << "Error loading font for LoseState!" << std::endl;
@@ -57,14 +62,14 @@ void LoseState::draw(sf::RenderWindow& window) {
             loseText.setPosition(285.f, 250.f);
             window.draw(loseText);
         }
-        // Affichage des options
+        // Display the options
         for (size_t i = 0; i < options.size(); ++i) {
             sf::Text text(options[i], font, 30);
-            text.setPosition(250.f, 180.f + i * 50.f); // Ajustez les positions
+            text.setPosition(250.f, 180.f + i * 50.f); // Adjust positions
             text.setFillColor(i == selectedOption ? sf::Color::Red : sf::Color::White);
             window.draw(text);
         }
-        window.display(); // Rafraîchir l'affichage
+        window.display(); // Refresh the display
     } catch (const std::exception& e) {
         std::cerr << "Exception in LoseState::draw: " << e.what() << std::endl;
     } catch (...) {
@@ -72,22 +77,25 @@ void LoseState::draw(sf::RenderWindow& window) {
     }
 }
 
+// Navigates up through the menu options
 void LoseState::navigateUp() {
     if (selectedOption > 0) {
         selectedOption--;
     } else {
-        selectedOption = options.size() - 1; // Retourner à la dernière option
+        selectedOption = options.size() - 1; // Wrap around to the last option
     }
 }
 
+// Navigates down through the menu options
 void LoseState::navigateDown() {
     if (selectedOption < options.size() - 1) {
         selectedOption++;
     } else {
-        selectedOption = 0; // Retourner à la première option
+        selectedOption = 0; // Wrap around to the first option
     }
 }
 
+// Executes the selected menu option
 void LoseState::executeOption() {
     const std::string& option = options[selectedOption];
 
