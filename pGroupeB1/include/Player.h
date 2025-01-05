@@ -22,15 +22,6 @@ public:
     // Sets the position of the player.
     void setPosition(float x, float y);
 
-    // Sets the color of the player.
-    void setColor(const sf::Color& color);
-
-    // Returns the color of the player.
-    const sf::Color& getColor() const;
-
-    // Returns the radius of the player.
-    float getRadius() const;
-
     // Sets the direction the player is facing.
     void setDirection(float direction);
 
@@ -62,6 +53,10 @@ public:
     void loseLife();
     void gainLife();
 
+    // Bullet damage management
+    void setBulletDamage(int damage);
+    int getBulletDamage() const;
+
 private:
     sf::Vector2f position;
     sf::Color color;
@@ -72,6 +67,7 @@ private:
     sf::FloatRect hitbox;
     float health;
     int lives;
+    int bulletDamage;
 };
 
 #endif // PLAYER_H
