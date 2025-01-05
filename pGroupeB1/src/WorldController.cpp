@@ -343,10 +343,51 @@ nlohmann::json WorldController::getGameState() const {
             { "health", boss->getHealth() },
             {"attack", boss->getAttack() },
             {"speed", boss->getSpeed() },
-            {"maxDistance", boss->isFinalBoss() },
-            {"coins", boss->getCoins() }
+            {"maxDistance", boss->getMaxDistance() },
+            {"isFinalBoss", boss->isFinalBoss() },
+            {"coins", boss->getCoins() },
+            {"shield", boss->getShield() }
         });
     }
 
     return gameState;
+}
+
+void WorldController::setCurrentWorldIndex(int index) {
+    currentWorldIndex = index;
+}
+
+void WorldController::setCurrentLevelIndex(int index) {
+    currentLevelIndex = index;
+}
+
+void WorldController::setInBossRoom(bool inBossRoom) {
+    this->inBossRoom = inBossRoom;
+}
+
+
+EnemyController& WorldController::getZombieController() {
+    return zombieController;
+}
+
+EnemyController& WorldController::getBossController() {
+    return bossController;
+}
+
+Player& WorldController::getPlayer() {
+    return playerController.getPlayer();
+}
+
+void WorldController::teleportPlayerToBossRoom() {
+    if (inBossRoom) {
+        if (currentLevelIndex >= 0 && currentLevelIndex < worlds[currentWorldIndex].getLevels().size()) {
+            loadBossRoom(worlds[currentWorldIndex].getLevels()[currentLevelIndex]);
+        } else {
+            std::cerr << "Error: Invalid level index " << currentLevelIndex << std::endl;
+        }
+    }
+}
+
+ std::vector<World> WorldController::getWorlds() const {
+     return worlds;
 }

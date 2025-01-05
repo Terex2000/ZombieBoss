@@ -17,7 +17,6 @@
 #include <memory> // Include for smart pointers
 #include <nlohmann/json.hpp> // Include the JSON library
 
-
 class WorldController {
 public:
     WorldController(TextureManager& textureManager, PlayerController& playerController);
@@ -37,6 +36,17 @@ public:
     bool getPlayerLives() const; // Add this method to get the player's lives
 
     nlohmann::json getGameState() const; // Add this method to get the game state as JSON
+
+    void setCurrentWorldIndex(int index); // Add this method to set the current world index
+    void setCurrentLevelIndex(int index); // Add this method to set the current level index
+    void setInBossRoom(bool inBossRoom); // Add this method to set the inBossRoom flag
+
+    EnemyController& getZombieController(); // Add this method to get the zombie controller
+    EnemyController& getBossController(); // Add this method to get the boss controller
+        Player& getPlayer(); // Add this method to get the player object
+
+    void teleportPlayerToBossRoom();
+     std::vector<World> getWorlds() const;
 
 private:
     PlayerController& playerController;
