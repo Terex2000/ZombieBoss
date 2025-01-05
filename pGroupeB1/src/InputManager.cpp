@@ -7,6 +7,11 @@ InputManager::~InputManager() {}
 
 // Handles input for the player controller.
 void InputManager::handleInput(PlayerController& playerController) {
+        if (isFullScreen()) {
+        moveSpeed = fullScreenSpeed;
+    } else {
+        moveSpeed = windowedSpeed;
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         playerController.move(-moveSpeed, 0);
         playerController.getPlayer().setDirection(-1.0f); // Update the direction
@@ -22,3 +27,18 @@ void InputManager::handleInput(PlayerController& playerController) {
         playerController.shoot();
     }
 }
+bool InputManager::isFullScreen() const {
+    HWND hwnd = GetForegroundWindow();
+    HMONITOR hMonitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+    MONITORINFO mi = { sizeof(mi) };
+    GetMonitorInfo(hMonitor, &mi);
+
+    RECT windowRect;
+    GetWindowRect(hwnd, &windowRect);
+
+    return (windowRect.left == mi.rcMonitor.left &&
+            windowRect.top == mi.rcMonitor.top &&
+            windowRect.right == mi.rcMonitor.right &&
+            windowRect.bottom == mi.rcMonitor.bottom);
+}
+
