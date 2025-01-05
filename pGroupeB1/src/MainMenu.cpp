@@ -2,7 +2,7 @@
 
 // Constructor: Initializes the MainMenu with default options and sets the selected index to 0
 MainMenu::MainMenu() : selectedIndex(0) {
-    options = {"Play", "Load Game", "Shop", "Settings", "Quit"}; // Add Load Game option
+    options = {"Play", "Load Game", "Settings", "Quit"}; // Add Load Game option
 }
 
 // Destructor: Cleans up resources used by the MainMenu
