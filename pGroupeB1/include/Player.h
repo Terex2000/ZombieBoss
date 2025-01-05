@@ -22,6 +22,15 @@ public:
     // Sets the position of the player.
     void setPosition(float x, float y);
 
+        // Sets the color of the player.
+    void setColor(const sf::Color& color);
+
+    // Returns the color of the player.
+    const sf::Color& getColor() const;
+
+    // Returns the radius of the player.
+    float getRadius() const;
+
     // Sets the direction the player is facing.
     void setDirection(float direction);
 
@@ -40,8 +49,8 @@ public:
     State getState() const;
 
     // Hitbox management
-    sf::FloatRect getHitbox() const;
-
+    sf::CircleShape getHitbox() const;
+    
     // Health management
     void setHealth(float health);
     float getHealth() const;
@@ -65,7 +74,7 @@ private:
     float direction;
     int coins;
     State state;
-    sf::FloatRect hitbox;
+    sf::CircleShape hitbox; // Change to sf::CircleShape
     float health;
     int lives;
     int bulletDamage;

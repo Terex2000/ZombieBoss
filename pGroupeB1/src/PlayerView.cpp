@@ -4,18 +4,20 @@
 // Constructor for PlayerView
 // Initializes the player view with a reference to the player.
 PlayerView::PlayerView(Player& player, TextureManager& textureManager) : player(player), textureManager(textureManager) {
-    sprite.setPosition(player.getPosition());
+    shape.setRadius(player.getRadius());
+    shape.setFillColor(player.getColor());
+    shape.setPosition(player.getPosition());
 }
 
 // Copy constructor for PlayerView
-PlayerView::PlayerView(const PlayerView& other) : player(other.player), textureManager(other.textureManager), sprite(other.sprite) {}
+PlayerView::PlayerView(const PlayerView& other) : player(other.player), textureManager(other.textureManager), shape(other.shape) {}
 
 // Copy assignment operator for PlayerView
 PlayerView& PlayerView::operator=(const PlayerView& other) {
     if (this != &other) {
         player = other.player;
         textureManager = other.textureManager;
-        sprite = other.sprite;
+        shape = other.shape;
     }
     return *this;
 }
@@ -25,15 +27,13 @@ PlayerView::~PlayerView() {}
 
 // Draws the player to the window.
 void PlayerView::draw(sf::RenderWindow& window) {
-    updateSprite();
-    window.draw(sprite);
+    updateShape();
+    window.draw(shape);
 }
-
-
 
 // Updates the shape's position and color based on the player's state.
 void PlayerView::updateSprite() {
-    sprite.setPosition(player.getHitbox().left, player.getHitbox().top);
+    sprite.setPosition(player.getHitbox().getPosition().x, player.getHitbox().getPosition().y);
 
     if (player.getDirection() > 0) {
         switch (player.getState()) {
@@ -76,6 +76,14 @@ void PlayerView::updateSprite() {
     }
 }
 
+void PlayerView::updateShape() {
+    shape.setPosition(player.getPosition());
+    shape.setFillColor(player.getColor());
+}
+
+const sf::CircleShape& PlayerView::getShape() const {
+    return shape;
+}
 // Returns the shape of the player.
 const sf::Sprite& PlayerView::getSprite() const {
     return sprite;

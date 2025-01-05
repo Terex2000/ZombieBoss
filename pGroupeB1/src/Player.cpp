@@ -1,13 +1,11 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
-    hitbox = sf::FloatRect(position.x, position.y, 42, 69); // Adjust hitbox size
+Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
 }
 
 // Copy constructor for Player
 Player::Player(const Player& other) : position(other.position), color(other.color), radius(other.radius), direction(other.direction), coins(other.coins), state(State::Idle), health(other.health), lives(other.lives) {
-    hitbox = other.hitbox;
 }
 
 // Copy assignment operator for Player
@@ -34,8 +32,6 @@ void Player::move(float dx, float dy) {
     position.y += dy;
 
     // Update hitbox position
-    hitbox.left = position.x;
-    hitbox.top = position.y;
     if (dx != 0) {
         direction = (dx > 0) ? 1.0f : -1.0f;
     }
@@ -51,14 +47,25 @@ void Player::setPosition(float x, float y) {
     position.x = x;
     position.y = y;
 
-    // Update hitbox position
-    hitbox.left = position.x;
-    hitbox.top = position.y;
 }
 
 // Sets the direction the player is facing.
 void Player::setDirection(float direction) {
     this->direction = direction;
+}
+
+void Player::setColor(const sf::Color& color) {
+    this->color = color;
+}
+
+// Returns the color of the player.
+const sf::Color& Player::getColor() const {
+    return color;
+}
+
+// Returns the radius of the player.
+float Player::getRadius() const {
+    return radius;
 }
 
 // Returns the direction the player is facing.
@@ -89,7 +96,7 @@ Player::State Player::getState() const {
 }
 
 // Returns the player's hitbox
-sf::FloatRect Player::getHitbox() const {
+sf::CircleShape Player::getHitbox() const {
     return hitbox;
 }
 
