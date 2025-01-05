@@ -9,7 +9,10 @@ EnemyController::EnemyController(EnemyFactory& factory, TextureManager& textureM
     if (!textureManager.loadTexture("zombie", "assets/img/zombie.png")) {
         std::cerr << "Error: Failed to load zombie texture" << std::endl;
     }
-    if (!textureManager.loadTexture("bullet", "assets/img/bullet.png")) {
+    if (!textureManager.loadTexture("bullet_acid", "assets/img/bullet_acid.png")) {
+        std::cerr << "Error: Failed to load bullet texture" << std::endl;
+    }
+    if (!textureManager.loadTexture("boss", "assets/img/boss.png")) {
         std::cerr << "Error: Failed to load bullet texture" << std::endl;
     }
     }
@@ -25,7 +28,7 @@ void EnemyController::createEnemy(float x, float y, float health, float attack, 
 }
 
 void EnemyController::createBoss(float x, float y, float health, float attack, float speed, int coins, bool isFinalBoss, float shield) {
-    enemies.push_back(factory.createBoss(x, y, health, attack, speed, coins, textureManager.getTexture("zombie"), isFinalBoss, shield));
+    enemies.push_back(factory.createBoss(x, y, health, attack, speed, coins, textureManager.getTexture("boss"), isFinalBoss, shield));
 }
 
 void EnemyController::draw(sf::RenderWindow& window) {
@@ -69,7 +72,9 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
                 sf::Vector2f direction = playerPosition - enemyPosition;
                 float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
                 direction /= length; // Normalize the direction vector
-                projectileController.shoot(enemyPosition, direction, textureManager.getTexture("bullet"), (*it)->getAttack()); // Example damage
+
+                projectileController.shoot(enemyPosition, direction, textureManager.getTexture("bullet_acid"), (*it)->getAttack()); // Example damage
+
                 projectileController.getProjectiles().back().setScale(2.0f, 2.0f);
             }
             ++it;

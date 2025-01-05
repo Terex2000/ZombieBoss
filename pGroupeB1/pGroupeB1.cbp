@@ -55,7 +55,9 @@
 		</Linker>
 		<Unit filename="assets/img/backgroundW1.jpg" />
 		<Unit filename="assets/img/backgroundW2.png" />
+		<Unit filename="assets/img/boss.png" />
 		<Unit filename="assets/img/bullet.png" />
+		<Unit filename="assets/img/bullet_acid.png" />
 		<Unit filename="assets/img/mainMenuBackground.gif" />
 		<Unit filename="assets/img/settings.jpg" />
 		<Unit filename="assets/img/tilesetW1.png" />
