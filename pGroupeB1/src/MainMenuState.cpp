@@ -112,12 +112,18 @@ void MainMenuState::update(sf::RenderWindow& window, double deltaTime) {
 
 
 void MainMenuState::draw(sf::RenderWindow& window) {
+    // Sauvegarder la vue actuelle (qui est affectée par la caméra)
+    sf::View originalView = window.getView();
+
+    // Utiliser la vue par défaut pour dessiner l'interface utilisateur (menus)
+    window.setView(window.getDefaultView());
+
+    // Affichage du menu principal
     if (currentMenu == MenuType::MainMenu) {
-        view.render(model);
+        view.render(model); // Ici, tu continues à utiliser ton code habituel pour afficher le menu
     } else if (currentMenu == MenuType::Settings) {
         window.clear();
-
-        window.draw(settingsBackgroundSprite);
+        window.draw(settingsBackgroundSprite); // Affichage de l'arrière-plan des paramètres
 
         sf::Font font;
         if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
@@ -145,5 +151,9 @@ void MainMenuState::draw(sf::RenderWindow& window) {
 
         window.display();
     }
+
+    // Restaurer la vue initiale (celle avec la caméra active)
+    window.setView(originalView);
 }
+
 
