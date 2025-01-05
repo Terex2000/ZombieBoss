@@ -20,6 +20,7 @@ public:
     void createBoss(float x, float y, float health, float attack, float speed, int coins, bool isFinalBoss = false, float shield = 0.0f);
     void draw(sf::RenderWindow& window);
     void update(float deltaTime, const sf::Vector2f& playerPosition, Player& player, const sf::View& view);
+    const std::vector<Enemy*>& getEnemies() const;
     std::vector<Enemy*>& getEnemies();
     ProjectileController& getProjectileController();
 

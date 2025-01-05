@@ -19,6 +19,20 @@ public:
     virtual void setSpeed(float speed) = 0;
     virtual float getSpeed() const = 0;
 
+    virtual void setMaxDistance(float maxDistance) = 0;
+    virtual float getMaxDistance() const = 0;
+
+    virtual void setCoins(int coins) = 0;
+    virtual int getCoins() const = 0;
+
+    virtual void setShield(float shield) = 0;
+    virtual float getShield() const = 0;
+
+    virtual void setFinalBoss(bool isFinalBoss) = 0;
+    virtual bool isFinalBoss() const = 0;
+
+    virtual const sf::Vector2f& getinitialPosition() const = 0;
+
     virtual void takeDamage(float damage) = 0;
 };
 

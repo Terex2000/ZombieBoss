@@ -21,28 +21,37 @@ public:
     void setSpeed(float speed) override;
     float getSpeed() const override;
 
+    void setMaxDistance(float maxDistance) override;
+    float getMaxDistance() const override;
+
+    void setCoins(int coins) override;
+    int getCoins() const override;
+
+    void setShield(float shield) override;
+    float getShield() const override;
+
+    void setFinalBoss(bool isFinalBoss) override;
+    bool isFinalBoss() const override;
+
+    const sf::Vector2f& getinitialPosition() const override;
+
     void takeDamage(float damage) override;
 
     void update(float deltaTime);
 
     const sf::Sprite& getSprite() const;
 
-    int getCoins() const;
-
-    bool isFinalBoss() const;
-
-    void setShield(float shield);
-    float getShield() const;
-
 private:
     sf::Vector2f position;
+    sf::Vector2f origin;
     float health;
     float attack;
     float speed;
+    float maxDistance;
     int coins;
     sf::Sprite sprite;
     bool finalBoss;
-    float shield; // New attribute for the shield
+    float shield;
 };
 
 #endif // BOSS_H

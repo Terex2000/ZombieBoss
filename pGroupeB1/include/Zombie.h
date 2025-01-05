@@ -22,13 +22,25 @@ public:
     void setSpeed(float speed) override;
     float getSpeed() const override;
 
+    void setMaxDistance(float maxDistance) override;
+    float getMaxDistance() const override;
+
+    void setCoins(int coins) override;
+    int getCoins() const override;
+
+    void setShield(float shield) override;
+    float getShield() const override;
+
+    void setFinalBoss(bool isFinalBoss) override;
+    bool isFinalBoss() const override;
+
+    const sf::Vector2f& getinitialPosition() const override;
+
     void takeDamage(float damage) override;
 
     void update(float deltaTime);
 
     const sf::Sprite& getSprite() const;
-
-    int getCoins() const;
 
 private:
     sf::Vector2f position;
@@ -40,6 +52,8 @@ private:
     float direction;
     int coins;
     sf::Sprite sprite;
+    float shield;
+    bool finalBoss;
 };
 
 #endif // ZOMBIE_H
