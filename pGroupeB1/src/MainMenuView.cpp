@@ -28,7 +28,7 @@ void MainMenuView::render(const MainMenu& menu) {
         text.setString(options[i]);
         text.setCharacterSize(50);
         text.setFillColor(i == menu.getSelectedOption() ? sf::Color::Red : sf::Color::White);
-        text.setPosition(300.f, 200.f + i * 100.f);
+        text.setPosition(300.f, 100.f + i * 100.f);
         window.draw(text);
     }
 
