@@ -18,6 +18,8 @@ public:
     WorldController& getWorldController();
         void saveGame(const std::string& filename); // Add this method to save the game state
             void loadGame(const std::string& filename); // Add this method to load the game state
+              void saveTemporaryState(); // Add this method to save the temporary game state
+    void loadTemporaryState(); // Add this method to load the temporary game state
 
 
 

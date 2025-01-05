@@ -95,3 +95,11 @@ void GameController::loadGame(const std::string& filename) {
         std::cerr << "Error: Unable to open save file: " << filename << std::endl;
     }
 }
+
+void GameController::saveTemporaryState() {
+    saveGame("temp_save.json");
+}
+
+void GameController::loadTemporaryState() {
+    loadGame("temp_save.json");
+}

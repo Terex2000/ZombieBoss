@@ -30,9 +30,6 @@ void OnPauseState::handleInput(sf::RenderWindow& window, sf::Event event) {
             navigateDown();
         } else if (event.key.code == sf::Keyboard::Enter) {
             executeOption();
-        } else if (event.key.code == sf::Keyboard::Escape) {
-            // Retourner directement au jeu
-            stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
         }
     }
 }
@@ -95,7 +92,7 @@ void OnPauseState::executeOption() {
     const std::string& option = options[selectedOption];
 
     if (option == "Resume") {
-        stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
+        stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager, "temp_save.json")); // Load the temporary game state
     } else if (option == "Shop") {
         //stateManager->setState(std::make_unique<ShopState>(window, stateManager, soundManager, textureManager, inputManager));
     } else if (option == "Quit to Main Menu") {
