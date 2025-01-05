@@ -2,20 +2,21 @@
 #define INGAMESTATE_H
 
 #include "State.h"
-#include <SFML/Graphics.hpp>
-#include "StateManager.h"
+#include "GameController.h"
 #include "SoundManager.h"
 #include "TextureManager.h"
 #include "InputManager.h"
-#include "GameController.h"
-
+#include "StateManager.h"
+#include <SFML/Graphics.hpp>
 
 class InGameState : public State {
 public:
     InGameState(sf::RenderWindow& window, SoundManager& soundManager,
                 TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
+    InGameState(sf::RenderWindow& window, SoundManager& soundManager,
+                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, const std::string& saveFile); // Add this constructor
 
-    virtual ~InGameState();
+    ~InGameState() override;
 
     void handleInput(sf::RenderWindow& window, sf::Event event) override;
     void update(sf::RenderWindow& window, double deltaTime) override;
@@ -23,11 +24,14 @@ public:
 
 private:
     sf::RenderWindow& window;
-    StateManager* stateManager;
     SoundManager& soundManager;
     TextureManager& textureManager;
     InputManager& inputManager;
+    StateManager* stateManager;
     GameController gameController;
+
+    bool changeState;
+    std::string nextState;
 };
 
 #endif // INGAMESTATE_H
