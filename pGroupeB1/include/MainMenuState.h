@@ -38,6 +38,7 @@ private:
 
 
     bool launchGame;
+    bool loadGame;
     int selectedSettingOption;
     bool isFullscreen;
 

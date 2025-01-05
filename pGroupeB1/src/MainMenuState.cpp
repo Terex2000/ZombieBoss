@@ -3,9 +3,9 @@
 
 MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManager,
                              TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
-    : window(window), view(window, textureManager), textureManager(textureManager),inputManager(inputManager),
-    stateManager(stateManager), controller(model, inputManager), soundManager(soundManager),
-      currentMenu(MenuType::MainMenu), selectedSettingOption(0), launchGame(false), isFullscreen(false) {
+    : window(window), view(window, textureManager), textureManager(textureManager), inputManager(inputManager),
+      stateManager(stateManager), controller(model, inputManager), soundManager(soundManager),
+      currentMenu(MenuType::MainMenu), selectedSettingOption(0), launchGame(false), loadGame(false), isFullscreen(false) {
     soundManager.loadMusic("assets/sound/mainMenuSound.wav");
     soundManager.playMusic();
 
@@ -13,6 +13,8 @@ MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManage
         std::cerr << "Error: Failed to load settings background image!" << std::endl;
     }
     settingsBackgroundSprite.setTexture(settingsBackgroundTexture);
+    launchGame = false;
+    loadGame = false;
 }
 
 void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
@@ -33,7 +35,9 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
                 window.close();
             } else if (model.getSelectedOption() == MainMenu::Play) {
                 launchGame = true;
-            }else if (event.key.code == sf::Keyboard::F11) {
+            } else if (model.getSelectedOption() == MainMenu::LoadGame) {
+                loadGame = true;
+            } else if (event.key.code == sf::Keyboard::F11) {
                 toggleFullscreen();
             } else if (event.key.code == sf::Keyboard::Escape) {
                 window.close(); // Fermer la fen�tre
@@ -96,10 +100,14 @@ void MainMenuState::adjustWindowToScreen() {
 void MainMenuState::update(sf::RenderWindow& window, double deltaTime) {
 
     if (launchGame) {
-            // Change l'état vers InGameState
-            stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager,stateManager));
-            launchGame = false;
-        }
+        // Change l'état vers InGameState
+        stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
+        launchGame = false;
+    } else if (loadGame) {
+        // Charger l'état du jeu à partir du fichier save.json
+        stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager, "save.json"));
+        loadGame = false;
+    }
 }
 
 
