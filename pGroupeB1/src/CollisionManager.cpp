@@ -5,16 +5,20 @@
 #include "Map.h"
 #include <iostream> // Include for std::cout
 
+// Constructor for CollisionManager
 CollisionManager::CollisionManager() {}
 
+// Destructor for CollisionManager
 CollisionManager::~CollisionManager() {}
 
+// Check collision between player (circle shape) and a tile (rectangle shape)
 bool CollisionManager::isColliding(const sf::CircleShape& playerShape, const sf::RectangleShape& tileShape) {
     sf::FloatRect playerBounds = playerShape.getGlobalBounds();
     sf::FloatRect tileBounds = tileShape.getGlobalBounds();
     return playerBounds.intersects(tileBounds);
 }
 
+// Check collision between two circular shapes
 bool CollisionManager::isColliding(const sf::CircleShape& shape1, const sf::CircleShape& shape2) {
     sf::Vector2f pos1 = shape1.getPosition();
     sf::Vector2f pos2 = shape2.getPosition();
@@ -24,6 +28,7 @@ bool CollisionManager::isColliding(const sf::CircleShape& shape1, const sf::Circ
     return distance < (radius1 + radius2);
 }
 
+// Get the cells that a bounding box intersects with, given a cell size
 std::vector<sf::Vector2i> CollisionManager::getCollisionCells(const sf::FloatRect& bounds, int cellSize) {
     std::vector<sf::Vector2i> cells;
     int startX = static_cast<int>(bounds.left) / cellSize;
@@ -40,6 +45,7 @@ std::vector<sf::Vector2i> CollisionManager::getCollisionCells(const sf::FloatRec
     return cells;
 }
 
+// Check if a circular shape is colliding with any tiles of specified types in the map
 bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& mapData = map.getData();
     int cellSize = 32; // Assuming each tile is 32x32 pixels
@@ -62,6 +68,7 @@ bool CollisionManager::isCollidingWithTile(const sf::CircleShape& shape, const M
     return false;
 }
 
+// Check if a projectile (circular shape) is colliding with any tiles of specified types in the map
 bool CollisionManager::isCollidingProjectileWithTile(const sf::CircleShape& shape, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& mapData = map.getData();
     int cellSize = 32; // Assuming each tile is 32x32 pixels
@@ -84,10 +91,11 @@ bool CollisionManager::isCollidingProjectileWithTile(const sf::CircleShape& shap
     return false;
 }
 
+// Check collisions between the player and the map tiles
 void CollisionManager::checkPlayerCollisions(PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& playerShape = playerController.getPlayerShape();
     auto cells = getCollisionCells(playerShape.getGlobalBounds(), 32); // Assuming each tile is 32x32 pixels
-     bool onGround = false;
+    bool onGround = false;
 
     for (const auto& cell : cells) {
         int x = cell.x;
@@ -99,21 +107,22 @@ void CollisionManager::checkPlayerCollisions(PlayerController& playerController,
                 tileShape.setPosition(tile.getX() * 32, tile.getY() * 32);
                 if (isColliding(playerShape, tileShape)) {
                     playerController.handleCollision(tileShape);
-                     if (playerController.isOnGround()) {
+                    if (playerController.isOnGround()) {
                         onGround = true;
                     }
                 }
             }
         }
     }
-        playerController.setOnGround(onGround);
-
+    playerController.setOnGround(onGround);
 }
 
+// Check if a projectile is colliding with any tiles of specified types in the map
 bool CollisionManager::checkProjectileCollisions(const Projectile& projectile, const Map& map, const std::unordered_set<int>& collisionTypes) {
     return isCollidingProjectileWithTile(projectile.getShape(), map, collisionTypes);
 }
 
+// Check collisions between projectiles and enemies
 void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& projectiles, EnemyController& enemyController) {
     for (auto it = projectiles.begin(); it != projectiles.end();) {
         bool hit = false;
@@ -138,6 +147,7 @@ void CollisionManager::checkProjectileEnemyCollisions(std::vector<Projectile>& p
     }
 }
 
+// Check collisions between enemy projectiles and the player
 void CollisionManager::checkEnemyProjectileCollisions(std::vector<Projectile>& projectiles, PlayerController& playerController, const Map& map, const std::unordered_set<int>& collisionTypes) {
     const auto& playerShape = playerController.getPlayerShape();
 

@@ -4,8 +4,10 @@
 #include <iostream>
 #include <cmath> // Include for sqrt and pow
 
+// Constructor: Initializes the EnemyController with a factory and texture manager
 EnemyController::EnemyController(EnemyFactory& factory, TextureManager& textureManager)
-    : factory(factory), textureManager(textureManager) {   
+    : factory(factory), textureManager(textureManager) {
+    // Load textures for different enemy types
     if (!textureManager.loadTexture("zombie", "assets/img/zombie.png")) {
         std::cerr << "Error: Failed to load zombie texture" << std::endl;
     }
@@ -13,24 +15,28 @@ EnemyController::EnemyController(EnemyFactory& factory, TextureManager& textureM
         std::cerr << "Error: Failed to load bullet texture" << std::endl;
     }
     if (!textureManager.loadTexture("boss", "assets/img/boss.png")) {
-        std::cerr << "Error: Failed to load bullet texture" << std::endl;
+        std::cerr << "Error: Failed to load boss texture" << std::endl;
     }
-    }
+}
 
+// Destructor: Cleans up dynamically allocated enemies
 EnemyController::~EnemyController() {
     for (auto enemy : enemies) {
         delete enemy;
     }
 }
 
+// Creates a new zombie enemy and adds it to the enemies vector
 void EnemyController::createEnemy(float x, float y, float health, float attack, float speed, float maxDistance, int coins) {
     enemies.push_back(factory.createEnemy(x, y, health, attack, speed, maxDistance, coins, textureManager.getTexture("zombie")));
 }
 
+// Creates a new boss enemy and adds it to the enemies vector
 void EnemyController::createBoss(float x, float y, float health, float attack, float speed, int coins, bool isFinalBoss, float shield) {
     enemies.push_back(factory.createBoss(x, y, health, attack, speed, coins, textureManager.getTexture("boss"), isFinalBoss, shield));
 }
 
+// Draws all enemies and projectiles on the window
 void EnemyController::draw(sf::RenderWindow& window) {
     for (auto enemy : enemies) {
         if (dynamic_cast<Zombie*>(enemy)) {
@@ -42,9 +48,11 @@ void EnemyController::draw(sf::RenderWindow& window) {
     projectileController.draw(window);
 }
 
+// Updates the state of all enemies and handles their interactions with the player
 void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition, Player& player, const sf::View& view) {
     for (auto it = enemies.begin(); it != enemies.end();) {
         if ((*it)->getHealth() <= 0) {
+            // If enemy is dead, add its coins to the player and remove it from the game
             if (dynamic_cast<Zombie*>(*it)) {
                 player.addCoins(dynamic_cast<Zombie*>(*it)->getCoins());
             } else if (dynamic_cast<Boss*>(*it)) {
@@ -83,14 +91,17 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
     projectileController.update(deltaTime, view);
 }
 
-const std::vector<Enemy*>& EnemyController::getEnemies() const{
+// Returns a constant reference to the enemies vector
+const std::vector<Enemy*>& EnemyController::getEnemies() const {
     return enemies;
 }
 
+// Returns a reference to the enemies vector
 std::vector<Enemy*>& EnemyController::getEnemies() {
     return enemies;
 }
 
+// Returns a reference to the projectile controller
 ProjectileController& EnemyController::getProjectileController() {
     return projectileController;
 }

@@ -2,6 +2,7 @@
 #include "MainMenuState.h"
 #include <iostream>
 
+// Constructor: Initializes the WinState with necessary managers and controllers
 WinState::WinState(sf::RenderWindow& window, SoundManager& soundManager,
                            TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
     : window(window), stateManager(stateManager), soundManager(soundManager),
@@ -13,10 +14,12 @@ WinState::WinState(sf::RenderWindow& window, SoundManager& soundManager,
     options = {"Quit to Main Menu"};
 }
 
+// Destructor: Cleans up resources used by the WinState
 WinState::~WinState(){
     std::cout << "WinState destroyed" << std::endl;
 }
 
+// Handles user input for the win state
 void WinState::handleInput(sf::RenderWindow& window, sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
@@ -29,18 +32,20 @@ void WinState::handleInput(sf::RenderWindow& window, sf::Event event) {
     }
 }
 
+// Updates the win state (no specific update logic needed here)
 void WinState::update(sf::RenderWindow& window, double deltaTime) {
 }
 
+// Draws the win state screen
 void WinState::draw(sf::RenderWindow& window) {
     try {
-        // Rectangle pour le fond du menu
+        // Rectangle for the menu background
         sf::RectangleShape rectangle(sf::Vector2f(400.f, 50.f));
         rectangle.setFillColor(sf::Color(128, 128, 128, 1));
         rectangle.setPosition(200.f, 175.f);
         window.draw(rectangle);
 
-        // Chargement de la police
+        // Load the font
         sf::Font font;
         if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
             std::cerr << "Error loading font for WinState!" << std::endl;
@@ -53,14 +58,14 @@ void WinState::draw(sf::RenderWindow& window) {
             winText.setPosition(285.f, 250.f);
             window.draw(winText);
         }
-        // Affichage des options
+        // Display the options
         for (size_t i = 0; i < options.size(); ++i) {
             sf::Text text(options[i], font, 30);
-            text.setPosition(250.f, 180.f + i * 50.f); // Ajustez les positions
+            text.setPosition(250.f, 180.f + i * 50.f); // Adjust positions
             text.setFillColor(i == selectedOption ? sf::Color::Red : sf::Color::White);
             window.draw(text);
         }
-        window.display(); // Rafra�chir l'affichage
+        window.display(); // Refresh the display
     } catch (const std::exception& e) {
         std::cerr << "Exception in WinState::draw: " << e.what() << std::endl;
     } catch (...) {
@@ -68,23 +73,25 @@ void WinState::draw(sf::RenderWindow& window) {
     }
 }
 
-
+// Navigates up through the menu options
 void WinState::navigateUp() {
     if (selectedOption > 0) {
         selectedOption--;
     } else {
-        selectedOption = options.size() - 1; // Retourner � la derni�re option
+        selectedOption = options.size() - 1; // Wrap around to the last option
     }
 }
 
+// Navigates down through the menu options
 void WinState::navigateDown() {
     if (selectedOption < options.size() - 1) {
         selectedOption++;
     } else {
-        selectedOption = 0; // Retourner � la premi�re option
+        selectedOption = 0; // Wrap around to the first option
     }
 }
 
+// Executes the selected menu option
 void WinState::executeOption() {
     const std::string& option = options[selectedOption];
 

@@ -4,9 +4,11 @@
 // Constructor for PlayerView
 // Initializes the player view with a reference to the player.
 PlayerView::PlayerView(Player& player, TextureManager& textureManager) : player(player), textureManager(textureManager) {
+    // Initialize the shape with the player's properties
     shape.setRadius(player.getRadius());
     shape.setFillColor(player.getColor());
     shape.setPosition(player.getPosition());
+    // Initialize the sprite's position
     sprite.setPosition(player.getPosition());
 }
 
@@ -32,10 +34,11 @@ void PlayerView::draw(sf::RenderWindow& window) {
     updateShape();
     updateSprite();
     window.draw(sprite);
-    //window.draw(shape);
+    // Uncomment the following line to draw the shape instead of the sprite
+    // window.draw(shape);
 }
 
-// Updates the shape's position and color based on the player's state.
+// Updates the sprite's position and texture based on the player's state.
 void PlayerView::updateSprite() {
     sprite.setPosition(player.getPosition());
     if (player.getDirection() > 0) {
@@ -69,22 +72,24 @@ void PlayerView::updateSprite() {
                 break;
         }
     }
-        // Set the scale of the sprite to match the player's shape
+    // Set the scale of the sprite to match the player's shape
     float scaleX = player.getRadius() * 2 / sprite.getTexture()->getSize().x;
     float scaleY = player.getRadius() * 2 / sprite.getTexture()->getSize().y;
     sprite.setScale(scaleX, scaleY);
 }
 
-
+// Updates the shape's position and color based on the player's state.
 void PlayerView::updateShape() {
     shape.setPosition(player.getPosition());
     shape.setFillColor(player.getColor());
 }
 
+// Returns the shape of the player.
 const sf::CircleShape& PlayerView::getShape() const {
     return shape;
 }
-// Returns the shape of the player.
+
+// Returns the sprite of the player.
 const sf::Sprite& PlayerView::getSprite() const {
     return sprite;
 }

@@ -1,7 +1,6 @@
 #include "Projectile.h"
 #include <cmath> // Include for atan2 and M_PI
 
-
 // Constructor for Projectile
 // Initializes the projectile with a position, direction, texture, and damage.
 Projectile::Projectile(const sf::Vector2f& position, const sf::Vector2f& direction, const sf::Texture& texture, float damage)

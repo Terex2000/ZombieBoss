@@ -4,21 +4,23 @@
 
 #include <iostream>
 
+// Constructor: Initializes the OnPauseState with necessary managers and controllers
 OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
-                           TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager, Player& player,HUDController& hudController)
+                           TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager, Player& player, HUDController& hudController)
     : window(window), stateManager(stateManager), soundManager(soundManager),
       textureManager(textureManager), inputManager(inputManager), player(player), hudController(hudController), gameController(stateManager, textureManager), selectedOption(0) {
 
     std::cout << "OnPauseState initialized" << std::endl;
 
-    // Charger la police
+    // Load the font
     if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
-    std::cerr << "Error loading font for OnPauseState!" << std::endl;
+        std::cerr << "Error loading font for OnPauseState!" << std::endl;
     }
 
     options = {"Resume", "Shop", "Quit to Main Menu"};
 }
 
+// Overloaded constructor: Initializes the OnPauseState without player and HUDController references
 OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
                            TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
     : window(window), stateManager(stateManager), soundManager(soundManager),
@@ -26,19 +28,20 @@ OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
 
     std::cout << "OnPauseState initialized" << std::endl;
 
-    // Charger la police
+    // Load the font
     if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
-    std::cerr << "Error loading font for OnPauseState!" << std::endl;
+        std::cerr << "Error loading font for OnPauseState!" << std::endl;
     }
 
     options = {"Resume", "Shop", "Quit to Main Menu"};
 }
 
+// Destructor: Cleans up resources used by the OnPauseState
 OnPauseState::~OnPauseState() {
     std::cout << "OnPauseState destroyed" << std::endl;
 }
 
-
+// Handles user input for the pause state
 void OnPauseState::handleInput(sf::RenderWindow& window, sf::Event event) {
     if (event.type == sf::Event::KeyPressed) {
         if (event.key.code == sf::Keyboard::Up) {
@@ -51,37 +54,37 @@ void OnPauseState::handleInput(sf::RenderWindow& window, sf::Event event) {
     }
 }
 
-
+// Updates the pause state (no specific update logic needed here)
 void OnPauseState::update(sf::RenderWindow& window, double deltaTime) {
 }
 
+// Draws the pause state menu
 void OnPauseState::draw(sf::RenderWindow& window) {
     try {
-        // Sauvegarder la vue actuelle
+        // Save the current view
         sf::View originalView = window.getView();
-        // Passer à une vue par défaut, non affectée par la caméra du joueur
+        // Switch to a default view, unaffected by the player's camera
         window.setView(window.getDefaultView());
-        // Rectangle pour le fond du menu
+        // Rectangle for the menu background
         sf::RectangleShape rectangle(sf::Vector2f(400.f, 200.f));
         rectangle.setFillColor(sf::Color(128, 128, 128, 200));
         rectangle.setPosition(200.f, 150.f);
         window.draw(rectangle);
 
-        // Chargement de la police
+        // Load the font
         sf::Font font;
         if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
             std::cerr << "Error loading font for OnPauseState!" << std::endl;
         }
-        // Affichage des options
+        // Display the options
         for (size_t i = 0; i < options.size(); ++i) {
             sf::Text text(options[i], font, 30);
-            text.setPosition(250.f, 180.f + i * 50.f); // Ajustez les positions
+            text.setPosition(250.f, 180.f + i * 50.f); // Adjust positions
             text.setFillColor(i == selectedOption ? sf::Color::Red : sf::Color::White);
             window.draw(text);
         }
 
-
-        window.display(); // Rafra�chir l'affichage
+        window.display(); // Refresh the display
     } catch (const std::exception& e) {
         std::cerr << "Exception in OnPauseState::draw: " << e.what() << std::endl;
     } catch (...) {
@@ -89,23 +92,25 @@ void OnPauseState::draw(sf::RenderWindow& window) {
     }
 }
 
-
+// Navigates up through the menu options
 void OnPauseState::navigateUp() {
     if (selectedOption > 0) {
         selectedOption--;
     } else {
-        selectedOption = options.size() - 1; // Retourner � la derni�re option
+        selectedOption = options.size() - 1; // Wrap around to the last option
     }
 }
 
+// Navigates down through the menu options
 void OnPauseState::navigateDown() {
     if (selectedOption < options.size() - 1) {
         selectedOption++;
     } else {
-        selectedOption = 0; // Retourner � la premi�re option
+        selectedOption = 0; // Wrap around to the first option
     }
 }
 
+// Executes the selected menu option
 void OnPauseState::executeOption() {
     const std::string& option = options[selectedOption];
 

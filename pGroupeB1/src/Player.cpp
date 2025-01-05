@@ -1,10 +1,11 @@
 #include "Player.h"
 
 // Constructor for Player
+// Initializes the player with default values for position, color, radius, direction, coins, state, health, lives, and bullet damage.
 Player::Player() : position(0, 0), color(sf::Color::Red), radius(14.5f), direction(1.0f), coins(50), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
     shape.setRadius(radius); // Set the radius of the shape
     shape.setOrigin(radius, radius); // Center the origin of the shape
-    shape.setPosition(position); 
+    shape.setPosition(position); // Set the initial position of the shape
 }
 
 // Copy constructor for Player
@@ -49,7 +50,6 @@ const sf::Vector2f& Player::getPosition() const {
 void Player::setPosition(float x, float y) {
     position.x = x;
     position.y = y;
-
 }
 
 // Sets the direction the player is facing.
@@ -57,6 +57,7 @@ void Player::setDirection(float direction) {
     this->direction = direction;
 }
 
+// Sets the color of the player.
 void Player::setColor(const sf::Color& color) {
     this->color = color;
 }
@@ -86,14 +87,17 @@ int Player::getCoins() const {
     return coins;
 }
 
+// Sets the number of coins the player has.
 void Player::setCoins(int coins) {
     this->coins = coins;
 }
 
+// Sets the state of the player.
 void Player::setState(State newState) {
     state = newState;
 }
 
+// Returns the current state of the player.
 Player::State Player::getState() const {
     return state;
 }
@@ -158,12 +162,12 @@ int Player::getBulletDamage() const {
     return bulletDamage;
 }
 
-// Returns the player's shape
+// Returns the player's shape.
 sf::CircleShape Player::getShape() const {
     return shape;
 }
 
-// Sets the texture for the player
+// Sets the texture for the player.
 void Player::setTexture(const sf::Texture& texture) {
     sprite.setTexture(texture);
     shape.setTexture(&texture);

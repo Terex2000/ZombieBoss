@@ -3,14 +3,17 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 
+// Constructor: Initializes the GameController with a state manager and texture manager
 GameController::GameController(StateManager* stateManager, TextureManager& textureManager)
     : stateManager(stateManager), playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {}
 
+// Constructor: Initializes the GameController and loads a saved game state from a file
 GameController::GameController(StateManager* stateManager, TextureManager& textureManager, const std::string& saveFile)
     : stateManager(stateManager), playerController(100.0f, 100.0f, textureManager), worldController(textureManager, playerController), textureManager(textureManager) {
     loadGame(saveFile);
 }
 
+// Main game loop: Runs the game, handling events, updating the world, and rendering
 void GameController::run(sf::RenderWindow& window) {
     sf::Clock clock;
 
@@ -35,24 +38,29 @@ void GameController::run(sf::RenderWindow& window) {
     }
 }
 
+// Updates the game state
 void GameController::update(float deltaTime) {
     // Update world
     worldController.update(deltaTime);
 }
 
+// Renders the game state
 void GameController::draw(sf::RenderWindow& window) {
     worldController.draw(window);
 }
 
+// Returns a reference to the world controller
 WorldController& GameController::getWorldController() {
     return worldController;
 }
 
+// Saves the current game state to a file
 void GameController::saveGame(const std::string& filename) {
     nlohmann::json gameState = worldController.getGameState();
     fileWriter.saveGameState(filename, gameState);
 }
 
+// Loads a game state from a file
 void GameController::loadGame(const std::string& filename) {
     std::ifstream file(filename);
     if (file.is_open()) {
@@ -66,8 +74,8 @@ void GameController::loadGame(const std::string& filename) {
         playerController.getPlayer().setCoins(gameState["player"]["coins"]);
         playerController.getPlayer().setBulletDamage(gameState["player"]["bulletDamage"]);
         playerController.getPlayer().setDirection(gameState["player"]["direction"]);
-        playerController.getPlayer().setState(static_cast<Player::State>(gameState["player"]["state"]));    
-        playerController.setOnGround(gameState["player"]["onGround"]); 
+        playerController.getPlayer().setState(static_cast<Player::State>(gameState["player"]["state"]));
+        playerController.setOnGround(gameState["player"]["onGround"]);
 
         // Load world state
         worldController.setCurrentWorldIndex(gameState["world"]["currentWorldIndex"]);
@@ -92,7 +100,6 @@ void GameController::loadGame(const std::string& filename) {
 
         worldController.getBossController().getEnemies().clear();
         for (const auto& bossState : gameState["enemies"]["bosses"]) {
-
             worldController.getBossController().createBoss(bossState["position"][0], bossState["position"][1], bossState["health"], bossState["attack"], bossState["speed"], bossState["coins"], bossState["isFinalBoss"], bossState["shield"]);
         }
     } else {
@@ -100,10 +107,12 @@ void GameController::loadGame(const std::string& filename) {
     }
 }
 
+// Saves the current game state to a temporary file
 void GameController::saveTemporaryState() {
     saveGame("temp_save.json");
 }
 
+// Loads the game state from a temporary file
 void GameController::loadTemporaryState() {
     loadGame("temp_save.json");
 }
