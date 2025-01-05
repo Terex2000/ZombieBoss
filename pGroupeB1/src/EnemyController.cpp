@@ -69,7 +69,7 @@ void EnemyController::update(float deltaTime, const sf::Vector2f& playerPosition
                 sf::Vector2f direction = playerPosition - enemyPosition;
                 float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
                 direction /= length; // Normalize the direction vector
-                projectileController.shoot(enemyPosition, direction, textureManager.getTexture("bullet"), 20.0f); // Example damage
+                projectileController.shoot(enemyPosition, direction, textureManager.getTexture("bullet"), (*it)->getAttack()); // Example damage
                 projectileController.getProjectiles().back().setScale(2.0f, 2.0f);
             }
             ++it;
