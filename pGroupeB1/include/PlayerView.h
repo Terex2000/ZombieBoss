@@ -19,15 +19,19 @@ public:
     void draw(sf::RenderWindow& window);
 
     // Returns the shape of the player.
+    const sf::CircleShape& getShape() const;
     const sf::Sprite& getSprite() const;
 
 private:
     Player& player; // Reference to the player object
     TextureManager& textureManager; // Shape for rendering the player
+    sf::CircleShape shape;
     sf::Sprite sprite;
 
     // Updates the shape's position and color based on the player's state.
     void updateSprite();
+
+    void updateShape();
 };
 
 #endif // PLAYERVIEW_H

@@ -50,6 +50,7 @@ public:
 
     // Returns the sprite of the player.
     const sf::Sprite& getPlayerSprite() const;
+    const sf::CircleShape& getPlayerShape() const;
 
     // Returns the direction the player is facing.
     float getDirection() const;

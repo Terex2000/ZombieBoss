@@ -136,29 +136,7 @@ void WorldController::update(float deltaTime) {
     bossController.update(deltaTime, playerController.getPlayer().getPosition(), playerController.getPlayer(), cameraManager.getView());
 
     // Check player collisions
-    const auto& playerShape = playerController.getPlayerSprite();
-    const auto& mapData = mapController->getMap().getData();
-    bool onGround = false;
-
-    std::vector<sf::RectangleShape> collisionTiles;
-    for (size_t i = 0; i < mapData.size(); ++i) {
-        for (size_t j = 0; j < mapData[i].size(); ++j) {
-            const auto& tile = mapData[i][j];
-            if (collisionTypes.find(tile.getType()) != collisionTypes.end()) {
-                sf::RectangleShape tileShape(sf::Vector2f(32, 32));
-                tileShape.setPosition(tile.getX() * 32, tile.getY() * 32);
-                collisionTiles.push_back(tileShape);
-                if (collisionManager.isColliding(playerShape, tileShape)) {
-                    playerController.handleCollision(tileShape);
-                    if (playerController.isOnGround()) {
-                        onGround = true;
-                    }
-                }
-            }
-        }
-    }
-
-    playerController.setOnGround(onGround);
+    collisionManager.checkPlayerCollisions(playerController, mapController->getMap(), collisionTypes);
 
     // Handle enemy collisions
     collisionManager.checkProjectileEnemyCollisions(playerController.getProjectiles(), zombieController);
@@ -193,12 +171,11 @@ void WorldController::update(float deltaTime) {
     }
 
     // Check if the player is on an instant death tile
-        if (checkInstantDeath(playerController.getPlayer().getPosition())) {
-            std::cerr << "Player hit an instant death tile! Respawning..." << std::endl;
-            playerController.getPlayer().takeDamage(100.0f); // Instantly kill the player
-            playerController.setPosition(100.0f, 100.0f); // Reset player position to the start of the level
-        }
-
+    if (checkInstantDeath(playerController.getPlayer().getPosition())) {
+        std::cerr << "Player hit an instant death tile! Respawning..." << std::endl;
+        playerController.getPlayer().takeDamage(100.0f); // Instantly kill the player
+        playerController.setPosition(100.0f, 100.0f); // Reset player position to the start of the level
+    }
 
     // Check if the boss is defeated
     if (inBossRoom && bossController.getEnemies().empty()) {
@@ -228,7 +205,7 @@ void WorldController::update(float deltaTime) {
         isBossDead = false;
     }
 
-    if(playerController.getPlayer().getLives() <= 0) {
+    if (playerController.getPlayer().getLives() <= 0) {
         isPlayerDead = true;
     }
 
