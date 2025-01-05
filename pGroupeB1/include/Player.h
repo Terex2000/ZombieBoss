@@ -33,6 +33,7 @@ public:
 
     // Returns the number of coins the player has.
     int getCoins() const;
+    void setCoins(int coins);
 
     // State management
     void setState(State newState);
@@ -49,7 +50,7 @@ public:
 
     // Lives management
     void setLives(int lives);
-    int getLives() const;
+    const int getLives() const;
     void loseLife();
     void gainLife();
 

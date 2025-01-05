@@ -76,6 +76,10 @@ int Player::getCoins() const {
     return coins;
 }
 
+void Player::setCoins(int coins) {
+    this->coins = coins;
+}
+
 void Player::setState(State newState) {
     state = newState;
 }
@@ -122,7 +126,7 @@ void Player::setLives(int lives) {
 }
 
 // Returns the player's lives.
-int Player::getLives() const {
+const int Player::getLives() const {
     return lives;
 }
 
