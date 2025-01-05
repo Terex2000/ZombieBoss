@@ -195,6 +195,7 @@ void WorldController::update(float deltaTime) {
     // Check if the player is on an instant death tile
         if (checkInstantDeath(playerController.getPlayer().getPosition())) {
             std::cerr << "Player hit an instant death tile! Respawning..." << std::endl;
+            playerController.getPlayer().takeDamage(100.0f); // Instantly kill the player
             playerController.setPosition(100.0f, 100.0f); // Reset player position to the start of the level
         }
 
