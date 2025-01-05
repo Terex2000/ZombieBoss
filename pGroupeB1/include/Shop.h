@@ -1,16 +1,20 @@
 #ifndef SHOP_H
 #define SHOP_H
 
+#include "Player.h"
+#include <nlohmann/json.hpp>
 
-class Shop
-{
-    public:
-        Shop();
-        virtual ~Shop();
+class Shop {
+public:
+    explicit Shop(Player& player);
 
-    protected:
+    bool buyLife(const std::string& jsonFilePath); // Acheter une vie
+    bool upgradeDamage(const std::string& jsonFilePath); // Améliorer les dommages
 
-    private:
+private:
+    Player& player; // Référence au joueur pour modifier ses statistiques
+
+    void updateJson(const std::string& jsonFilePath); // Met à jour le fichier JSON
 };
 
 #endif // SHOP_H

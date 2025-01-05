@@ -1,37 +1,101 @@
 {
     "enemies": {
-        "bosses": [
+        "zombies": [
             {
-                "attack": 50.0,
-                "coins": 200,
-                "health": 500.0,
-                "isFinalBoss": false,
-                "maxDistance": 0.0,
+                "attack": 10.0,
+                "coins": 10,
+                "health": 100.0,
+                "maxDistance": 16.0,
                 "position": [
-                    544.0,
-                    485.0
+                    288.0,
+                    272.0
                 ],
-                "shield": 20.0,
-                "speed": 30.0
+                "speed": 50.0
+            },
+            {
+                "attack": 10.0,
+                "coins": 5,
+                "health": 100.0,
+                "maxDistance": 50.0,
+                "position": [
+                    480.0,
+                    528.0
+                ],
+                "speed": 50.0
+            },
+            {
+                "attack": 10.0,
+                "coins": 10,
+                "health": 100.0,
+                "maxDistance": 90.0,
+                "position": [
+                    1184.0,
+                    208.0
+                ],
+                "speed": 50.0
+            },
+            {
+                "attack": 10.0,
+                "coins": 5,
+                "health": 100.0,
+                "maxDistance": 20.0,
+                "position": [
+                    1440.0,
+                    528.0
+                ],
+                "speed": 50.0
+            },
+            {
+                "attack": 10.0,
+                "coins": 5,
+                "health": 100.0,
+                "maxDistance": 100.0,
+                "position": [
+                    1696.0,
+                    528.0
+                ],
+                "speed": 50.0
+            },
+            {
+                "attack": 10.0,
+                "coins": 5,
+                "health": 100.0,
+                "maxDistance": 32.0,
+                "position": [
+                    2016.0,
+                    528.0
+                ],
+                "speed": 50.0
+            },
+            {
+                "attack": 10.0,
+                "coins": 5,
+                "health": 100.0,
+                "maxDistance": 10.0,
+                "position": [
+                    2464.0,
+                    528.0
+                ],
+                "speed": 50.0
             }
         ]
     },
     "player": {
         "bulletDamage": 10,
-        "coins": 0,
+        "coins": 50,
         "direction": 1.0,
-        "health": 90.0,
+        "health": 100.0,
         "lives": 3,
         "onGround": false,
         "position": [
-            172.0247039794922,
-            515.0001220703125
+            100.0,
+            515.0000610351563
         ],
         "state": 0
     },
     "world": {
         "currentLevelIndex": 0,
         "currentWorldIndex": 0,
-        "inBossRoom": true
+        "inBossRoom": false
     }
 }

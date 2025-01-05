@@ -7,13 +7,15 @@
 #include "SoundManager.h"
 #include "TextureManager.h"
 #include "InputManager.h"
+#include "GameController.h"
+
 #include <vector>
 #include <string>
 
 class LoseState : public State {
 public:
     LoseState(sf::RenderWindow& window, SoundManager& soundManager,
-                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
+                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, GameController& gameController);
     ~LoseState() override;
 
     void handleInput(sf::RenderWindow& window, sf::Event event) override;
@@ -26,6 +28,8 @@ private:
     SoundManager& soundManager;
     TextureManager& textureManager;
     InputManager& inputManager;
+    GameController& gameController;
+
 
     sf::Font font;
     std::vector<std::string> options;

@@ -5,7 +5,7 @@
 OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
                            TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
     : window(window), stateManager(stateManager), soundManager(soundManager),
-      textureManager(textureManager), inputManager(inputManager), selectedOption(0) {
+      textureManager(textureManager), inputManager(inputManager), gameController(stateManager, textureManager), selectedOption(0) {
 
     std::cout << "OnPauseState initialized" << std::endl;
 
@@ -100,8 +100,8 @@ void OnPauseState::executeOption() {
     if (option == "Resume") {
         stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager, "temp_save.json")); // Load the temporary game state
     } else if (option == "Shop") {
-        //stateManager->setState(std::make_unique<ShopState>(window, stateManager, soundManager, textureManager, inputManager));
+        stateManager->setState(std::make_unique<ShopState>(window, stateManager, soundManager, textureManager, inputManager, gameController.getPlayerController().getPlayer()));
     } else if (option == "Quit to Main Menu") {
-        stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager));
+        stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager, gameController));
     }
 }

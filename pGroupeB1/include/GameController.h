@@ -12,15 +12,23 @@ class GameController {
 public:
     GameController(StateManager* stateManager, TextureManager& textureManager);
     GameController(StateManager* stateManager, TextureManager& textureManager, const std::string& saveFile); // Add constructor for loading game
+
     void run(sf::RenderWindow& window);
-    void update(float deltaTime);   
+    void update(float deltaTime);
     void draw(sf::RenderWindow& window);
     WorldController& getWorldController();
-        void saveGame(const std::string& filename); // Add this method to save the game state
-            void loadGame(const std::string& filename); // Add this method to load the game state
-              void saveTemporaryState(); // Add this method to save the temporary game state
+
+    void saveGame(const std::string& filename); // Add this method to save the game state
+    void loadGame(const std::string& filename); // Add this method to load the game state
+    void saveTemporaryState(); // Add this method to save the temporary game state
     void loadTemporaryState(); // Add this method to load the temporary game state
 
+    void updateSaveFile();
+    void setBulletDamage(int damage);
+    void updatePlayerStats(); // Mise à jour des statistiques du joueur
+
+
+    PlayerController& getPlayerController();
 
 
 private:
@@ -31,7 +39,7 @@ private:
     sf::Sprite backgroundSprite;
     FileWriter fileWriter; // Add this member to handle file writing
 
-    
+
 };
 
 #endif // GAMECONTROLLER_H

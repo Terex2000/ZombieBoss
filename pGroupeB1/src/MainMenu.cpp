@@ -1,7 +1,7 @@
 #include "MainMenu.h"
 
 MainMenu::MainMenu() : selectedIndex(0) {
-    options = {"Play", "Load Game", "Shop", "Settings", "Quit"}; // Add Load Game option
+    options = {"Play", "Load Game", "Settings", "Quit"}; // Add Load Game option
 }
 
 MainMenu::~MainMenu() {}

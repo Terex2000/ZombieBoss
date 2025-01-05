@@ -2,9 +2,9 @@
 #include <iostream>
 
 MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManager,
-                             TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
+                             TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, GameController& gameController)
     : window(window), view(window, textureManager), textureManager(textureManager), inputManager(inputManager),
-      stateManager(stateManager), controller(model, inputManager), soundManager(soundManager),
+      stateManager(stateManager), controller(model, inputManager), soundManager(soundManager), gameController(gameController),
       currentMenu(MenuType::MainMenu), selectedSettingOption(0), launchGame(false), loadGame(false), isFullscreen(false) {
     soundManager.loadMusic("assets/sound/mainMenuSound.wav");
     soundManager.playMusic();
@@ -53,6 +53,16 @@ void MainMenuState::handleInput(sf::RenderWindow& window, sf::Event event) {
                 switch (selectedSettingOption) {
                     case 0: // Changer la difficult�
                         settings.setDifficulty(static_cast<Settings::Difficulty>((settings.getDifficulty() + 1) % 3));
+                        if (settings.getDifficulty() == Settings::Difficulty::Easy) {
+                            gameController.getPlayerController().getPlayer().setBulletDamage(40); // Facile
+                            gameController.setBulletDamage(40);
+                            std::cerr << "change dammage : " <<gameController.getPlayerController().getPlayer().getBulletDamage()<< std::endl;
+                        } else if (settings.getDifficulty() == Settings::Difficulty::Medium) {
+                            gameController.getPlayerController().getPlayer().setBulletDamage(25); // Moyen
+                        } else if (settings.getDifficulty() == Settings::Difficulty::Hard) {
+                            gameController.getPlayerController().getPlayer().setBulletDamage(10); // Difficile
+                        }
+                        gameController.updatePlayerStats();
                         break;
                     case 1: // Modifier le volume
                         settings.setVolume((settings.getVolume() + 10) % 110);
@@ -100,6 +110,8 @@ void MainMenuState::adjustWindowToScreen() {
 void MainMenuState::update(sf::RenderWindow& window, double deltaTime) {
 
     if (launchGame) {
+                                     gameController.updatePlayerStats();
+
         // Change l'état vers InGameState
         stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager));
         launchGame = false;

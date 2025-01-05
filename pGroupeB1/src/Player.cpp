@@ -1,10 +1,10 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), color(sf::Color::Red), radius(14.5f), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
+Player::Player() : position(0, 0), color(sf::Color::Red), radius(14.5f), direction(1.0f), coins(50), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
     shape.setRadius(radius); // Set the radius of the shape
     shape.setOrigin(radius, radius); // Center the origin of the shape
-    shape.setPosition(position); 
+    shape.setPosition(position);
 }
 
 // Copy constructor for Player

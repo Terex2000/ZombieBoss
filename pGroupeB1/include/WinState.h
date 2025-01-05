@@ -15,7 +15,7 @@
 class WinState : public State {
 public:
     WinState(sf::RenderWindow& window, SoundManager& soundManager,
-                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
+                TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, GameController& gameController);
     ~WinState() override;
 
     void handleInput(sf::RenderWindow& window, sf::Event event) override;
@@ -28,6 +28,8 @@ private:
     SoundManager& soundManager;
     TextureManager& textureManager;
     InputManager& inputManager;
+    GameController& gameController;
+
 
     sf::Font font;
     std::vector<std::string> options;

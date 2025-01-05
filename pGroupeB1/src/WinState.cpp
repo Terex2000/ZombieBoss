@@ -3,8 +3,8 @@
 #include <iostream>
 
 WinState::WinState(sf::RenderWindow& window, SoundManager& soundManager,
-                           TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
-    : window(window), stateManager(stateManager), soundManager(soundManager),
+                           TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager, GameController& gameController)
+    : window(window), stateManager(stateManager), soundManager(soundManager), gameController(gameController),
       textureManager(textureManager), inputManager(inputManager), selectedOption(0) {
     // Load the font
     if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
@@ -89,6 +89,6 @@ void WinState::executeOption() {
     const std::string& option = options[selectedOption];
 
     if (option == "Quit to Main Menu") {
-        stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager));
+        stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager, gameController));
     }
 }

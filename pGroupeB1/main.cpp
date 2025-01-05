@@ -3,6 +3,7 @@
 #include "SoundManager.h"
 #include "TextureManager.h"
 #include "InputManager.h"
+#include "GameController.h"
 #include <SFML/Graphics.hpp>
 
 int main() {
@@ -13,7 +14,9 @@ int main() {
         InputManager inputManager;
 
         StateManager stateManager(window);
-        stateManager.setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, &stateManager));
+        GameController gameController(&stateManager, textureManager);
+
+        stateManager.setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, &stateManager, gameController));
 
         sf::Clock clock;
         while (window.isOpen()) {

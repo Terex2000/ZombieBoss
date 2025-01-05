@@ -9,6 +9,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <string>
+#include "ShopState.h"
+#include "GameController.h"
+
 
 
 class OnPauseState : public State {
@@ -28,6 +31,7 @@ private:
     SoundManager& soundManager;
     TextureManager& textureManager;
     InputManager& inputManager;
+    GameController gameController;
 
     sf::Font font;
     std::vector<std::string> options;

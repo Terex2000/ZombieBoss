@@ -1,0 +1,33 @@
+#ifndef ONPAUSESTATE_H
+#define ONPAUSESTATE_H
+
+#include "State.h"
+#include "SoundManager.h"
+#include "TextureManager.h"
+#include "InputManager.h"
+#include "StateManager.h"
+#include "Shop.h"
+#include "ShopView.h"
+
+
+class OnPauseState : public State {
+public:
+    OnPauseState(sf::RenderWindow& window, SoundManager& soundManager, TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
+    ~OnPauseState();
+
+    void handleInput(sf::RenderWindow& window, sf::Event event) override;
+    void update(sf::RenderWindow& window, double deltaTime) override;
+    void draw(sf::RenderWindow& window) override;
+
+private:
+    sf::RenderWindow& window;
+    SoundManager& soundManager;
+    TextureManager& textureManager;
+    InputManager& inputManager;
+    StateManager* stateManager;
+    ShopView shopView;
+    Shop shop;
+    bool exitShop;
+};
+
+#endif // ONPAUSESTATE_H

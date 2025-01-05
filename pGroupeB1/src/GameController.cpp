@@ -35,6 +35,40 @@ void GameController::run(sf::RenderWindow& window) {
     }
 }
 
+PlayerController& GameController::getPlayerController() {
+    return playerController;
+}
+
+void GameController::setBulletDamage(int damage) {
+    playerController.getPlayer().setBulletDamage(damage);
+}
+
+void GameController::updatePlayerStats() {
+
+
+    playerController.getPlayer().setBulletDamage(playerController.getPlayer().getBulletDamage());
+    std::cerr << "Debug: Player bullet damage set to " << playerController.getPlayer().getBulletDamage() << std::endl;
+}
+
+
+void GameController::updateSaveFile() {
+    nlohmann::json gameState = worldController.getGameState();
+
+    // Update player-specific fields
+    gameState["player"]["coins"] = playerController.getPlayer().getCoins();
+    gameState["player"]["lives"] = playerController.getPlayer().getLives();
+    gameState["player"]["bulletDamage"] = playerController.getPlayer().getBulletDamage();
+
+    // Save to JSON file
+    std::ofstream file("save.json");
+    if (file.is_open()) {
+        file << gameState.dump(4); // Write formatted JSON
+        std::cerr << "Debug: Save file updated successfully" << std::endl;
+    } else {
+        std::cerr << "Error: Unable to open save file for writing" << std::endl;
+    }
+}
+
 void GameController::update(float deltaTime) {
     // Update world
     worldController.update(deltaTime);

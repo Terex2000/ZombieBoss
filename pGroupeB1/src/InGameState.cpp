@@ -7,12 +7,16 @@
 InGameState::InGameState(sf::RenderWindow& window, SoundManager& soundManager,
                          TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager)
     : window(window), soundManager(soundManager),
-      textureManager(textureManager), inputManager(inputManager), stateManager(stateManager), gameController(stateManager, textureManager), hudController(gameController.getWorldController().getPlayer(), nullptr), changeState(false) {}
+      textureManager(textureManager), inputManager(inputManager), stateManager(stateManager), gameController(stateManager, textureManager),
+      hudController(gameController.getWorldController().getPlayer(), nullptr), changeState(false) {    gameController.updatePlayerStats();
+}
 
 InGameState::InGameState(sf::RenderWindow& window, SoundManager& soundManager,
                          TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, const std::string& saveFile)
     : window(window), soundManager(soundManager),
-      textureManager(textureManager), inputManager(inputManager), stateManager(stateManager), gameController(stateManager, textureManager, saveFile), hudController(gameController.getWorldController().getPlayer(), nullptr), changeState(false) {}
+      textureManager(textureManager), inputManager(inputManager), stateManager(stateManager), gameController(stateManager, textureManager, saveFile),
+      hudController(gameController.getWorldController().getPlayer(), nullptr), changeState(false) {    gameController.updatePlayerStats();
+}
 
 InGameState::~InGameState() {
     std::cout << "InGameState destroyed" << std::endl;
@@ -64,11 +68,11 @@ void InGameState::update(sf::RenderWindow& window, double deltaTime) {
         if (nextState == "OnPauseState") {
             stateManager->setState(std::make_unique<OnPauseState>(window, soundManager, textureManager, inputManager, stateManager));
         } else if (nextState == "MainMenuState") {
-            stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager));
+            stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager, gameController));
         } else if (nextState == "WinState") {
-            stateManager->setState(std::make_unique<WinState>(window, soundManager, textureManager, inputManager, stateManager));
+            stateManager->setState(std::make_unique<WinState>(window, soundManager, textureManager, inputManager, stateManager, gameController));
         } else if (nextState == "LoseState") {
-            stateManager->setState(std::make_unique<LoseState>(window, soundManager, textureManager, inputManager, stateManager));
+            stateManager->setState(std::make_unique<LoseState>(window, soundManager, textureManager, inputManager, stateManager, gameController));
         }
         changeState = false;
     }

@@ -17,7 +17,7 @@
 class MainMenuState : public State {
 public:
     MainMenuState(sf::RenderWindow& window, SoundManager& soundManager,
-                  TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager);
+                  TextureManager& textureManager, InputManager& inputManager, StateManager* stateManager, GameController& gameController);
     void handleInput(sf::RenderWindow& window, sf::Event event) override;
     void update(sf::RenderWindow& window, double deltaTime) override;
     void draw(sf::RenderWindow& window) override;
@@ -35,7 +35,7 @@ private:
     Settings settings;
     MenuController controller;
     SoundManager& soundManager;
-
+    GameController& gameController;
 
     bool launchGame;
     bool loadGame;
