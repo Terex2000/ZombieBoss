@@ -57,8 +57,10 @@ void OnPauseState::update(sf::RenderWindow& window, double deltaTime) {
 
 void OnPauseState::draw(sf::RenderWindow& window) {
     try {
-        // Fond semi-transparent
-
+        // Sauvegarder la vue actuelle
+        sf::View originalView = window.getView();
+        // Passer à une vue par défaut, non affectée par la caméra du joueur
+        window.setView(window.getDefaultView());
         // Rectangle pour le fond du menu
         sf::RectangleShape rectangle(sf::Vector2f(400.f, 200.f));
         rectangle.setFillColor(sf::Color(128, 128, 128, 200));
