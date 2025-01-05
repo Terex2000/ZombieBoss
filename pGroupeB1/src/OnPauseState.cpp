@@ -40,35 +40,42 @@ void OnPauseState::update(sf::RenderWindow& window, double deltaTime) {
 
 void OnPauseState::draw(sf::RenderWindow& window) {
     try {
-        // Fond semi-transparent
+        // Sauvegarder la vue actuelle
+        sf::View originalView = window.getView();
 
-        // Rectangle pour le fond du menu
+        // Passer à une vue par défaut, non affectée par la caméra du joueur
+        window.setView(window.getDefaultView());
+
+        // Fond semi-transparent
         sf::RectangleShape rectangle(sf::Vector2f(400.f, 200.f));
-        rectangle.setFillColor(sf::Color(128, 128, 128, 200));
+        rectangle.setFillColor(sf::Color(128, 128, 128, 200));  // Couleur de fond semi-transparente
         rectangle.setPosition(200.f, 150.f);
         window.draw(rectangle);
 
         // Chargement de la police
-        sf::Font font;
         if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
             std::cerr << "Error loading font for OnPauseState!" << std::endl;
         }
+
         // Affichage des options
         for (size_t i = 0; i < options.size(); ++i) {
             sf::Text text(options[i], font, 30);
-            text.setPosition(250.f, 180.f + i * 50.f); // Ajustez les positions
+            text.setPosition(250.f, 180.f + i * 50.f); // Ajuster les positions
             text.setFillColor(i == selectedOption ? sf::Color::Red : sf::Color::White);
             window.draw(text);
         }
 
+        // Rétablir la vue originale du joueur
+        window.setView(originalView);
 
-        window.display(); // Rafra�chir l'affichage
+        window.display(); // Rafraîchir l'affichage
     } catch (const std::exception& e) {
         std::cerr << "Exception in OnPauseState::draw: " << e.what() << std::endl;
     } catch (...) {
         std::cerr << "Unknown exception in OnPauseState::draw" << std::endl;
     }
 }
+
 
 
 void OnPauseState::navigateUp() {
