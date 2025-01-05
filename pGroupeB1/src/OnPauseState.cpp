@@ -1,11 +1,28 @@
 #include "OnPauseState.h"
 #include "MainMenuState.h"
+#include "ShopState.h"
+
 #include <iostream>
+
+OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
+                           TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager, Player& player,HUDController& hudController)
+    : window(window), stateManager(stateManager), soundManager(soundManager),
+      textureManager(textureManager), inputManager(inputManager), player(player), hudController(hudController), gameController(stateManager, textureManager), selectedOption(0) {
+
+    std::cout << "OnPauseState initialized" << std::endl;
+
+    // Charger la police
+    if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
+    std::cerr << "Error loading font for OnPauseState!" << std::endl;
+    }
+
+    options = {"Resume", "Shop", "Quit to Main Menu"};
+}
 
 OnPauseState::OnPauseState(sf::RenderWindow& window, SoundManager& soundManager,
                            TextureManager& textureManager, InputManager& inputManager,  StateManager* stateManager)
     : window(window), stateManager(stateManager), soundManager(soundManager),
-      textureManager(textureManager), inputManager(inputManager), selectedOption(0) {
+      textureManager(textureManager), inputManager(inputManager), player(player), hudController(hudController), gameController(stateManager, textureManager), selectedOption(0) {
 
     std::cout << "OnPauseState initialized" << std::endl;
 
@@ -40,42 +57,35 @@ void OnPauseState::update(sf::RenderWindow& window, double deltaTime) {
 
 void OnPauseState::draw(sf::RenderWindow& window) {
     try {
-        // Sauvegarder la vue actuelle
-        sf::View originalView = window.getView();
-
-        // Passer à une vue par défaut, non affectée par la caméra du joueur
-        window.setView(window.getDefaultView());
-
         // Fond semi-transparent
+
+        // Rectangle pour le fond du menu
         sf::RectangleShape rectangle(sf::Vector2f(400.f, 200.f));
-        rectangle.setFillColor(sf::Color(128, 128, 128, 200));  // Couleur de fond semi-transparente
+        rectangle.setFillColor(sf::Color(128, 128, 128, 200));
         rectangle.setPosition(200.f, 150.f);
         window.draw(rectangle);
 
         // Chargement de la police
+        sf::Font font;
         if (!font.loadFromFile("assets/police/ZOMBIE.ttf")) {
             std::cerr << "Error loading font for OnPauseState!" << std::endl;
         }
-
         // Affichage des options
         for (size_t i = 0; i < options.size(); ++i) {
             sf::Text text(options[i], font, 30);
-            text.setPosition(250.f, 180.f + i * 50.f); // Ajuster les positions
+            text.setPosition(250.f, 180.f + i * 50.f); // Ajustez les positions
             text.setFillColor(i == selectedOption ? sf::Color::Red : sf::Color::White);
             window.draw(text);
         }
 
-        // Rétablir la vue originale du joueur
-        window.setView(originalView);
 
-        window.display(); // Rafraîchir l'affichage
+        window.display(); // Rafra�chir l'affichage
     } catch (const std::exception& e) {
         std::cerr << "Exception in OnPauseState::draw: " << e.what() << std::endl;
     } catch (...) {
         std::cerr << "Unknown exception in OnPauseState::draw" << std::endl;
     }
 }
-
 
 
 void OnPauseState::navigateUp() {
@@ -100,7 +110,7 @@ void OnPauseState::executeOption() {
     if (option == "Resume") {
         stateManager->setState(std::make_unique<InGameState>(window, soundManager, textureManager, inputManager, stateManager, "temp_save.json")); // Load the temporary game state
     } else if (option == "Shop") {
-        //stateManager->setState(std::make_unique<ShopState>(window, stateManager, soundManager, textureManager, inputManager));
+        stateManager->setState(std::make_unique<ShopState>(window, soundManager, textureManager, inputManager, stateManager, "temp_save.json"));
     } else if (option == "Quit to Main Menu") {
         stateManager->setState(std::make_unique<MainMenuState>(window, soundManager, textureManager, inputManager, stateManager));
     }

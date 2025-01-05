@@ -64,6 +64,10 @@ void GameController::loadGame(const std::string& filename) {
         playerController.getPlayer().setHealth(gameState["player"]["health"]);
         playerController.getPlayer().setLives(gameState["player"]["lives"]);
         playerController.getPlayer().setCoins(gameState["player"]["coins"]);
+        playerController.getPlayer().setBulletDamage(gameState["player"]["bulletDamage"]);
+        playerController.getPlayer().setDirection(gameState["player"]["direction"]);
+        playerController.getPlayer().setState(static_cast<Player::State>(gameState["player"]["state"]));    
+        playerController.setOnGround(gameState["player"]["onGround"]); 
 
         // Load world state
         worldController.setCurrentWorldIndex(gameState["world"]["currentWorldIndex"]);
