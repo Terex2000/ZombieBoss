@@ -41,7 +41,6 @@ void OnPauseState::update(sf::RenderWindow& window, double deltaTime) {
 void OnPauseState::draw(sf::RenderWindow& window) {
     try {
         // Fond semi-transparent
-        window.clear(sf::Color::Green);
 
         // Rectangle pour le fond du menu
         sf::RectangleShape rectangle(sf::Vector2f(400.f, 200.f));
