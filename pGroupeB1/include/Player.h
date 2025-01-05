@@ -49,7 +49,8 @@ public:
     State getState() const;
 
     // Hitbox management
-    sf::CircleShape getHitbox() const;
+    sf::CircleShape getShape() const;
+    void setTexture(const sf::Texture& texture);
     
     // Health management
     void setHealth(float health);
@@ -74,7 +75,8 @@ private:
     float direction;
     int coins;
     State state;
-    sf::CircleShape hitbox; // Change to sf::CircleShape
+    sf::CircleShape shape; // Change from hitbox to shape
+    sf::Sprite sprite; // Add sprite for texture management
     float health;
     int lives;
     int bulletDamage;

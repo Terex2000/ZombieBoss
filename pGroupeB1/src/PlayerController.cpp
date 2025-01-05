@@ -185,7 +185,7 @@ void PlayerController::handleCollision(const sf::RectangleShape& tileShape) {
     }
 
     // Ajuster la position du joueur en fonction de la collision détectée
-    const float marginH = 3.0f; // Distance horizontale entre le joueur et la tuile
+    const float marginH = 4.5f; // Distance horizontale entre le joueur et la tuile
     const float marginV = 0.0f; // Distance verticale entre le joueur et la tuile
 
     switch (collision) {

@@ -7,10 +7,11 @@ PlayerView::PlayerView(Player& player, TextureManager& textureManager) : player(
     shape.setRadius(player.getRadius());
     shape.setFillColor(player.getColor());
     shape.setPosition(player.getPosition());
+    sprite.setPosition(player.getPosition());
 }
 
 // Copy constructor for PlayerView
-PlayerView::PlayerView(const PlayerView& other) : player(other.player), textureManager(other.textureManager), shape(other.shape) {}
+PlayerView::PlayerView(const PlayerView& other) : player(other.player), textureManager(other.textureManager), shape(other.shape), sprite(other.sprite) {}
 
 // Copy assignment operator for PlayerView
 PlayerView& PlayerView::operator=(const PlayerView& other) {
@@ -18,6 +19,7 @@ PlayerView& PlayerView::operator=(const PlayerView& other) {
         player = other.player;
         textureManager = other.textureManager;
         shape = other.shape;
+        sprite = other.sprite;
     }
     return *this;
 }
@@ -28,53 +30,51 @@ PlayerView::~PlayerView() {}
 // Draws the player to the window.
 void PlayerView::draw(sf::RenderWindow& window) {
     updateShape();
-    window.draw(shape);
+    updateSprite();
+    window.draw(sprite);
+    //window.draw(shape);
 }
 
 // Updates the shape's position and color based on the player's state.
 void PlayerView::updateSprite() {
-    sprite.setPosition(player.getHitbox().getPosition().x, player.getHitbox().getPosition().y);
-
+    sprite.setPosition(player.getPosition());
     if (player.getDirection() > 0) {
         switch (player.getState()) {
             case Player::State::Idle:
                 sprite.setTexture(textureManager.getTexture("Idle"));
-                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
                 break;
             case Player::State::Jump:
                 sprite.setTexture(textureManager.getTexture("Jump"));
-                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
                 break;
             case Player::State::Run:
                 sprite.setTexture(textureManager.getTexture("Run"));
-                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
                 break;
             case Player::State::Shot_2:
                 sprite.setTexture(textureManager.getTexture("Shot_2"));
-                sprite.setScale(30.0f / 57.0f, 30.0f / 69.0f); 
                 break;
         }
     } else {
         switch (player.getState()) {
             case Player::State::Idle:
                 sprite.setTexture(textureManager.getTexture("Idle_Left"));
-                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
                 break;
             case Player::State::Jump:
                 sprite.setTexture(textureManager.getTexture("Jump_Left"));
-                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
                 break;
             case Player::State::Run:
                 sprite.setTexture(textureManager.getTexture("Run_Left"));
-                sprite.setScale(30.0f / 42.0f, 30.0f / 69.0f); 
                 break;
             case Player::State::Shot_2:
                 sprite.setTexture(textureManager.getTexture("Shot_2_Left"));
-                sprite.setScale(30.0f / 57.0f, 30.0f / 69.0f); 
                 break;
         }
     }
+        // Set the scale of the sprite to match the player's shape
+    float scaleX = player.getRadius() * 2 / sprite.getTexture()->getSize().x;
+    float scaleY = player.getRadius() * 2 / sprite.getTexture()->getSize().y;
+    sprite.setScale(scaleX, scaleY);
 }
+
 
 void PlayerView::updateShape() {
     shape.setPosition(player.getPosition());

@@ -1,7 +1,10 @@
 #include "Player.h"
 
 // Constructor for Player
-Player::Player() : position(0, 0), color(sf::Color::Red), radius(15.0f), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
+Player::Player() : position(0, 0), color(sf::Color::Red), radius(14.5f), direction(1.0f), coins(0), state(State::Idle), health(100.0f), lives(3), bulletDamage(10) {
+    shape.setRadius(radius); // Set the radius of the shape
+    shape.setOrigin(radius, radius); // Center the origin of the shape
+    shape.setPosition(position); 
 }
 
 // Copy constructor for Player
@@ -16,7 +19,7 @@ Player& Player::operator=(const Player& other) {
         radius = other.radius;
         direction = other.direction;
         coins = other.coins;
-        hitbox = other.hitbox;
+        shape = other.shape;
         health = other.health;
         lives = other.lives;
     }
@@ -95,11 +98,6 @@ Player::State Player::getState() const {
     return state;
 }
 
-// Returns the player's hitbox
-sf::CircleShape Player::getHitbox() const {
-    return hitbox;
-}
-
 // Sets the player's health.
 void Player::setHealth(float health) {
     this->health = health;
@@ -158,4 +156,15 @@ void Player::setBulletDamage(int damage) {
 // Returns the damage dealt by the player's bullets.
 int Player::getBulletDamage() const {
     return bulletDamage;
+}
+
+// Returns the player's shape
+sf::CircleShape Player::getShape() const {
+    return shape;
+}
+
+// Sets the texture for the player
+void Player::setTexture(const sf::Texture& texture) {
+    sprite.setTexture(texture);
+    shape.setTexture(&texture);
 }
