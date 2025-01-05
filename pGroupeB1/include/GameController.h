@@ -11,11 +11,14 @@
 class GameController {
 public:
     GameController(StateManager* stateManager, TextureManager& textureManager);
+    GameController(StateManager* stateManager, TextureManager& textureManager, const std::string& saveFile); // Add constructor for loading game
     void run(sf::RenderWindow& window);
     void update(float deltaTime);   
     void draw(sf::RenderWindow& window);
     WorldController& getWorldController();
         void saveGame(const std::string& filename); // Add this method to save the game state
+            void loadGame(const std::string& filename); // Add this method to load the game state
+
 
 
 private:
