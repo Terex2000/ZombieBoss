@@ -7,6 +7,7 @@
 #include "TextureManager.h"
 #include "InputManager.h"
 #include "StateManager.h"
+#include "HUDController.h"
 #include <SFML/Graphics.hpp>
 
 class InGameState : public State {
@@ -29,6 +30,10 @@ private:
     InputManager& inputManager;
     StateManager* stateManager;
     GameController gameController;
+        HUDController hudController; // Add this member to manage the HUD
+            sf::View hudView; // Add this member for the HUD view
+
+
 
     bool changeState;
     std::string nextState;

@@ -1,16 +1,21 @@
 #ifndef HUDCONTROLLER_H
 #define HUDCONTROLLER_H
 
+#include "HUDView.h"
+#include "Player.h"
+#include "Boss.h"
 
-class HUDController
-{
-    public:
-        HUDController();
-        virtual ~HUDController();
+class HUDController {
+public:
+    HUDController(Player& player, Boss* boss);
+    void update();
+    void draw(sf::RenderWindow& window);
+    void setBoss(Boss* boss); // Add this method to set the current boss
 
-    protected:
-
-    private:
+private:
+    Player& player;
+    Boss* boss;
+    HUDView hudView;
 };
 
 #endif // HUDCONTROLLER_H
