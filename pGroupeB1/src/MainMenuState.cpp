@@ -7,7 +7,7 @@ MainMenuState::MainMenuState(sf::RenderWindow& window, SoundManager& soundManage
     : window(window), view(window, textureManager), textureManager(textureManager), inputManager(inputManager),
       stateManager(stateManager), controller(model, inputManager), soundManager(soundManager),
       currentMenu(MenuType::MainMenu), selectedSettingOption(0), launchGame(false), loadGame(false), isFullscreen(false) {
-    soundManager.loadMusic("assets/sound/mainMenuSound.wav");
+    soundManager.loadMusic("assets/sound/mainMenuSound.ogg");
     soundManager.playMusic();
 
     if (!settingsBackgroundTexture.loadFromFile("assets/img/settings.jpg")) {
