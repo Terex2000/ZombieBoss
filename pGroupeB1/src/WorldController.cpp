@@ -5,6 +5,8 @@ WorldController::WorldController(TextureManager& textureManager, PlayerControlle
     : textureManager(textureManager), playerController(playerController), zombieController(zombieFactory, textureManager), bossController(bossFactory, textureManager), currentWorldIndex(0), currentLevelIndex(0), cameraManager(800.0f, 600.0f), inBossRoom(false) {
     // Initialize the worlds and levels
     std::cerr << "Create Worlds" << std::endl;
+    //Zombie : x, y, health, attack, speed, maxDistance, coins
+    //Boss : x, y, health, attack, speed,coins, isBoss, maxDistance 
     std::vector<World> worlds = {
         World({
             Level("assets/map/mapW1L1.txt", "assets/map/bossMapW1.txt",
