@@ -16,6 +16,7 @@ private:
     sf::Text playerHealthText;
     sf::Text playerDamageText;
     sf::Text playerLivesText;
+    sf::Text playerCoinsText;
     sf::Text bossHealthText;
 };
 

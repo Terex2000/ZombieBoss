@@ -20,13 +20,13 @@ HUDView::HUDView() {
     playerLivesText.setCharacterSize(24);
     playerLivesText.setFillColor(sf::Color::White);
 
+    playerCoinsText.setFont(font);
+    playerCoinsText.setCharacterSize(24);
+    playerCoinsText.setFillColor(sf::Color::White);
+
     bossHealthText.setFont(font);
     bossHealthText.setCharacterSize(24);
     bossHealthText.setFillColor(sf::Color::Red);
-
-    playerHealthText.setString("Health: ");
-    playerDamageText.setString("Damage: ");
-    playerLivesText.setString("Lives: ");
 }
 
 void HUDView::update(const Player& player, const Boss* boss) {
@@ -39,6 +39,10 @@ void HUDView::update(const Player& player, const Boss* boss) {
     playerDamageText.setString("Damage: " + damageStream.str());
 
     playerLivesText.setString("Lives: " + std::to_string(player.getLives()));
+    
+    std::ostringstream coinsStream;
+    coinsStream << std::fixed << std::setprecision(1) << player.getCoins();
+    playerCoinsText.setString("Coins: " + coinsStream.str());
 
     if (boss) {
         std::ostringstream bossHealthStream;
@@ -53,10 +57,12 @@ void HUDView::draw(sf::RenderWindow& window) {
     playerHealthText.setPosition(10, 10);
     playerDamageText.setPosition(10, 40);
     playerLivesText.setPosition(10, 70);
-    bossHealthText.setPosition(10, 100);
+    playerCoinsText.setPosition(10, 100);
+    bossHealthText.setPosition(10, 130);
 
     window.draw(playerHealthText);
     window.draw(playerDamageText);
     window.draw(playerLivesText);
+    window.draw(playerCoinsText);
     window.draw(bossHealthText);
 }
