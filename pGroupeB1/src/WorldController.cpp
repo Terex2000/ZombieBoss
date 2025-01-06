@@ -394,3 +394,8 @@ void WorldController::teleportPlayerToBossRoom() {
 std::vector<World> WorldController::getWorlds() const {
     return worlds;
 }
+
+// Sets the window size
+void WorldController::setWindowSize(const sf::Vector2u& size) {
+    inputManager.setWindowSize(size);
+}

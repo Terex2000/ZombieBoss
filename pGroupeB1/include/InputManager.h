@@ -3,7 +3,7 @@
 
 #include "PlayerController.h"
 #include <windows.h> // For checking full screen mode
-
+#include <SFML/Graphics.hpp> // For getting screen resolution
 
 // The InputManager class is responsible for handling player input.
 class InputManager {
@@ -16,11 +16,21 @@ public:
 
     bool isFullScreen() const;
 
+    // Sets the current window size
+    void setWindowSize(const sf::Vector2u& size);
 
 private:
-    float moveSpeed = 0.02f; // The speed at which the player moves.
-    const float fullScreenSpeed = 0.06f; // Speed when in full screen.
-    const float windowedSpeed = 0.02f; // Speed when not in full screen.
+    float moveSpeed = 0.05f; // The speed at which the player moves.
+    const float baseSpeed = 0.05f; // Base speed for calculations.
+    const float fullScreenMultiplier = 1.5f; // Speed multiplier when in full screen.
+    const float windowedMultiplier = 2.0f; // Speed multiplier when in windowed mode.
+
+    // Calculates the move speed based on the screen resolution and size.
+    void calculateMoveSpeed();
+
+    // Screen resolution and size
+    sf::Vector2u screenSize;
+    sf::Vector2u windowSize;
 };
 
 #endif // INPUTMANAGER_H

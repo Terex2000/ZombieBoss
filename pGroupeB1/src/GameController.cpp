@@ -22,6 +22,8 @@ void GameController::run(sf::RenderWindow& window) {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+            else if(event.type == sf::Event::Resized)
+                worldController.setWindowSize(window.getSize());
         }
 
         float deltaTime = clock.restart().asSeconds();

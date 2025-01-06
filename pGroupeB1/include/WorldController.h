@@ -48,6 +48,8 @@ public:
     void teleportPlayerToBossRoom();
      std::vector<World> getWorlds() const;
 
+     void setWindowSize(const sf::Vector2u& size); // Add this method to set the window size
+
 private:
     PlayerController& playerController;
     CollisionManager collisionManager;
